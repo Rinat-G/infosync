@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.urfu.infosync.Model.HabrPost;
+import ru.urfu.infosync.model.HabrPost;
 import ru.urfu.infosync.service.HabrNewsService;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class HabrNewsController {
         this.newsService = newsService;
     }
 
-    @RequestMapping
+    @GetMapping
     public List<HabrPost> getHabrNews() {
         return newsService.getNews();
     }

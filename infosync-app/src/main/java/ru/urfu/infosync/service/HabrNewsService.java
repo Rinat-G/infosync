@@ -4,7 +4,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
-import ru.urfu.infosync.Model.HabrPost;
+import ru.urfu.infosync.model.HabrPost;
 
 import java.io.IOException;
 import java.util.List;
