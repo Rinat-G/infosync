@@ -87,8 +87,8 @@
                         <phase>generate-resources</phase>
                         <configuration>
                             <outputDirectory>${project.build.outputDirectory}/static</outputDirectory>
-                            <includes>**/*.html, **/*.svg, **/*.jpg, **/*.ico</includes>
-                            <includeArtifacIds>infosync-ui</includeArtifacIds>
+                            <includes>**/*.html, **/*.js, **/*.svg, **/*.jpg, **/*.ico</includes>
+                            <includeArtifactIds>infosync-ui</includeArtifactIds>
                             <includeGroupIds>${project.groupId}</includeGroupIds>
                             <excludeTransitive>true</excludeTransitive>
                         </configuration>
