@@ -13,7 +13,7 @@
     <groupId>ru.urfu</groupId>
     <artifactId>infosync-app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>InfoSync</name>
+    <name>infosync-app</name>
     <description>Demo project for Spring Boot</description>
 
 
