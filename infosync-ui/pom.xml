@@ -17,14 +17,6 @@
         <npm.executable>npm</npm.executable>
     </properties>
     <build>
-        <resources>
-            <resource>
-                <directory>${project.basedir}/dist</directory>
-                <excludes>
-                    <exclude>**/*.js</exclude>
-                </excludes>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -33,7 +25,7 @@
                 <executions>
                     <execution>
                         <id>run-npm-install</id>
-                        <phase>compile</phase>
+                        <phase>generate-resources</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
@@ -46,7 +38,7 @@
                     </execution>
                     <execution>
                         <id>npm-build</id>
-                        <phase>compile</phase>
+                        <phase>generate-resources</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
@@ -61,6 +53,14 @@
                 </executions>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>${project.basedir}/dist</directory>
+                <excludes>
+                    <exclude>**/*.js</exclude>
+                </excludes>
+            </resource>
+        </resources>
     </build>
     <profiles>
         <profile>
