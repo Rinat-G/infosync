@@ -1,0 +1,8 @@
+{
+  "name": "infosync",
+  "description": "infosync description here",
+  "version": "0.0.1",
+  "engines": {
+    "npm": "7.x"
+  }
+}
