@@ -1,4 +1,4 @@
-package ru.urfu.infosync.Model;
+package ru.urfu.infosync.model;
 
 import lombok.Value;
 
