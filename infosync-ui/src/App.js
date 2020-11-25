@@ -1,6 +1,7 @@
 import logo from './images/logo.svg';
 import './css/App.css';
 import React from 'react'
+import 'semantic-ui-css/semantic.min.css'
 
 function App() {
   return (
