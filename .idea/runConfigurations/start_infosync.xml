@@ -3,6 +3,11 @@
     <module name="infosync-app" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="ru.urfu.infosync.InfoSyncApplication" />
     <option name="ALTERNATIVE_JRE_PATH" />
+    <envs>
+      <env name="JDBC_DATABASE_URL" value="jdbc:postgresql://localhost:5432/postgres?currentSchema=INFOSYNC" />
+      <env name="JDBC_DATABASE_USERNAME" value="postgres" />
+      <env name="JDBC_DATABASE_PASSWORD" value="qwe123" />
+    </envs>
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
