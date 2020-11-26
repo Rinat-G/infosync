@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="start spring boot and webpack dev server" type="CompoundRunConfigurationType">
+    <toRun name="start infosync" type="SpringBootApplicationConfigurationType" />
+    <toRun name="start dev server" type="js.build_tools.npm" />
+    <method v="2" />
+  </configuration>
+</component>

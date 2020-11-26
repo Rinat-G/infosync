@@ -3,6 +3,9 @@
     <module name="infosync-app" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="ru.urfu.infosync.InfoSyncApplication" />
     <option name="ALTERNATIVE_JRE_PATH" />
+    <envs>
+      <env name="PORT" value="9080" />
+    </envs>
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
