@@ -5,3 +5,5 @@ spring:
     password: ${JDBC_DATABASE_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
+server:
+  port: ${PORT}
