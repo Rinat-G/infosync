@@ -15,6 +15,7 @@ import static org.springframework.http.MediaType.TEXT_HTML_VALUE;
 
 @RestController
 @RequestMapping(value = "/api/habr/news", produces = APPLICATION_JSON_VALUE)
+
 public class HabrNewsController {
 
     private final HabrNewsService newsService;
