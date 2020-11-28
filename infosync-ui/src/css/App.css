@@ -1,39 +1,38 @@
 :root {
-  --bg: #282c34;
-  --bg-tab: #131519;
+  --bg: #131519;
+  --bg-tab: #282c34 ;
   --text-color: #fbfbfb;
   --link: #0060ff;
+  --block-text: #999;
 }
 body {
   color: var(--text-color);
 }
 .ui.attached.segment {
-  min-block-size: 93vh;
-  min-height: 93vh;
-  max-block-size: 93vh;
-  max-height: 93vh;
-  border-radius: 0px;
+  height: 93vh;
+  block-size: 93vh;
   background-color: var(--bg);
   max-width: 100%!important;
   width: 100%!important;
   margin: 0px;
   border: 0px;
+  padding: 0px;
+  border-radius: 0px;
 }
 .ui.attached.menu {
-  min-block-size: 7vh;
-  min-height: 7vh;
-  max-block-size: 7vh;
-  max-height: 7vh;
+  height: 7vh;
+  block-size: 7vh;
   width: 100%!important;
   max-width: 100%!important;
   margin: 0px;
   text-align: center;
   border: 0px;
   background-color: var(--bg-tab);
-  color: #fbfbfb;
+  color: var(--text-color);
 }
 .ui.attached.menu:not(.tabular) {
   border: 0px;
+  border-radius: 0px;
 }
 .ui.attached.menu:not(.tabular) a {
   color: var(--text-color);
@@ -47,4 +46,20 @@ body {
 }
 .ui[class*="bottom attached"].menu {
   border-right: 0px;
+}
+.ui.header:first-child {
+  margin-top: 0px;
+}
+.news {
+  background-color: var(--bg-tab);
+  padding: 20px 10px;
+  width: 100%;
+  inline-size: 100%;
+  position: sticky;
+}
+.news .header, .sub.header  {
+  color: var(--block-text)!important
+}
+h2.header i {
+  font-size: 22px!important;
 }
