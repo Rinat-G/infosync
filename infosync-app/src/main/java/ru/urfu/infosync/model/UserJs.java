@@ -37,6 +37,6 @@ public class UserJs {
     String group;
 
     @NotBlank
-    @Pattern(regexp = "^(student|teacher)$" ,message = "The role can only be \"student\" or \"teacher\" ")
+    @Pattern(regexp = "^(student|teacher)$", message = "The role can only be 'student' or 'teacher'")
     String role;
 }
