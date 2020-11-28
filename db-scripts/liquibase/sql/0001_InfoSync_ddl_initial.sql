@@ -21,14 +21,15 @@ CREATE TABLE ifs_user
     first_name VARCHAR      NOT NULL,
     last_name  VARCHAR      NOT NULL,
     patronymic VARCHAR,
+    full_name  VARCHAR GENERATED ALWAYS AS ( first_name || ' ' || last_name || coalesce(' ' || patronymic, '') ) STORED,
     email      VARCHAR      NOT NULL,
-    group_id   BIGINT,
-    type       VARCHAR(100) NOT NULL DEFAULT 'student',
-    salt       VARCHAR      NOT NULL,
     pass_hash  VARCHAR      NOT NULL,
+    group_id   BIGINT,
+    role       VARCHAR(100) NOT NULL DEFAULT 'student',
     CONSTRAINT user_pk PRIMARY KEY (id),
     CONSTRAINT user_group_id_fk FOREIGN KEY (group_id) REFERENCES ifs_group (id) ON DELETE SET NULL,
-    CONSTRAINT user_full_name_group_u UNIQUE (first_name, last_name, patronymic, group_id)
+    CONSTRAINT user_email_u UNIQUE (email),
+    CONSTRAINT user_full_name_group_u UNIQUE (full_name, group_id)
 );
 
 
