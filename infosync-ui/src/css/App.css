@@ -50,14 +50,14 @@ body {
 .ui.header:first-child {
   margin-top: 0px;
 }
-.news {
+.news_header {
   background-color: var(--bg-tab);
   padding: 20px 10px;
   width: 100%;
   inline-size: 100%;
   position: sticky;
 }
-.news .header, .sub.header  {
+.news_header .header, .sub.header  {
   color: var(--block-text)!important
 }
 h2.header i {
