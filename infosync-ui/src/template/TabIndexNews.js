@@ -1,5 +1,6 @@
 import React from 'react'
 import { Header, Icon } from 'semantic-ui-react'
+import TabPostContent from './Post/TabPostContent'
 
 function TabIndexNews() {
     return  (

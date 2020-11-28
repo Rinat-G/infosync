@@ -15,9 +15,18 @@ module.exports = {
                 loader: "babel-loader",
                 options:
                     {
-                        presets: ['@babel/react',]
+                        presets: [
+                            '@babel/react',
+                            {
+                                plugins: [
+                                    '@babel/plugin-proposal-class-properties'
+                                ]
+                            }
+                        ]
+
                     }
-            },
+
+                },
             {
                 test: /\.(css|sccs)$/i,
                 use: ["style-loader", "css-loader"],
@@ -42,9 +51,11 @@ module.exports = {
     },
 
     plugins: [
+
         new HtmlWebpackPlugin({
             template: 'public/index.html',
         }),
+
     ],
     devServer: {
         proxy: {
