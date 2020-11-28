@@ -30,8 +30,17 @@ module.exports = {
                     },
                 ],
             },
+            {
+                test: /.(ttf|woff|woff2|eot)$/i,
+                use: [
+                    {
+                        loader: 'file-loader',
+                    },
+                ],
+            },
         ]
     },
+
     plugins: [
         new HtmlWebpackPlugin({
             template: 'public/index.html',

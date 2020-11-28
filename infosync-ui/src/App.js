@@ -1,14 +1,13 @@
-import './css/App.css';
 import React from 'react'
+import 'semantic-ui-css/semantic.min.css';
+import TabIndex from "./template/TabIndex";
+import './css/App.css';
+
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-
-
-      </header>
-    </div>
-  );
+    return (
+        <TabIndex/>
+    );
 }
 export default App;
