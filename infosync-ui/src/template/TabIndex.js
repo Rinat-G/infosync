@@ -1,18 +1,19 @@
 import React from 'react'
 import { Tab } from 'semantic-ui-react'
 
+
 const panes = [
     {
-        menuItem: 'Tab 1',
-        render: () => <Tab.Pane attached='top'>Tab 1 Content</Tab.Pane>,
+        menuItem: { key: 'newspaper outline', icon: 'newspaper outline', content: 'Новости' },
+        render: () => <Tab.Pane attached='top'>Новости</Tab.Pane>,
     },
     {
-        menuItem: 'Tab 2',
-        render: () => <Tab.Pane attached='top'>Tab 2 Content</Tab.Pane>,
+        menuItem: { key: 'users', icon: 'users', content: 'Группа' },
+        render: () => <Tab.Pane attached='top'>Группа</Tab.Pane>,
     },
     {
-        menuItem: 'Tab 3',
-        render: () => <Tab.Pane attached='top'>Tab 3 Content</Tab.Pane>,
+        menuItem: { key: 'user outline', icon: 'user outline', content: 'Аккаунт' },
+        render: () => <Tab.Pane attached='top'>Аккаунт</Tab.Pane>,
     },
 ]
 
