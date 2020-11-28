@@ -2,15 +2,16 @@
   --bg: #282c34;
   --bg-tab: #131519;
   --text-color: #fbfbfb;
+  --link: #0060ff;
 }
 body {
   color: var(--text-color);
 }
 .ui.attached.segment {
-  min-block-size: 95vh;
-  min-height: 95vh;
-  max-block-size: 95vh;
-  max-height: 95vh;
+  min-block-size: 93vh;
+  min-height: 93vh;
+  max-block-size: 93vh;
+  max-height: 93vh;
   border-radius: 0px;
   background-color: var(--bg);
   max-width: 100%!important;
@@ -19,10 +20,10 @@ body {
   border: 0px;
 }
 .ui.attached.menu {
-  min-block-size: 5vh;
-  min-height: 5vh;
-  max-block-size: 5vh;
-  max-height: 5vh;
+  min-block-size: 7vh;
+  min-height: 7vh;
+  max-block-size: 7vh;
+  max-height: 7vh;
   width: 100%!important;
   max-width: 100%!important;
   margin: 0px;
@@ -33,6 +34,16 @@ body {
 }
 .ui.attached.menu:not(.tabular) {
   border: 0px;
+}
+.ui.attached.menu:not(.tabular) a {
+  color: var(--text-color);
+  transition: 0.25s ease;
+  width: calc(100%/3);
+  inline-size: calc(100%/3);
+  justify-content: center;
+}
+.ui.attached.menu:not(.tabular) a:hover, .ui.attached.menu:not(.tabular) a:focus, a:active {
+  color: var(--link);
 }
 .ui[class*="bottom attached"].menu {
   border-right: 0px;
