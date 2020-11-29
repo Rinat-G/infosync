@@ -1,28 +1,104 @@
 import React from 'react'
-import { Tab } from 'semantic-ui-react'
+import PropTypes from 'prop-types';
+import SwipeableViews from 'react-swipeable-views';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import AnnouncementOutlinedIcon from '@material-ui/icons/AnnouncementOutlined';
+import PermIdentityOutlinedIcon from '@material-ui/icons/PermIdentityOutlined';
+import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
 import TabIndexNews from "./TabIndexNews";
 import TabIndexGroups from "./TabIndexGroups";
 import TabIndexAccount from "./TabIndexAccount";
 
 
-const panes = [
-    {
-        menuItem: { key: 'newspaper outline', icon: 'newspaper outline', content: 'Новости' },
-        render: () => <Tab.Pane attached='top'> <TabIndexNews/> </Tab.Pane>,
-    },
-    {
-        menuItem: { key: 'users', icon: 'users', content: 'Группа' },
-        render: () => <Tab.Pane attached='top'> <TabIndexGroups/> </Tab.Pane>,
-    },
-    {
-        menuItem: { key: 'user', icon: 'user', content: 'Аккаунт' },
-        render: () => <Tab.Pane attached='top'> <TabIndexAccount/></Tab.Pane>,
-    },
-]
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
 
-const TabExampleAttachedBottom = () => (
-    <Tab menu={{ attached: 'bottom' }} panes={panes} />
-)
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`full-width-tabpanel-${index}`}
+            aria-labelledby={`full-width-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box p={3}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
+        </div>
+    );
+}
 
-export default TabExampleAttachedBottom
+TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.any.isRequired,
+    value: PropTypes.any.isRequired,
+};
+
+function a11yProps(index) {
+    return {
+        id: `full-width-tab-${index}`,
+        'aria-controls': `full-width-tabpanel-${index}`,
+    };
+}
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        backgroundColor: theme.palette.background.default,
+    },
+}));
+
+export default function FullWidthTabs() {
+    const classes = useStyles();
+    const theme = useTheme();
+    const [value, setValue] = React.useState(0);
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
+    const handleChangeIndex = (index) => {
+        setValue(index);
+    };
+
+    return (
+        <div className={classes.root}>
+            <SwipeableViews
+                axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                index={value}
+                onChangeIndex={handleChangeIndex}
+            >
+                <TabPanel value={value} index={0} dir={theme.direction}>
+                    {<TabIndexNews/>}
+                </TabPanel>
+                <TabPanel value={value} index={1} dir={theme.direction}>
+                    {<TabIndexGroups/>}
+                </TabPanel>
+                <TabPanel value={value} index={2} dir={theme.direction}>
+                    {<TabIndexAccount/>}
+                </TabPanel>
+            </SwipeableViews>
+            <Paper position="static" color="default">
+                <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    indicatorColor="secondary"
+                    textColor="primary"
+                    variant="fullWidth"
+                    aria-label="full width tabs example"
+                >
+                    <Tab icon={<AnnouncementOutlinedIcon />} label="Новости" {...a11yProps(0)} />
+                    <Tab icon={<PeopleAltOutlinedIcon />} label="Группа" {...a11yProps(1)} />
+                    <Tab icon={<PermIdentityOutlinedIcon  />} label="Аккаунт" {...a11yProps(2)} />
+                </Tabs>
+            </Paper>
+        </div>
+    );
+}
 

@@ -1,65 +1,20 @@
-:root {
-  --bg: #131519;
-  --bg-tab: #282c34 ;
-  --text-color: #fbfbfb;
-  --link: #0060ff;
-  --block-text: #999;
+.MuiTab-textColorPrimary.Mui-selected {
+  color: #0060ff!important;
 }
-body {
-  color: var(--text-color);
+.react-swipeable-view-container {
+  height: 92vh;
+  block-size: 92vh;
 }
-.ui.attached.segment {
-  height: 93vh;
-  block-size: 93vh;
-  background-color: var(--bg);
-  max-width: 100%!important;
-  width: 100%!important;
-  margin: 0px;
-  border: 0px;
-  padding: 0px;
-  border-radius: 0px;
+.MuiTabs-root {
+  height: 8vh;
+  block-size: 8vh;
 }
-.ui.attached.menu {
-  height: 7vh;
-  block-size: 7vh;
-  width: 100%!important;
-  max-width: 100%!important;
-  margin: 0px;
-  text-align: center;
-  border: 0px;
-  background-color: var(--bg-tab);
-  color: var(--text-color);
+.MuiTabs-indicator {
+  display: none;
 }
-.ui.attached.menu:not(.tabular) {
-  border: 0px;
-  border-radius: 0px;
+.MuiTab-labelIcon {
+ padding: 0px!important;
 }
-.ui.attached.menu:not(.tabular) a {
-  color: var(--text-color);
-  transition: 0.25s ease;
-  width: calc(100%/3);
-  inline-size: calc(100%/3);
-  justify-content: center;
-}
-.ui.attached.menu:not(.tabular) a:hover, .ui.attached.menu:not(.tabular) a:focus, a:active {
-  color: var(--link);
-}
-.ui[class*="bottom attached"].menu {
-  border-right: 0px;
-}
-.ui.header:first-child {
-  margin-top: 0px;
-}
-.news_header {
-  background-color: var(--bg-tab);
-  padding: 20px 10px;
-  width: 100%;
-  inline-size: 100%;
-  position: sticky;
-}
-.news_header .header, .sub.header  {
-  color: var(--block-text)!important
-}
-h2.header i {
-  font-size: 22px!important;
+@media screen and (min-device-height: 700px) {
+
 }
