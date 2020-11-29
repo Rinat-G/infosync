@@ -1,9 +1,16 @@
 import React, {useEffect, useState} from 'react'
-import {CardContent, Paper, Typography} from "@material-ui/core";
+import {CardContent, Link, makeStyles, Paper, Typography} from "@material-ui/core";
 import Axios from "axios";
+import ajax from "../../utils/ajax";
 
 
 const API_KEY = "api/habr/news"
+
+const useStyles = makeStyles((theme) => ({
+    paper: {
+        marginBottom: theme.spacing(2),
+    },
+}));
 
 const TabPostContent = () => {
 
@@ -24,13 +31,14 @@ const TabPostContent = () => {
 
     }
 
+    const classes = useStyles();
     if (content) {
         return (
             <div>
                 {content.map(post => {
                     return (
-                        <Paper >
-                            <CardContent >
+                        <Paper className={classes.paper}>
+                            <CardContent>
                                 <Typography gutterBottom variant="h6">
                                     {post.postTitle}
                                 </Typography>
@@ -39,7 +47,6 @@ const TabPostContent = () => {
                         </Paper>
                     )
                 })}
-
             </div>
         );
     }
@@ -53,14 +60,3 @@ const TabPostContent = () => {
 
 
 export default TabPostContent
-
-const ajax = (url, payload) => {
-    return Axios({
-        method: 'get',
-        url: url,
-        data: payload,
-        headers: {
-            'Content-Type': 'application/json; charset=utf-8'
-        }
-    })
-}

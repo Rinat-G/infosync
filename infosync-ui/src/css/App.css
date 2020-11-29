@@ -7,6 +7,13 @@
   height: auto;
 }
 
+.post__body_crop p {
+  margin: 0;
+}
+.post__body_crop a{
+  color: #3f51b5
+}
+
 .react-swipeable-view-container {
   height: 92vh!important;
 }
