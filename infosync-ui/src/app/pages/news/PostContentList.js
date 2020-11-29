@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const TabPostContent = () => {
+const PostContentList = () => {
 
 
     const [content, setContent] = useState();
@@ -59,4 +59,4 @@ const TabPostContent = () => {
 }
 
 
-export default TabPostContent
+export default PostContentList

@@ -1,5 +1,19 @@
 .MuiBottomNavigationAction-root.Mui-selected {
-  color: #0060ff!important;
+    color: #0060ff !important;
+}
+
+.react-swipeable-view-container {
+    height: calc(100vh - 56px)
+}
+
+.MuiBottomNavigation-root {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.MuiPaper-rounded {
+    border-radius: 0 !important;
 }
 
 .post__body_crop img {
@@ -12,17 +26,4 @@
 }
 .post__body_crop a{
   color: #3f51b5
-}
-
-.react-swipeable-view-container {
-  height: 92vh!important;
-}
-.MuiTabs-root, .MuiBottomNavigation-root, .MuiBottomNavigationAction-root {
-  height: 8vh!important;
-  min-height: 8vh!important;
-  padding: 0px!important;
-  align-items: center;
-}
-.MuiPaper-rounded {
-  border-radius: 0px!important;
 }
