@@ -4,7 +4,7 @@
 .react-swipeable-view-container {
   height: 92vh!important;
 }
-.MuiTabs-root, .MuiBottomNavigation-root {
+.MuiTabs-root, .MuiBottomNavigation-root, .MuiBottomNavigationAction-root {
   height: 8vh!important;
   min-height: 8vh!important;
   padding: 0px!important;
@@ -12,7 +12,4 @@
 }
 .MuiPaper-rounded {
   border-radius: 0px!important;
-}
-.MuiBottomNavigationAction-root {
-  padding: 0px!important;
 }
