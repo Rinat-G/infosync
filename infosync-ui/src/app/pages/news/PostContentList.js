@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {CardContent, Link, makeStyles, Paper, Typography} from "@material-ui/core";
-import Axios from "axios";
+import {Box, CardContent, makeStyles, Paper, Typography} from "@material-ui/core";
 import ajax from "../../utils/ajax";
 
 
@@ -34,7 +33,7 @@ const PostContentList = () => {
     const classes = useStyles();
     if (content) {
         return (
-            <div>
+            <Box>
                 {content.map(post => {
                     return (
                         <Paper className={classes.paper}>
@@ -47,7 +46,7 @@ const PostContentList = () => {
                         </Paper>
                     )
                 })}
-            </div>
+            </Box>
         );
     }
     return (
