@@ -8,7 +8,6 @@ import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
 import NewsPage from "../pages/news/NewsPage";
 import GroupsPage from "../pages/groups/GroupsPage";
 import AccountPage from "../pages/account/AccountPage";
-import TabPanel from "./TabPanel";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -18,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const shouldRenderPage = (value, index, component) => {
+    return value === index && component
+}
 
 export default function SwipeableTabs() {
     const classes = useStyles();
@@ -34,15 +36,9 @@ export default function SwipeableTabs() {
     return (
         <div className={classes.root}>
             <SwipeableViews axis={'x'} index={value} onChangeIndex={handleChangeIndex}>
-                <TabPanel value={value} index={0}>
-                    <NewsPage/>
-                </TabPanel>
-                <TabPanel value={value} index={1}>
-                    <GroupsPage/>
-                </TabPanel>
-                <TabPanel value={value} index={2}>
-                    <AccountPage/>
-                </TabPanel>
+                {shouldRenderPage(value, 0, <NewsPage/>)}
+                {shouldRenderPage(value, 1, <GroupsPage/>)}
+                {shouldRenderPage(value, 2, <AccountPage/>)}
             </SwipeableViews>
             <BottomNavigation value={value} onChange={handleChange}>
                 <BottomNavigationAction icon={<AnnouncementOutlinedIcon/>} label="Новости"/>
