@@ -1,20 +1,18 @@
-.MuiTab-textColorPrimary.Mui-selected {
+.MuiBottomNavigationAction-root.Mui-selected {
   color: #0060ff!important;
 }
 .react-swipeable-view-container {
-  height: 92vh;
-  block-size: 92vh;
+  height: 92vh!important;
 }
-.MuiTabs-root {
-  height: 8vh;
-  block-size: 8vh;
+.MuiTabs-root, .MuiBottomNavigation-root {
+  height: 8vh!important;
+  min-height: 8vh!important;
+  padding: 0px!important;
+  align-items: center;
 }
-.MuiTabs-indicator {
-  display: none;
+.MuiPaper-rounded {
+  border-radius: 0px!important;
 }
-.MuiTab-labelIcon {
- padding: 0px!important;
-}
-@media screen and (min-device-height: 700px) {
-
+.MuiBottomNavigationAction-root {
+  padding: 0px!important;
 }

@@ -2,11 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import {Typography, Box, BottomNavigation, BottomNavigationAction } from "@material-ui/core";
+import {Paper} from "@material-ui/core";
 import AnnouncementOutlinedIcon from '@material-ui/icons/AnnouncementOutlined';
 import PermIdentityOutlinedIcon from '@material-ui/icons/PermIdentityOutlined';
 import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
@@ -67,6 +64,7 @@ export default function FullWidthTabs() {
         setValue(index);
     };
 
+
     return (
         <div className={classes.root}>
             <SwipeableViews
@@ -85,18 +83,11 @@ export default function FullWidthTabs() {
                 </TabPanel>
             </SwipeableViews>
             <Paper position="static" color="default">
-                <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    indicatorColor="secondary"
-                    textColor="primary"
-                    variant="fullWidth"
-                    aria-label="full width tabs example"
-                >
-                    <Tab icon={<AnnouncementOutlinedIcon />} label="Новости" {...a11yProps(0)} />
-                    <Tab icon={<PeopleAltOutlinedIcon />} label="Группа" {...a11yProps(1)} />
-                    <Tab icon={<PermIdentityOutlinedIcon  />} label="Аккаунт" {...a11yProps(2)} />
-                </Tabs>
+                <BottomNavigation value={value} onChange={handleChange}>
+                    <BottomNavigationAction icon={<AnnouncementOutlinedIcon />} label="Новости"  {...a11yProps(0)} />
+                    <BottomNavigationAction icon={<PeopleAltOutlinedIcon />} label="Группа"  {...a11yProps(1)} />
+                    <BottomNavigationAction icon={<PermIdentityOutlinedIcon  />} label="Аккаунт"  {...a11yProps(2)} />
+                </BottomNavigation>
             </Paper>
         </div>
     );
