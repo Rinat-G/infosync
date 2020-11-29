@@ -26,7 +26,7 @@ module.exports = {
 
                     }
 
-                },
+            },
             {
                 test: /\.(css|sccs)$/i,
                 use: ["style-loader", "css-loader"],
@@ -61,5 +61,6 @@ module.exports = {
         proxy: {
             '/api': 'http://localhost:9080'
         }
-    }
+    },
+    devtool: 'source-map'
 };

@@ -1,6 +1,12 @@
 .MuiBottomNavigationAction-root.Mui-selected {
   color: #0060ff!important;
 }
+
+.post__body_crop img {
+  max-width: 100%;
+  height: auto;
+}
+
 .react-swipeable-view-container {
   height: 92vh!important;
 }
