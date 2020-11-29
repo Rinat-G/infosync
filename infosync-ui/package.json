@@ -7,7 +7,8 @@
     "@material-ui/icons": "^4.9.1",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
-    "react-swipeable-views": "^0.13.9"
+    "react-swipeable-views": "^0.13.9",
+    "prop-types": "^15.7.2"
   },
   "scripts": {
     "build-webpack": "webpack",

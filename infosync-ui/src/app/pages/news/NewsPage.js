@@ -1,17 +1,15 @@
 import React from 'react'
-import TabPostContent from './Post/TabPostContent'
+import PostContentList from './PostContentList'
 
-function TabIndexNews() {
+export default  function NewsPage() {
     return  (
         <div className='all_news'>
             <div className='news_header'>
 
             </div>
             <div className='news_content'>
-                <TabPostContent/>
+                <PostContentList/>
             </div>
         </div>
     );
 }
-
-export default TabIndexNews

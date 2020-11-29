@@ -3,7 +3,7 @@ import React from 'react'
 
 const API_KEY = "api/habr/news"
 
-function TabPostContent(){
+function PostContentList(){
     return (
     <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi cupiditate, dicta dolorem dolores eos fugiat
         ipsa labore mollitia nostrum nulla optio quos ullam. Animi dolores ea possimus provident voluptas,
@@ -33,5 +33,5 @@ function TabPostContent(){
 
 
 
-export default TabPostContent
+export default PostContentList
 

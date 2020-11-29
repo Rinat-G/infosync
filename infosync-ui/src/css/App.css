@@ -1,15 +1,17 @@
 .MuiBottomNavigationAction-root.Mui-selected {
-  color: #0060ff!important;
+    color: #0060ff !important;
 }
+
 .react-swipeable-view-container {
-  height: 92vh!important;
+    height: calc(100vh - 56px)
 }
-.MuiTabs-root, .MuiBottomNavigation-root, .MuiBottomNavigationAction-root {
-  height: 8vh!important;
-  min-height: 8vh!important;
-  padding: 0px!important;
-  align-items: center;
+
+.MuiBottomNavigation-root {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
+
 .MuiPaper-rounded {
-  border-radius: 0px!important;
+    border-radius: 0 !important;
 }
