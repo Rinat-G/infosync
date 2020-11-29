@@ -12,17 +12,12 @@ import TabIndexGroups from "./TabIndexGroups";
 import TabIndexAccount from "./TabIndexAccount";
 
 
+
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
     return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`full-width-tabpanel-${index}`}
-            aria-labelledby={`full-width-tab-${index}`}
-            {...other}
-        >
+        <div role="tabpanel" hidden={value !== index} id={`full-width-tabpanel-${index}`} aria-labelledby={`full-width-tab-${index}`} {...other}>
             {value === index && (
                 <Box p={3}>
                     <Typography>{children}</Typography>
@@ -48,8 +43,11 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
     root: {
         backgroundColor: theme.palette.background.default,
+        color: theme.palette.text.primary,
     },
 }));
+
+
 
 export default function FullWidthTabs() {
     const classes = useStyles();
@@ -63,7 +61,6 @@ export default function FullWidthTabs() {
     const handleChangeIndex = (index) => {
         setValue(index);
     };
-
 
     return (
         <div className={classes.root}>

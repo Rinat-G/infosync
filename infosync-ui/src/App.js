@@ -1,16 +1,23 @@
 import React from 'react'
 import TabIndex from "./template/TabIndex";
 import './css/App.css';
-import BottomNavigation from "@material-ui/core/BottomNavigation";
-import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
-import RestoreIcon from "@material-ui/icons/Restore";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import LocationOnIcon from "@material-ui/icons/LocationOn";
-import FolderIcon from "@material-ui/icons/Folder";
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const darkTheme = createMuiTheme({
+    palette: {
+        type: 'dark',
+        background: {
+            default: '#212121',
+            },
+        },
+
+});
 
 function App() {
     return (
-        <TabIndex/>
+        <ThemeProvider theme={darkTheme}>
+            <TabIndex/>
+        </ThemeProvider>
     );
 }
 export default App;
