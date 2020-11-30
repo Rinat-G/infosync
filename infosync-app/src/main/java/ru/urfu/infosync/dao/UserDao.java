@@ -11,8 +11,8 @@ public class UserDao {
             "SELECT * FROM ifs_user WHERE email = ?";
 
     private static final String INSERT_NEW_USER = "" +
-            "INSERT INTO ifs_user (first_name, last_name, patronymic, email, pass_hash, group_id)" +
-            "VALUES (?, ?, ?, ?, ?, ?)";
+            "INSERT INTO ifs_user (first_name, last_name, patronymic, email, pass_hash, group_id, role)" +
+            "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -28,7 +28,8 @@ public class UserDao {
                 userDto.getPatronymic(),
                 userDto.getEmail(),
                 userDto.getPasswordHash(),
-                userDto.getGroupId()
+                userDto.getGroupId(),
+                userDto.getRole()
         );
     }
 

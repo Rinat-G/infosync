@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler((request, response, exception) -> {
                     response.setStatus(SC_FORBIDDEN);
                     response.setContentType("application/json");
-                    response.getWriter().write(String.format("{\"success\": \"false\", \"message\": %s}", exception.getMessage()));
+                    response.getWriter().write(String.format("{\"success\": \"false\", \"message\": \"%s\"}", exception.getMessage()));
                     response.getWriter().flush();
                 })
                 .and()

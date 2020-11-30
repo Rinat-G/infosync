@@ -1,8 +1,8 @@
 import Axios from "axios";
 
-const ajax = (url, payload) => {
+const ajax = (url, payload, method = 'get') => {
     return Axios({
-        method: 'get',
+        method: method,
         url: url,
         data: payload,
         headers: {

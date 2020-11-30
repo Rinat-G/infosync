@@ -7,52 +7,28 @@ import {
     Grid,
     Radio,
     RadioGroup,
-    Snackbar,
     TextField,
     Typography
 } from "@material-ui/core";
 import React, {useState} from "react";
-import Axios from "axios";
 import {Alert} from "@material-ui/lab";
+import ajax from "../../utils/ajax";
 
-const ajaxLogin = (email, password) => {
-    const formData = new FormData();
-    formData.append('username', email)
-    formData.append('password', password)
-    return Axios({
-        method: 'post',
-        url: '/api/login',
-        data: formData
-    })
-}
 
 const RegistrationPage = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [registerSuccess, setRegisterSuccess] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
+
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [patronymic, setPatronymic] = useState('');
+
     const [role, setRole] = useState('student');
     const [group, setGroup] = useState('');
-
-    const handleLogin = () => {
-        ajaxLogin(email, password)
-            .then((value) => {
-                if (value.data.success) {
-                    setIsLoggedIn(true);
-                    setErrorMessage(null);
-                }
-
-            })
-            .catch((reason) => {
-                    setIsLoggedIn(false);
-                    setErrorMessage(reason.response.data.message);
-                }
-            )
-    }
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value)
@@ -86,14 +62,83 @@ const RegistrationPage = () => {
         setGroup(event.target.value)
     }
 
-    const handleCloseSnackbar = () => {
+    const handleCloseAlert = () => {
         setErrorMessage(null)
-        setIsLoggedIn(false)
+        setRegisterSuccess(false)
+    }
+
+    const renderGroupField = (role) => {
+        if (role === 'student') {
+            return (
+                <Grid item>
+                    <TextField required
+                               label='Group'
+                               value={group}
+                               onChange={handleGroupChange}/>
+                </Grid>
+            )
+        }
+    }
+
+    const handleRegistration = () => {
+        if (password !== passwordConfirm) {
+            setErrorMessage('Password and password confirm did not match')
+            return
+        }
+
+        const registrationData = {
+            email,
+            password,
+            firstName,
+            lastName,
+            patronymic: patronymic ? patronymic : null,
+            group: role === 'student' ? group : null,
+            role
+        }
+
+        ajax('/api/registration', registrationData, 'post')
+            .then(() => {
+                setRegisterSuccess(true);
+                setErrorMessage(null);
+                resetState();
+
+            })
+            .catch((reason) => {
+                    setErrorMessage(reason.response.data[0]);
+
+                }
+            )
+    }
+
+    const resetState = () => {
+        setEmail('')
+        setPassword('')
+        setPasswordConfirm('')
+        setFirstName('')
+        setLastName('')
+        setPatronymic('')
+        setRole('student')
+        setGroup('')
+    }
+
+    const renderAlert = () => {
+        if (registerSuccess || errorMessage) {
+            let severity = registerSuccess ? 'success' : 'error'
+            let message = registerSuccess ? 'You are successfully registered!' : errorMessage
+            return (
+                <Alert elevation={6}
+                       variant="filled"
+                       severity={severity}
+                       onClose={handleCloseAlert}>
+                    {message}
+                </Alert>
+            )
+        }
     }
 
     return (
         <Box minHeight='100%' display='flex' p={2}>
-            <Grid container justify='center' alignItems='center' direction='column'>
+            <Grid container justify='center' alignItems='center' direction='column' spacing={2}>
                 <Grid item>
                     <Card>
                         <CardContent>
@@ -102,28 +147,40 @@ const RegistrationPage = () => {
                                     <Typography variant='h5'>Sign up</Typography>
                                 </Grid>
                                 <Grid item>
-                                    <TextField label='E-mail' onChange={handleEmailChange}/>
+                                    <TextField required
+                                               label='E-mail'
+                                               value={email}
+                                               onChange={handleEmailChange}/>
                                 </Grid>
                                 <Grid item>
-                                    <TextField type='password'
+                                    <TextField required
+                                               type='password'
                                                label='Password'
+                                               value={password}
                                                onChange={handlePasswordChange}/>
                                 </Grid>
                                 <Grid item>
-                                    <TextField type='password'
+                                    <TextField required
+                                               type='password'
                                                label='Confirm password'
+                                               value={passwordConfirm}
                                                onChange={handlePasswordConfirmChange}/>
                                 </Grid>
                                 <Grid item>
-                                    <TextField label='First Name'
+                                    <TextField required
+                                               label='First Name'
+                                               value={firstName}
                                                onChange={handleFirstNameChange}/>
                                 </Grid>
                                 <Grid item>
-                                    <TextField label='Last Name'
+                                    <TextField required
+                                               label='Last Name'
+                                               value={lastName}
                                                onChange={handleLastNameChange}/>
                                 </Grid>
                                 <Grid item>
                                     <TextField label='Patronymic'
+                                               value={patronymic}
                                                onChange={handlePatronymicChange}/>
                                 </Grid>
                                 <Grid item>
@@ -132,40 +189,18 @@ const RegistrationPage = () => {
                                         <FormControlLabel value="teacher" control={<Radio/>} label="Teacher"/>
                                     </RadioGroup>
                                 </Grid>
-                                <Grid item>
-                                    <TextField label='Group'
-                                               onChange={handleGroupChange}/>
-                                </Grid>
+                                {renderGroupField(role)}
                                 <Grid item>
                                     <Button variant='contained'
                                             color='primary'
-                                            onClick={handleLogin}>Submit</Button>
+                                            onClick={handleRegistration}>Submit</Button>
                                 </Grid>
                             </Grid>
                         </CardContent>
                     </Card>
                 </Grid>
+                {renderAlert()}
             </Grid>
-            <Snackbar open={isLoggedIn}
-                      autoHideDuration={3000}
-                      onClose={handleCloseSnackbar}>
-                <Alert elevation={6}
-                       variant="filled"
-                       severity={"success"}
-                       onClose={handleCloseSnackbar}>
-                    You are successfully logged in!
-                </Alert>
-            </Snackbar>
-            <Snackbar open={errorMessage}
-                      autoHideDuration={3000}
-                      onClose={handleCloseSnackbar}>
-                <Alert elevation={6}
-                       variant="filled"
-                       severity={"error"}
-                       onClose={handleCloseSnackbar}>
-                    Error during login perform!
-                </Alert>
-            </Snackbar>
         </Box>
     )
 }

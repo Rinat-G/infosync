@@ -1,4 +1,4 @@
-import {Box, Button, Card, CardContent, Grid, Snackbar, TextField, Typography} from "@material-ui/core";
+import {Box, Button, Card, CardContent, Grid, TextField, Typography} from "@material-ui/core";
 import React, {useState} from "react";
 import Axios from "axios";
 import {Alert} from "@material-ui/lab";
@@ -16,9 +16,10 @@ const ajaxLogin = (email, password) => {
 
 const LoginPage = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
 
     const handleLogin = () => {
         ajaxLogin(email, password)
@@ -44,13 +45,29 @@ const LoginPage = () => {
         setPassword(event.target.value)
     }
 
-    const handleCloseSnackbar = () => {
+    const handleCloseAlert = () => {
         setErrorMessage(null)
         setIsLoggedIn(false)
     }
+
+    const renderAlert = () => {
+        if (isLoggedIn || errorMessage) {
+            let severity = isLoggedIn ? 'success' : 'error'
+            let message = isLoggedIn ? 'You are successfully logged in!' : errorMessage
+            return (
+                <Alert elevation={6}
+                       variant="filled"
+                       severity={severity}
+                       onClose={handleCloseAlert}>
+                    {message}
+                </Alert>
+            )
+        }
+    }
+
     return (
         <Box minHeight='100%' display='flex'>
-            <Grid container justify='center' alignItems='center' direction='column'>
+            <Grid container justify='center' alignItems='center' direction='column' spacing={2}>
                 <Grid item>
                     <Card>
                         <CardContent>
@@ -59,7 +76,7 @@ const LoginPage = () => {
                                     <Typography variant='h5'>Sign in</Typography>
                                 </Grid>
                                 <Grid item>
-                                    <TextField label='E-mail' onChange={handleEmailChange}/>
+                                    <TextField label='E-mail' value={email} onChange={handleEmailChange}/>
                                 </Grid>
                                 <Grid item>
                                     <TextField type='password'
@@ -75,27 +92,8 @@ const LoginPage = () => {
                         </CardContent>
                     </Card>
                 </Grid>
+                {renderAlert()}
             </Grid>
-            <Snackbar open={isLoggedIn}
-                      autoHideDuration={3000}
-                      onClose={handleCloseSnackbar}>
-                <Alert elevation={6}
-                       variant="filled"
-                       severity={"success"}
-                       onClose={handleCloseSnackbar}>
-                    You are successfully logged in!
-                </Alert>
-            </Snackbar>
-            <Snackbar open={errorMessage}
-                      autoHideDuration={3000}
-                      onClose={handleCloseSnackbar}>
-                <Alert elevation={6}
-                       variant="filled"
-                       severity={"error"}
-                       onClose={handleCloseSnackbar}>
-                    Error during login perform!
-                </Alert>
-            </Snackbar>
         </Box>
     )
 }
