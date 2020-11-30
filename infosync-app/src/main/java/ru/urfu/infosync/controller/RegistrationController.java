@@ -9,9 +9,10 @@ import ru.urfu.infosync.model.UserJs;
 import ru.urfu.infosync.service.UserService;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -26,26 +27,24 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public ResponseEntity<String> registration(@Valid @RequestBody final UserJs userJs) {
+    public ResponseEntity<List<String>> registration(@Valid @RequestBody final UserJs userJs) {
 
         var result = userService.registerNewUser(userJs);
         if (result.getStatus()) {
-            return ResponseEntity.ok(result.getMessage());
+            return ResponseEntity.ok(List.of(result.getMessage()));
         }
-        return ResponseEntity.badRequest().body(result.getMessage());
+        return ResponseEntity.badRequest().body(List.of(result.getMessage()));
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+    public ResponseEntity<List<String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
 
-        Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
+        var errors = ex.getBindingResult().getAllErrors().stream().map(error -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        });
-        return ResponseEntity.badRequest().contentType(APPLICATION_JSON_UTF8).body(
-                errors);
+            return fieldName + ": " + errorMessage;
+        }).collect(toList());
+        return ResponseEntity.badRequest().contentType(APPLICATION_JSON_UTF8).body(errors);
     }
 }

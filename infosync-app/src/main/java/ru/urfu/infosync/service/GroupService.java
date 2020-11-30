@@ -12,7 +12,11 @@ public class GroupService {
         this.groupDao = groupDao;
     }
 
-    public int createGroupOrGetId(String groupName) {
+    public Integer createGroupOrGetId(String groupName) {
+        if (groupName == null) {
+            return null;
+        }
+
         var existGroup = groupDao.getGroupByName(groupName);
 
         if (existGroup == null) {

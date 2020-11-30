@@ -15,8 +15,17 @@ module.exports = {
                 loader: "babel-loader",
                 options:
                     {
-                        presets: ['@babel/react',]
+                        presets: [
+                            '@babel/react',
+                            {
+                                plugins: [
+                                    '@babel/plugin-proposal-class-properties'
+                                ]
+                            }
+                        ]
+
                     }
+
             },
             {
                 test: /\.(css|sccs)$/i,
@@ -30,16 +39,28 @@ module.exports = {
                     },
                 ],
             },
+            {
+                test: /.(ttf|woff|woff2|eot)$/i,
+                use: [
+                    {
+                        loader: 'file-loader',
+                    },
+                ],
+            },
         ]
     },
+
     plugins: [
+
         new HtmlWebpackPlugin({
             template: 'public/index.html',
         }),
+
     ],
     devServer: {
         proxy: {
             '/api': 'http://localhost:9080'
         }
-    }
+    },
+    devtool: 'source-map'
 };
