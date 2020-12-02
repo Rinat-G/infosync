@@ -193,7 +193,7 @@ const RegistrationPage = () => {
                                 <Grid item>
                                     <Button variant='contained'
                                             color='primary'
-                                            onClick={handleRegistration}>Submit</Button>
+                                            onClick={handleRegistration}>Отправить</Button>
                                 </Grid>
                             </Grid>
                         </CardContent>

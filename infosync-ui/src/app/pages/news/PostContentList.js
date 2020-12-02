@@ -1,7 +1,11 @@
 import React, {useEffect, useState} from 'react'
-import {Box, CardContent, makeStyles, Paper, Typography} from "@material-ui/core";
+import {Box, CardContent, makeStyles, Paper, Typography, Button} from "@material-ui/core";
 import ajax from "../../utils/ajax";
-
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import RegistrationPage from "../registration/RegistrationPage";
+import LoginPage from "../login/LoginPage";
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 
 const API_KEY = "api/habr/news"
 
@@ -49,10 +53,30 @@ const PostContentList = () => {
             </Box>
         );
     }
+
     return (
-        <div>
-            {API_KEY}
-        </div>
+        <Router>
+            <Link to="auth">
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<AssignmentIndIcon  />}>Авторизация                </Button>
+            </Link>
+            <Link to="/reg">
+                <Button
+                     variant="contained"
+                    color="secondary"
+                     startIcon={<LockOpenIcon  />}>Регистрация
+                 </Button>
+            </Link>
+
+            <Switch>
+                <Route exact path="/"></Route>
+                <Route path="/auth"  component={LoginPage}></Route>
+                <Route path="/reg"  component={RegistrationPage}></Route>
+            </Switch>
+        </Router>
+
     );
 
 }
