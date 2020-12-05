@@ -51,4 +51,15 @@ public class UserDao {
 
         return users.size() < 1 ? null : users.get(0);
     }
+
+    public Integer getUserIdByEmail(final String email) {
+
+        var ids = jdbcTemplate.query(
+                SELECT_USER_BY_EMAIL,
+                (rs, rowNum) -> rs.getInt("id"),
+                email
+        );
+
+        return ids.size() < 1 ? null : ids.get(0);
+    }
 }
