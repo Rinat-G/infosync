@@ -8,8 +8,6 @@ import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
 import NewsPage from "../pages/news/NewsPage";
 import GroupsPage from "../pages/groups/GroupsPage";
 import AccountPage from "../pages/account/AccountPage";
-import LoginPage from "../pages/login/LoginPage";
-import RegistrationPage from "../pages/registration/RegistrationPage";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -38,17 +36,13 @@ export default function SwipeableTabs() {
     return (
         <div className={classes.root}>
             <SwipeableViews axis={'x'} index={value} onChangeIndex={handleChangeIndex}>
-                {shouldRenderPage(value, 0, <LoginPage/>)}
-                {shouldRenderPage(value, 1, <RegistrationPage/>)}
-                {shouldRenderPage(value, 2, <NewsPage/>)}
-                {shouldRenderPage(value, 3, <GroupsPage/>)}
-                {shouldRenderPage(value, 4, <AccountPage/>)}
+                {shouldRenderPage(value, 0, <NewsPage/>)}
+                {shouldRenderPage(value, 1, <GroupsPage/>)}
+                {shouldRenderPage(value, 2, <AccountPage/>)}
             </SwipeableViews>
             <BottomNavigation value={value} onChange={handleChange}>
-                <BottomNavigationAction icon={<AnnouncementOutlinedIcon/>} label="Новости"/>
-                <BottomNavigationAction icon={<PeopleAltOutlinedIcon/>} label="Группа"/>
-                <BottomNavigationAction icon={<PermIdentityOutlinedIcon/>} label="Аккаунт"/>
-                <BottomNavigationAction icon={<PermIdentityOutlinedIcon/>} label="Аккаунт"/>
+                <BottomNavigationAction icon={<PermIdentityOutlinedIcon/>} label="Новости"/>
+                <BottomNavigationAction icon={<PermIdentityOutlinedIcon/>} label="Группы"/>
                 <BottomNavigationAction icon={<PermIdentityOutlinedIcon/>} label="Аккаунт"/>
             </BottomNavigation>
         </div>

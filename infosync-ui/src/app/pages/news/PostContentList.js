@@ -60,7 +60,8 @@ const PostContentList = () => {
                 <Button
                     variant="contained"
                     color="secondary"
-                    startIcon={<AssignmentIndIcon  />}>Авторизация                </Button>
+                    startIcon={<AssignmentIndIcon  />}>Авторизация
+                </Button>
             </Link>
             <Link to="/reg">
                 <Button

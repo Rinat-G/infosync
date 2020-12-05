@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import Axios from "axios";
 import {Alert} from "@material-ui/lab";
 
+
 const ajaxLogin = (email, password) => {
     const formData = new FormData();
     formData.append('username', email)
@@ -15,6 +16,8 @@ const ajaxLogin = (email, password) => {
 }
 
 const LoginPage = () => {
+
+
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -52,7 +55,7 @@ const LoginPage = () => {
 
     const renderAlert = () => {
         if (isLoggedIn || errorMessage) {
-            let severity = isLoggedIn ? 'success' : 'error'
+            let severity = isLoggedIn ? 'success' : 'error}'
             let message = isLoggedIn ? 'You are successfully logged in!' : errorMessage
             return (
                 <Alert elevation={6}
@@ -70,6 +73,7 @@ const LoginPage = () => {
             <Grid container justify='center' alignItems='center' direction='column' spacing={2}>
                 <Grid item>
                     <Card>
+                        {renderAlert()}
                         <CardContent>
                             <Grid container direction='column' spacing={2}>
                                 <Grid item>
@@ -92,7 +96,6 @@ const LoginPage = () => {
                         </CardContent>
                     </Card>
                 </Grid>
-                {renderAlert()}
             </Grid>
         </Box>
     )
