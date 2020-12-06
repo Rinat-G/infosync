@@ -2,6 +2,7 @@ import {Box, Button, Card, CardContent, Grid, TextField, Typography} from "@mate
 import React, {useState} from "react";
 import Axios from "axios";
 import {Alert} from "@material-ui/lab";
+import {Redirect} from "react-router-dom";
 
 
 const ajaxLogin = (email, password) => {
@@ -15,7 +16,7 @@ const ajaxLogin = (email, password) => {
     })
 }
 
-const LoginPage = () => {
+const LoginPage = (props) => {
 
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -28,9 +29,11 @@ const LoginPage = () => {
         ajaxLogin(email, password)
             .then((value) => {
                 if (value.data.success) {
+                    props.loginCallback()
                     setIsLoggedIn(true);
                     setErrorMessage(null);
                 }
+
 
             })
             .catch((reason) => {
@@ -66,6 +69,10 @@ const LoginPage = () => {
                 </Alert>
             )
         }
+    }
+
+    if (isLoggedIn) {
+        return <Redirect to={"/"}/>
     }
 
     return (
