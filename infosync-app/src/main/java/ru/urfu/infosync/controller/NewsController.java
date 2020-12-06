@@ -2,10 +2,6 @@ package ru.urfu.infosync.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ru.urfu.infosync.model.News;
 import ru.urfu.infosync.service.NewsService;

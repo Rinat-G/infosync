@@ -2,6 +2,9 @@ package ru.urfu.infosync.model;
 
 import lombok.Value;
 
+/**
+ * @author valery
+ */
 @Value
 public class News {
     Integer id;

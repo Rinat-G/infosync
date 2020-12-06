@@ -6,8 +6,13 @@ import org.springframework.stereotype.Service;
 import ru.urfu.infosync.dao.NewsDao;
 import ru.urfu.infosync.dao.UserDao;
 import ru.urfu.infosync.model.News;
+
 import java.util.List;
 
+/**
+ * Tool for harvest recommended posts for student
+ * @author valery
+ */
 @Service
 public class NewsService {
 
@@ -19,10 +24,12 @@ public class NewsService {
         this.userDao = userDao;
     }
 
+    /**
+     * @return list all recommended posts for "username" using SecurityContextHolder
+     */
     public List<News> getNews() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         var email = authentication.getName();
-        System.out.println(newsDao.getRecommendedPosts(userDao.getUserByEmail(email).getGroupId()));
         return newsDao.getRecommendedPosts(userDao.getUserByEmail(email).getGroupId());
     }
 }

@@ -1,19 +1,20 @@
 package ru.urfu.infosync.dao;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import ru.urfu.infosync.model.Group;
 import ru.urfu.infosync.model.News;
 
 import java.util.List;
 
+/**
+ * Component of access into ifs_post table
+ * @author valery
+ */
 @Component
 public class NewsDao {
 
     private final JdbcTemplate jdbcTemplate;
 
-    @Autowired
     public NewsDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
