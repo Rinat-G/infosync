@@ -7,5 +7,23 @@ import ru.urfu.infosync.model.PostStatus;
 @Component
 public class PostStatusDao {
 
-    private static final String MARK_POST_AS_READ = "INSERT INTO ifs_post_status";
+    private static final String MARK_POST_AS_READ = "" +
+            "INSERT INTO ifs_post_status (user_id, post_id, readed)" +
+            "VALUES (?, ?, ?)";
+
+    private final JdbcTemplate jdbcTemplate;
+
+    public PostStatusDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    public void setPostStatusTrue(final PostStatus postStatus) {
+        jdbcTemplate.update(
+                MARK_POST_AS_READ,
+                postStatus.getUser_id(),
+                postStatus.getPost_id(),
+                postStatus.isReaded()
+        );
+    }
 }
+
