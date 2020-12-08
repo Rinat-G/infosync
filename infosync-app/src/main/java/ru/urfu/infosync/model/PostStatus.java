@@ -4,7 +4,7 @@ import lombok.Value;
 
 @Value
 public class PostStatus {
-    String postTitle;
-    String postLink;
-    String postBody;
+    Integer user_id;
+    Integer post_id;
+    boolean readed;
 }

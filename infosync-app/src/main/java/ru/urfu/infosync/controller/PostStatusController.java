@@ -14,4 +14,6 @@ public class PostStatusController {
     public PostStatusController(PostStatusService postStatusService) {
         this.postStatusService = postStatusService;
     }
+
+
 }
