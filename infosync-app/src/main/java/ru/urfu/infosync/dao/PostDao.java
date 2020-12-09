@@ -2,7 +2,7 @@ package ru.urfu.infosync.dao;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import ru.urfu.infosync.model.News;
+import ru.urfu.infosync.model.GeneralPost;
 
 import java.util.List;
 
@@ -11,11 +11,11 @@ import java.util.List;
  * @author valery
  */
 @Component
-public class NewsDao {
+public class PostDao {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public NewsDao(JdbcTemplate jdbcTemplate) {
+    public PostDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -25,10 +25,10 @@ public class NewsDao {
                     "WHERE group_id = ? " +
                     "ORDER BY id DESC";
 
-    public List<News> getRecommendedPosts(Integer groupId) {
+    public List<GeneralPost> getRecommendedPosts(Integer groupId) {
         var news = jdbcTemplate.query(
                 SELECT_RECOMMENDED_POST_BY_GROUP_ID,
-                (rs, rowNum) -> new News(
+                (rs, rowNum) -> new GeneralPost(
                         rs.getInt("id"),
                         rs.getString("title"),
                         rs.getString("post_link"),

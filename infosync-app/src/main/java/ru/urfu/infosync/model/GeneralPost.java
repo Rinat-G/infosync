@@ -6,7 +6,7 @@ import lombok.Value;
  * @author valery
  */
 @Value
-public class News {
+public class GeneralPost {
     Integer id;
     String title;
     String post_Link;
