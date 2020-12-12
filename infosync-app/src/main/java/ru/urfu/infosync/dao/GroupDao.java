@@ -4,7 +4,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.urfu.infosync.model.Group;
 
+import java.util.Collection;
 import java.util.List;
+
+import static java.lang.String.join;
+import static java.util.Collections.nCopies;
 
 @Component
 public class GroupDao {
@@ -12,6 +16,8 @@ public class GroupDao {
     private static final String SELECT_ALL_GROUPS = "SELECT id, name FROM ifs_group";
 
     private static final String SELECT_GROUP_BY_NAME = "SELECT id, name FROM ifs_group WHERE name = ?";
+
+    private static final String SELECT_GROUPS_BY_NAMES = "SELECT id, name FROM ifs_group WHERE name in ( $names )";
 
     private static final String INSERT_GROUP = "INSERT INTO ifs_group (name) VALUES (?) RETURNING id";
 
@@ -36,6 +42,17 @@ public class GroupDao {
         );
 
         return groups.size() < 1 ? null : groups.get(0);
+    }
+
+    public Collection<Group> getGroupsByNames(List<String> groupNames) {
+
+        var inClauseSql = join(", ", nCopies(groupNames.size(), "?"));
+
+        return jdbcTemplate.query(
+                SELECT_GROUPS_BY_NAMES.replace("$names", inClauseSql),
+                (rs, rowNum) -> new Group(rs.getInt("id"), rs.getString("name")),
+                groupNames.toArray()
+        );
     }
 
     public Group saveNewGroup(String groupName) {
