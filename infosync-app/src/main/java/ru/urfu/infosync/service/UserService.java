@@ -55,7 +55,7 @@ public class UserService {
     /**
      * @return list all recommended posts for "username" using SecurityContextHolder
      */
-    public UserDto GetDataOfCurrentUser() {
+    public UserDto getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         var email = authentication.getName();
         return userDao.getUserByEmail(email);

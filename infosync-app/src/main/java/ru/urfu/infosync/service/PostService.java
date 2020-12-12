@@ -22,6 +22,6 @@ public class PostService {
     }
 
     public List<GeneralPost> getNews() {
-        return postDao.getRecommendedPosts(userService.GetDataOfCurrentUser().getGroupId());
+        return postDao.getRecommendedPosts(userService.getCurrentUser().getGroupId());
     }
 }

@@ -26,7 +26,7 @@ public class PostDao {
                     "ORDER BY id DESC";
 
     public List<GeneralPost> getRecommendedPosts(Integer groupId) {
-        var news = jdbcTemplate.query(
+        return jdbcTemplate.query(
                 SELECT_RECOMMENDED_POST_BY_GROUP_ID,
                 (rs, rowNum) -> new GeneralPost(
                         rs.getInt("id"),
@@ -36,7 +36,5 @@ public class PostDao {
                         rs.getInt("recommended_by_user_id")),
                 groupId
         );
-
-        return news;
     }
 }
