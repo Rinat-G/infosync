@@ -10,6 +10,10 @@ public class UserDao {
     private static final String SELECT_USER_BY_EMAIL = "" +
             "SELECT * FROM ifs_user WHERE email = ?";
 
+    //Где-то читал, что SELECT * используют только если нужны все столбцы из строки
+    private static final String SELECT_USER_ID_BY_EMAIL = "" +
+            "SELECT id FROM ifs_user WHERE email = ?";
+
     private static final String INSERT_NEW_USER = "" +
             "INSERT INTO ifs_user (first_name, last_name, patronymic, email, pass_hash, group_id, role)" +
             "VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -55,7 +59,7 @@ public class UserDao {
     public Integer getUserIdByEmail(final String email) {
 
         var ids = jdbcTemplate.query(
-                SELECT_USER_BY_EMAIL,
+                SELECT_USER_ID_BY_EMAIL,
                 (rs, rowNum) -> rs.getInt("id"),
                 email
         );

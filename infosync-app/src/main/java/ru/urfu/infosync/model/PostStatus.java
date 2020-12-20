@@ -6,5 +6,4 @@ import lombok.Value;
 public class PostStatus {
     Integer user_id;
     Integer post_id;
-    boolean readed;
 }

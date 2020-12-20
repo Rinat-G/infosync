@@ -8,8 +8,9 @@ import ru.urfu.infosync.model.PostStatus;
 public class PostStatusDao {
 
     private static final String MARK_POST_AS_READ = "" +
-            "INSERT INTO ifs_post_status (user_id, post_id, readed)" +
-            "VALUES (?, ?, ?)";
+            "INSERT INTO ifs_post_status (user_id, post_id)" +
+            "VALUES (?, ?)" +
+            "ON CONFLICT DO NOTHING";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -18,11 +19,11 @@ public class PostStatusDao {
     }
 
     public void setPostStatusTrue(final PostStatus postStatus) {
+
         jdbcTemplate.update(
                 MARK_POST_AS_READ,
                 postStatus.getUser_id(),
-                postStatus.getPost_id(),
-                postStatus.isReaded()
+                postStatus.getPost_id()
         );
     }
 }
