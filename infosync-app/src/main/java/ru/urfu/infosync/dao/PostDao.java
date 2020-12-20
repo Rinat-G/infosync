@@ -3,11 +3,13 @@ package ru.urfu.infosync.dao;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.urfu.infosync.model.GeneralPost;
+import ru.urfu.infosync.model.HabrPost;
 
 import java.util.List;
 
 /**
  * Component of access into ifs_post table
+ *
  * @author valery
  */
 @Component
@@ -18,6 +20,10 @@ public class PostDao {
     public PostDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+
+    private static final String INSERT_NEW_POST = "" +
+            "INSERT INTO ifs_post (title, post_link, post_body, group_id, recommended_by_user_id) " +
+            "VALUES (?, ?, ?, ?, ?)";
 
     private static final String SELECT_RECOMMENDED_POST_BY_GROUP_ID =
             "SELECT id, title, post_link, post_body, recommended_by_user_id " +
@@ -35,6 +41,17 @@ public class PostDao {
                         rs.getString("post_body"),
                         rs.getInt("recommended_by_user_id")),
                 groupId
+        );
+    }
+
+    public void saveNewRecommendedPost(final HabrPost habrPost, final Integer groupId, final Integer fromId) {
+        jdbcTemplate.update(
+                INSERT_NEW_POST,
+                habrPost.getPostTitle(),
+                habrPost.getPostLink(),
+                habrPost.getPostBody(),
+                groupId,
+                fromId
         );
     }
 }
