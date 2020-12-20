@@ -1,5 +1,7 @@
 package ru.urfu.infosync.service;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,5 +50,14 @@ public class UserService {
 
     private boolean emailAlreadyExist(String email) {
         return userDao.getUserByEmail(email) != null;
+    }
+
+    /**
+     * @return list all recommended posts for "username" using SecurityContextHolder
+     */
+    public UserDto getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        var email = authentication.getName();
+        return userDao.getUserByEmail(email);
     }
 }
