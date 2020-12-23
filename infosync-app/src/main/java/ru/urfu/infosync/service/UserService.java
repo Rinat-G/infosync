@@ -52,14 +52,14 @@ public class UserService {
         return userDao.getUserByEmail(email) != null;
     }
 
+    /**
+     * @return this method uses SecurityContextHolder
+     */
     private String getEmailOfCurrentUser() {
-        //Пока не совсем разобрался, вероятно authentication можно каким-то образом вынести наверх
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getName();
     }
-    /**
-     * @return list all recommended posts for "username" using SecurityContextHolder
-     */
+
     public UserDto getCurrentUser() {
         return userDao.getUserByEmail(getEmailOfCurrentUser());
     }

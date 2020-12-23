@@ -10,7 +10,6 @@ public class UserDao {
     private static final String SELECT_USER_BY_EMAIL = "" +
             "SELECT * FROM ifs_user WHERE email = ?";
 
-    //Где-то читал, что SELECT * используют только если нужны все столбцы из строки
     private static final String SELECT_USER_ID_BY_EMAIL = "" +
             "SELECT id FROM ifs_user WHERE email = ?";
 
@@ -58,12 +57,11 @@ public class UserDao {
 
     public Integer getUserIdByEmail(final String email) {
 
-        var ids = jdbcTemplate.query(
+        var ids = jdbcTemplate.queryForObject(
                 SELECT_USER_ID_BY_EMAIL,
-                (rs, rowNum) -> rs.getInt("id"),
+                Integer.class,
                 email
         );
-
-        return ids.size() < 1 ? null : ids.get(0);
+        return ids;
     }
 }

@@ -22,8 +22,8 @@ public class PostStatusDao {
 
         jdbcTemplate.update(
                 MARK_POST_AS_READ,
-                postStatus.getUser_id(),
-                postStatus.getPost_id()
+                postStatus.getUserId(),
+                postStatus.getPostId()
         );
     }
 }
