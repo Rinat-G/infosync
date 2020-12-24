@@ -12,6 +12,9 @@ public class PostStatusDao {
             "VALUES (?, ?)" +
             "ON CONFLICT DO NOTHING";
 
+    private static final String GET_POST_STATUS = "" +
+            "SELECT 1 FROM ifs_post_status WHERE user_id = ? AND post_id = ?";
+
     private final JdbcTemplate jdbcTemplate;
 
     public PostStatusDao(JdbcTemplate jdbcTemplate) {
@@ -24,6 +27,20 @@ public class PostStatusDao {
                 MARK_POST_AS_READ,
                 postStatus.getUserId(),
                 postStatus.getPostId()
+        );
+    }
+
+    public PostStatus getPostStatus(Integer userId, Integer postId) {
+
+        //На перспективу(таблица ifs_post_status вероятно в будущем будет расширена)
+        return jdbcTemplate.queryForObject(
+                GET_POST_STATUS,
+                (rs, rowNum) -> new PostStatus(
+                        rs.getInt("user_id"),
+                        rs.getInt("post_id")
+                ),
+                userId,
+                postId
         );
     }
 }

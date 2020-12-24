@@ -67,4 +67,8 @@ public class UserService {
     public Integer getIdCurrentUser() {
         return userDao.getUserIdByEmail(getEmailOfCurrentUser());
     }
+
+    public String getCurrentUserRole(Integer userId)  {
+        return userDao.getUsersRoleById(userId);
+    }
 }
