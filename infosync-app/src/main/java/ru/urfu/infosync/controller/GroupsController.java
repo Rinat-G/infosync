@@ -40,9 +40,9 @@ public class GroupsController {
 
     @GetMapping(value = "/{groupId:\\d+}", produces = APPLICATION_JSON_VALUE)
     public HashMap<User, HashMap<GeneralPost, PostStatus>> getGroupsPostInfo(@PathVariable Integer groupId) {
-
         Integer userId = userService.getIdCurrentUser();
         String role = userService.getCurrentUserRole(userId);
+        System.out.println("ROLE = " + role);
         if(role.equals("teacher")) {
             return groupService.getGroupInfoForTeacher(groupId, userId);
         }

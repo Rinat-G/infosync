@@ -21,10 +21,12 @@ public class UserDao {
             "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     private static final String GET_USERS_ROLE = "" +
-            "SELECT role FROM ifs_user WHERE email = ?";
+            "SELECT role FROM ifs_user WHERE Id = ?";
 
     private static final String SELECT_USERS_BY_GROUP_ID = "" +
-            "SELECT id, full_name FROM ifs_user WHERE group_id = ?";
+            "SELECT id, full_name FROM ifs_user " +
+            "WHERE group_id = ? " +
+            "ORDER BY full_name";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -74,7 +76,6 @@ public class UserDao {
     }
 
     public String getUsersRoleById(final Integer userId) {
-
         return jdbcTemplate.queryForObject(
                 GET_USERS_ROLE,
                 String.class,

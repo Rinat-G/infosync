@@ -13,7 +13,7 @@ public class PostStatusDao {
             "ON CONFLICT DO NOTHING";
 
     private static final String GET_POST_STATUS = "" +
-            "SELECT 1 FROM ifs_post_status WHERE user_id = ? AND post_id = ?";
+            "SELECT * FROM ifs_post_status WHERE user_id = ? AND post_id = ?";
 
     private final JdbcTemplate jdbcTemplate;
 

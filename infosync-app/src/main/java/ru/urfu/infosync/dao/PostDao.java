@@ -4,7 +4,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.urfu.infosync.model.GeneralPost;
 import ru.urfu.infosync.model.HabrPost;
-import ru.urfu.infosync.model.UserDto;
 
 import java.util.List;
 
@@ -35,8 +34,7 @@ public class PostDao {
     private static final String SELECT_POSTS_THAT_TEACHER_GIVES_FOR_GROUP =
             "SELECT id, title, post_link, post_body, recommended_by_user_id " +
                     "FROM ifs_post " +
-                    "WHERE group_id = ? AND recommended_by_user_id = ? " +
-                    "ORDER BY id DESC";
+                    "WHERE group_id = ? AND recommended_by_user_id = ? ";
 
     public List<GeneralPost> getRecommendedPosts(Integer groupId) {
         return jdbcTemplate.query(
@@ -52,6 +50,7 @@ public class PostDao {
     }
 
     public void saveNewRecommendedPost(final HabrPost habrPost, final Integer groupId, final Integer fromId) {
+
         jdbcTemplate.update(
                 INSERT_NEW_POST,
                 habrPost.getPostTitle(),
@@ -63,6 +62,17 @@ public class PostDao {
     }
 
     public List<GeneralPost> getTeacherPostsForGroup(Integer groupId, Integer teacherId) {
-        return null;
+
+        return jdbcTemplate.query(
+                SELECT_POSTS_THAT_TEACHER_GIVES_FOR_GROUP,
+                (rs, rowNum) -> new GeneralPost(
+                        rs.getInt("id"),
+                        rs.getString("title"),
+                        rs.getString("post_link"),
+                        rs.getString("post_body"),
+                        rs.getInt("recommended_by_user_id")),
+                groupId,
+                teacherId
+        );
     }
 }
