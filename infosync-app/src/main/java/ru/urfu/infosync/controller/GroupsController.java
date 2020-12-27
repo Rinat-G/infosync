@@ -1,5 +1,6 @@
 package ru.urfu.infosync.controller;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,10 +40,11 @@ public class GroupsController {
     }
 
     @GetMapping(value = "/{groupId:\\d+}", produces = APPLICATION_JSON_VALUE)
-    public HashMap<User, HashMap<GeneralPost, PostStatus>> getGroupsPostInfo(@PathVariable Integer groupId) {
+    public HashMap<User, HashMap<GeneralPost, PostStatus>> getGroupsPostInfo
+            (@PathVariable Integer groupId,UsernamePasswordAuthenticationToken token) {
+
         Integer userId = userService.getIdCurrentUser();
-        String role = userService.getCurrentUserRole(userId);
-        System.out.println("ROLE = " + role);
+        String role = userService.getCurrentUserRole(token);
         if(role.equals("teacher")) {
             return groupService.getGroupInfoForTeacher(groupId, userId);
         }

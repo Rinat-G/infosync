@@ -46,7 +46,6 @@ public class GroupService {
         var posts = postDao.getTeacherPostsForGroup(groupId, teacherId);
         if(posts.size() == 0) return null;
 
-        System.out.println(posts);
         var students = userDao.getUsersByGroupId(groupId);
         var result = new HashMap<User, HashMap<GeneralPost, PostStatus>>();
         for (User student : students) {
