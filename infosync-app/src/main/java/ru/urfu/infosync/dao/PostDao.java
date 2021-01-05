@@ -25,16 +25,16 @@ public class PostDao {
             "INSERT INTO ifs_post (title, post_link, post_body, group_id, recommended_by_user_id) " +
             "VALUES (?, ?, ?, ?, ?)";
 
-    private static final String SELECT_RECOMMENDED_POST_BY_GROUP_ID =
+    private static final String SELECT_RECOMMENDED_POST_BY_GROUP_ID = "" +
             "SELECT id, title, post_link, post_body, recommended_by_user_id " +
-                    "FROM ifs_post " +
-                    "WHERE group_id = ? " +
-                    "ORDER BY id DESC";
+            "FROM ifs_post " +
+            "WHERE group_id = ? " +
+            "ORDER BY id DESC";
 
-    private static final String SELECT_POSTS_THAT_TEACHER_GIVES_FOR_GROUP =
+    private static final String SELECT_POSTS_THAT_TEACHER_GIVES_FOR_GROUP = "" +
             "SELECT id, title, post_link, post_body, recommended_by_user_id " +
-                    "FROM ifs_post " +
-                    "WHERE group_id = ? AND recommended_by_user_id = ? ";
+            "FROM ifs_post " +
+            "WHERE group_id = ? AND recommended_by_user_id = ? ";
 
     public List<GeneralPost> getRecommendedPosts(Integer groupId) {
         return jdbcTemplate.query(
