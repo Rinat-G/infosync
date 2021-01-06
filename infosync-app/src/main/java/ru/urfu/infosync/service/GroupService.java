@@ -5,11 +5,13 @@ import ru.urfu.infosync.dao.GroupDao;
 import ru.urfu.infosync.dao.PostDao;
 import ru.urfu.infosync.dao.UserDao;
 import ru.urfu.infosync.model.GeneralPost;
+import ru.urfu.infosync.model.Group;
 import ru.urfu.infosync.model.PostStatus;
 import ru.urfu.infosync.model.User;
 import ru.urfu.infosync.dao.PostStatusDao;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class GroupService {
@@ -58,6 +60,21 @@ public class GroupService {
                 result.get(student).put(post, status);
             }
         }
+
         return result;
+    }
+
+    /**
+     *
+     * @return List of groups which the teacher recommended posts
+     */
+    public List<Group> getGroupsRecommendedByTeacher(Integer teacherId) {
+
+        System.out.println("GroupService.getGroupsRecommendedByTeacher");
+        var x = postDao.getGroupsWithPostByTeacher(teacherId);
+        System.out.println(x);
+        System.out.println(groupDao.getGroupsNamesByIndexes(x));
+
+        return groupDao.getGroupsNamesByIndexes(postDao.getGroupsWithPostByTeacher(teacherId));
     }
 }

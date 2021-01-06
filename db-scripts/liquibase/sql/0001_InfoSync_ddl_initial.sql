@@ -44,7 +44,16 @@ CREATE TABLE ifs_post
     recommended_by_user_id BIGINT  NOT NULL,
     CONSTRAINT post_pk PRIMARY KEY (id),
     CONSTRAINT post_group_id_fk FOREIGN KEY (group_id) REFERENCES ifs_group (id),
-    CONSTRAINT post_recommended_by_user_id_fk FOREIGN KEY (recommended_by_user_id) REFERENCES ifs_user (id) ON DELETE SET NULL
+    CONSTRAINT post_recommended_by_user_id_fk FOREIGN KEY (recommended_by_user_id) REFERENCES ifs_user (id) ON DELETE SET NULL,
+
+    /******************
+    ПОПРАВИТЬ КОД В ДАО
+    ******************/
+    /*На случай повтроной отправки или отправки другим преподом той же статьи*/
+    CONSTRAINT no_duplicate_for_group_and_link UNIQUE (group_id, post_link),
+
+    /*На случай дубликата с этого или другого сайта*/
+    CONSTRAINT no_duplicate_for_group_and_body UNIQUE (group_id, post_body)
 );
 
 

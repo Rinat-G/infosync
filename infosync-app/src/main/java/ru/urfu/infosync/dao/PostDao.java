@@ -36,6 +36,11 @@ public class PostDao {
             "FROM ifs_post " +
             "WHERE group_id = ? AND recommended_by_user_id = ? ";
 
+    private static final  String SELECT_GROUPS_WHICH_TEACHER_GIVES_POSTS = "" +
+            "SELECT DISTINCT group_id " +
+            "FROM ifs_post " +
+            "WHERE recommended_by_user_id = ?";
+
     public List<GeneralPost> getRecommendedPosts(Integer groupId) {
         return jdbcTemplate.query(
                 SELECT_RECOMMENDED_POST_BY_GROUP_ID,
@@ -73,6 +78,20 @@ public class PostDao {
                         rs.getInt("recommended_by_user_id")),
                 groupId,
                 teacherId
+        );
+    }
+
+    /**
+     *
+     * @param recommendedByUserId Teacher ID
+     * @return List of indexes of groups in which teacher gives posts
+     */
+    public List<Integer> getGroupsWithPostByTeacher(Integer recommendedByUserId) {
+
+        return jdbcTemplate.query(
+                SELECT_GROUPS_WHICH_TEACHER_GIVES_POSTS,
+                (rs, rowNum) -> rs.getInt("group_id"),
+                recommendedByUserId
         );
     }
 }
