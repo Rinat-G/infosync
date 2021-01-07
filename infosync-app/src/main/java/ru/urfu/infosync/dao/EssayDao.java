@@ -2,6 +2,9 @@ package ru.urfu.infosync.dao;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import ru.urfu.infosync.model.Essay;
+
+import java.util.List;
 
 @Component
 public class EssayDao {
@@ -13,9 +16,13 @@ public class EssayDao {
             "RETURNING id ";
 
 
-    private static final String GET_ESSAY = "" +
+    private static final String GET_ESSAY_BY_ID = "" +
             "SELECT essay_text FROM ifs_essay " +
             "WHERE id = ?";
+
+    private static final String GET_ESSAYS_BY_POST_ID = "" +
+            "SELECT * FROM ifs_essay " +
+            "WHERE post_id = ?";
 
     private final JdbcTemplate jdbcTemplate;
     private final PostStatusDao postStatusDao;
@@ -42,11 +49,25 @@ public class EssayDao {
         var essayId = postStatusDao.getEssayId(userId, postId);
         if (essayId != null) {
             return jdbcTemplate.queryForObject(
-                    GET_ESSAY,
+                    GET_ESSAY_BY_ID,
                     String.class,
                     essayId
             );
         }
         return null;
+    }
+
+    public List<Essay> getAllEssayByPostId(Integer postId) {
+        System.out.println("EssayDao.getAllEssaysByPostId");
+        return jdbcTemplate.query(
+                GET_ESSAYS_BY_POST_ID,
+                (rs, rowNum) -> new Essay(
+                        rs.getInt("id"),
+                        rs.getInt("post_id"),
+                        rs.getInt("author_id"),
+                        rs.getString("essay_text")
+                ),
+                postId
+        );
     }
 }

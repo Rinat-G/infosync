@@ -8,5 +8,5 @@ public class Essay {
     Integer id;
     Integer postId;
     Integer authorId;
-    String text;
+    String textEssay;
 }
