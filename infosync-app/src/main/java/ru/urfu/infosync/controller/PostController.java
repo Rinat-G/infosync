@@ -22,4 +22,10 @@ public class PostController {
     public List<GeneralPost> getNews() {
         return postService.getNews();
     }
+
+    //PUT идемпонентный, так как сколько не выполняй результат не изменится
+    @PutMapping(value = "/{postId:\\d+}")
+    public void setPostStatusService(@PathVariable Integer postId) {
+        postService.markAsRead(postId);
+    }
 }

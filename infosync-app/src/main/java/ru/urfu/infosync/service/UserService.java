@@ -53,11 +53,18 @@ public class UserService {
     }
 
     /**
-     * @return list all recommended posts for "username" using SecurityContextHolder
+     * @return this method uses SecurityContextHolder
      */
-    public UserDto getCurrentUser() {
+    private String getEmailOfCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        var email = authentication.getName();
-        return userDao.getUserByEmail(email);
+        return authentication.getName();
+    }
+
+    public UserDto getCurrentUser() {
+        return userDao.getUserByEmail(getEmailOfCurrentUser());
+    }
+
+    public Integer getIdCurrentUser() {
+        return userDao.getUserIdByEmail(getEmailOfCurrentUser());
     }
 }

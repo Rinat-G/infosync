@@ -10,6 +10,9 @@ public class UserDao {
     private static final String SELECT_USER_BY_EMAIL = "" +
             "SELECT * FROM ifs_user WHERE email = ?";
 
+    private static final String SELECT_USER_ID_BY_EMAIL = "" +
+            "SELECT id FROM ifs_user WHERE email = ?";
+
     private static final String INSERT_NEW_USER = "" +
             "INSERT INTO ifs_user (first_name, last_name, patronymic, email, pass_hash, group_id, role)" +
             "VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -54,12 +57,11 @@ public class UserDao {
 
     public Integer getUserIdByEmail(final String email) {
 
-        var ids = jdbcTemplate.query(
-                SELECT_USER_BY_EMAIL,
-                (rs, rowNum) -> rs.getInt("id"),
+        var ids = jdbcTemplate.queryForObject(
+                SELECT_USER_ID_BY_EMAIL,
+                Integer.class,
                 email
         );
-
-        return ids.size() < 1 ? null : ids.get(0);
+        return ids;
     }
 }
