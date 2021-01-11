@@ -1,21 +1,14 @@
-import {
-    Box,
-    Button,
-    Card,
-    CardContent,
-    FormControlLabel,
-    Grid,
-    Radio,
-    RadioGroup,
-    TextField,
-    Typography
-} from "@material-ui/core";
+import { Box, Button, Card, CardContent, FormControlLabel, Grid, Radio, RadioGroup, TextField, Typography } from "@material-ui/core";
 import React, {useState} from "react";
 import {Alert} from "@material-ui/lab";
 import ajax from "../../utils/ajax";
+import {useHistory} from "react-router-dom";
+import LockOpen from "@material-ui/icons/LockOpen";
+import {makeStyles} from "@material-ui/core/styles";
+import {ArrowBack} from "@material-ui/icons";
 
 
-const RegistrationPage = () => {
+const RegistrationPage = (props) => {
     const [registerSuccess, setRegisterSuccess] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -70,11 +63,8 @@ const RegistrationPage = () => {
     const renderGroupField = (role) => {
         if (role === 'student') {
             return (
-                <Grid item>
-                    <TextField required
-                               label='Group'
-                               value={group}
-                               onChange={handleGroupChange}/>
+                <Grid item xs={12}>
+                    <TextField required label='Группа' value={group} fullWidth variant="outlined" onChange={handleGroupChange}/>
                 </Grid>
             )
         }
@@ -124,83 +114,96 @@ const RegistrationPage = () => {
     const renderAlert = () => {
         if (registerSuccess || errorMessage) {
             let severity = registerSuccess ? 'success' : 'error'
-            let message = registerSuccess ? 'You are successfully registered!' : errorMessage
+            let message = registerSuccess ? 'Вы успешно зарегистрировались!' : errorMessage
             return (
-                <Alert elevation={6}
-                       variant="filled"
-                       severity={severity}
+                <Alert
+                       className={classes.Alert}
+                       variant="standard"
+                       severity= {severity}
                        onClose={handleCloseAlert}>
                     {message}
                 </Alert>
             )
         }
     }
+    const useStyles = makeStyles((theme) => ({
+        root: {
+            '& > *': {
+                margin: theme.spacing(1, 0),
+                height: 50,
+            },
+        },
+        buttonLogin: {
+            color: '#fbfbfb',
+            backgroundColor: '#2196f3',
+            "&:hover": {
+                backgroundColor: "#1976d2",
+            },
+        },
+        buttonReg: {
+            color: '#fbfbfb',
+            backgroundColor: '#e4084a',
+            "&:hover": {
+                backgroundColor: "#7b082b",
+            },
+        },
+        HeaderName: {
+            backgroundColor: '#303030',
+            padding: theme.spacing (2),
+        },
+        HeadPage: {
+            display: 'flex',
+        },
+        Alert: {
+            margin: theme.spacing (1, 2),
+        },
+    }));
+
+    const classes = useStyles();
+    const history = useHistory();
+    const Login = () => history.push('/login');
 
     return (
-        <Box minHeight='100%' display='flex' p={2}>
-            <Grid container justify='center' alignItems='center' direction='column' spacing={2}>
-                <Grid item>
-                    <Card>
-                        <CardContent>
-                            <Grid container direction='column' spacing={2}>
-                                <Grid item>
-                                    <Typography variant='h5'>Sign up</Typography>
-                                </Grid>
-                                <Grid item>
-                                    <TextField required
-                                               label='E-mail'
-                                               value={email}
-                                               onChange={handleEmailChange}/>
-                                </Grid>
-                                <Grid item>
-                                    <TextField required
-                                               type='password'
-                                               label='Password'
-                                               value={password}
-                                               onChange={handlePasswordChange}/>
-                                </Grid>
-                                <Grid item>
-                                    <TextField required
-                                               type='password'
-                                               label='Confirm password'
-                                               value={passwordConfirm}
-                                               onChange={handlePasswordConfirmChange}/>
-                                </Grid>
-                                <Grid item>
-                                    <TextField required
-                                               label='First Name'
-                                               value={firstName}
-                                               onChange={handleFirstNameChange}/>
-                                </Grid>
-                                <Grid item>
-                                    <TextField required
-                                               label='Last Name'
-                                               value={lastName}
-                                               onChange={handleLastNameChange}/>
-                                </Grid>
-                                <Grid item>
-                                    <TextField label='Patronymic'
-                                               value={patronymic}
-                                               onChange={handlePatronymicChange}/>
-                                </Grid>
-                                <Grid item>
-                                    <RadioGroup value={role} onChange={handleChangeRole}>
-                                        <FormControlLabel value="student" control={<Radio/>} label="Student"/>
-                                        <FormControlLabel value="teacher" control={<Radio/>} label="Teacher"/>
-                                    </RadioGroup>
-                                </Grid>
-                                {renderGroupField(role)}
-                                <Grid item>
-                                    <Button variant='contained'
-                                            color='primary'
-                                            onClick={handleRegistration}>Отправить</Button>
-                                </Grid>
-                            </Grid>
-                        </CardContent>
-                    </Card>
-                </Grid>
+        <Box height="100vh" className={classes.HeadPage}>
+            <Card>
+                <Typography variant='h5' className={classes.HeaderName}><LockOpen/>Регистрация</Typography>
                 {renderAlert()}
-            </Grid>
+                <CardContent>
+                    <Grid container spacing={3}>
+                        <Grid item xs={12}>
+                            <TextField required label='Email' value={email} fullWidth variant="outlined" onChange={handleEmailChange}/>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField required type='password' label='Пароль' value={password} fullWidth variant="outlined" onChange={handlePasswordChange}/>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField required type='password' label='Подтвердите пароль' value={passwordConfirm} fullWidth variant="outlined" onChange={handlePasswordConfirmChange}/>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField required label='Имя' value={firstName} fullWidth variant="outlined" onChange={handleFirstNameChange}/>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField required label='Фамилия' value={lastName} fullWidth variant="outlined" onChange={handleLastNameChange}/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField label='Отчество' value={patronymic} fullWidth variant="outlined" onChange={handlePatronymicChange}/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <RadioGroup value={role} onChange={handleChangeRole}>
+                                <FormControlLabel value="student" control={<Radio/>} label="Студент"/>
+                                <FormControlLabel value="teacher" control={<Radio/>} label="Преподаватель"/>
+                            </RadioGroup>
+                        </Grid>
+                        {renderGroupField(role)}
+                        <Grid item xs={6} className={classes.root}>
+                            <Button size="large" fullWidth variant='contained' className={classes.buttonLogin} startIcon={<ArrowBack />} onClick={Login}>Обратно</Button>
+                        </Grid>
+                        <Grid item xs={6} className={classes.root}>
+                            <Button size="large" fullWidth variant="contained" className={classes.buttonReg} color="secondary" onClick={handleRegistration}>Отправить</Button>
+                        </Grid>
+                    </Grid>
+                </CardContent>
+            </Card>
         </Box>
     )
 }

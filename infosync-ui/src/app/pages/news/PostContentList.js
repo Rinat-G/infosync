@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {Box, CardContent, makeStyles, Paper, Typography, Button} from "@material-ui/core";
+import {Box, CardContent, makeStyles, Paper, Typography, Button, CircularProgress, Fade} from "@material-ui/core";
 import ajax from "../../utils/ajax";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import RegistrationPage from "../registration/RegistrationPage";
@@ -12,6 +12,17 @@ const API_KEY = "api/habr/news"
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginBottom: theme.spacing(2),
+    },
+    root: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    button: {
+        margin: theme.spacing(2),
+    },
+    placeholder: {
+        height: 40,
     },
 }));
 
@@ -34,10 +45,16 @@ const PostContentList = () => {
 
     }
 
+
+
+
     const classes = useStyles();
+
+
     if (content) {
         return (
             <Box>
+
                 {content.map(post => {
                     return (
                         <Paper className={classes.paper}>
@@ -55,22 +72,9 @@ const PostContentList = () => {
     }
 
     return (
-        <Router>
-            <Link to="auth">
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    startIcon={<AssignmentIndIcon  />}>Авторизация
-                </Button>
-            </Link>
-            <Link to="/reg">
-                <Button
-                     variant="contained"
-                    color="secondary"
-                     startIcon={<LockOpenIcon  />}>Регистрация
-                 </Button>
-            </Link>
 
+        <Router>
+            <CircularProgress />
             <Switch>
                 <Route exact path="/"></Route>
                 <Route path="/auth"  component={LoginPage}></Route>

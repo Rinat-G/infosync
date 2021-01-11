@@ -1,7 +1,8 @@
+
 import React from 'react'
 import SwipeableViews from 'react-swipeable-views';
 import {makeStyles} from '@material-ui/core/styles';
-import {BottomNavigation, BottomNavigationAction, Box} from "@material-ui/core";
+import {BottomNavigation, BottomNavigationAction} from "@material-ui/core";
 import AnnouncementOutlinedIcon from '@material-ui/icons/AnnouncementOutlined';
 import PermIdentityOutlinedIcon from '@material-ui/icons/PermIdentityOutlined';
 import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const shouldRenderPage = (value, index, component) => {
-    return value === index ? component : <Box/>
+    return value === index && component
 }
 
 export default function SwipeableTabs() {
@@ -41,11 +42,10 @@ export default function SwipeableTabs() {
                 {shouldRenderPage(value, 2, <AccountPage/>)}
             </SwipeableViews>
             <BottomNavigation value={value} onChange={handleChange}>
-                <BottomNavigationAction icon={<PermIdentityOutlinedIcon/>} label="Новости"/>
-                <BottomNavigationAction icon={<PermIdentityOutlinedIcon/>} label="Группы"/>
+                <BottomNavigationAction icon={<AnnouncementOutlinedIcon/>} label="Новости"/>
+                <BottomNavigationAction icon={<PeopleAltOutlinedIcon/>} label="Группа"/>
                 <BottomNavigationAction icon={<PermIdentityOutlinedIcon/>} label="Аккаунт"/>
             </BottomNavigation>
         </div>
     );
 }
-
