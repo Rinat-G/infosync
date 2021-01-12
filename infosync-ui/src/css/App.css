@@ -27,3 +27,6 @@
 .post__body_crop a{
   color: #3f51b5
 }
+.MuiCard-root {
+    width: 100%;
+}

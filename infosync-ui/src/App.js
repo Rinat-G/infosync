@@ -1,6 +1,6 @@
 import React from 'react'
-import SwipeableTabs from "./app/tabs/SwipeableTabs";
 import './css/App.css';
+import Routing from "../Routing";
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 
 const darkTheme = createMuiTheme({
@@ -9,14 +9,17 @@ const darkTheme = createMuiTheme({
         background: {
             default: '#212121',
         },
+        primary: {
+            main: '#2196f3',
+        },
     },
-
 });
+
 
 function App() {
     return (
         <ThemeProvider theme={darkTheme}>
-            <SwipeableTabs/>
+            <Routing/>
         </ThemeProvider>
     );
 }

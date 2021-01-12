@@ -2,6 +2,11 @@ import {Box, Button, Card, CardContent, Grid, TextField, Typography} from "@mate
 import React, {useState} from "react";
 import Axios from "axios";
 import {Alert} from "@material-ui/lab";
+import {HashRouter, Redirect, Route, Switch, useHistory} from "react-router-dom";
+import LockOpen from '@material-ui/icons/LockOpen';
+import { makeStyles } from '@material-ui/core/styles';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+
 
 const ajaxLogin = (email, password) => {
     const formData = new FormData();
@@ -14,7 +19,7 @@ const ajaxLogin = (email, password) => {
     })
 }
 
-const LoginPage = () => {
+const LoginPage = (props) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -25,17 +30,18 @@ const LoginPage = () => {
         ajaxLogin(email, password)
             .then((value) => {
                 if (value.data.success) {
+                    props.loginCallback()
                     setIsLoggedIn(true);
                     setErrorMessage(null);
                 }
-
             })
             .catch((reason) => {
                     setIsLoggedIn(false);
-                    setErrorMessage(reason.response.data.message);
+                    setErrorMessage("Неверные учетные данные");
                 }
             )
     }
+
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value)
@@ -53,47 +59,84 @@ const LoginPage = () => {
     const renderAlert = () => {
         if (isLoggedIn || errorMessage) {
             let severity = isLoggedIn ? 'success' : 'error'
-            let message = isLoggedIn ? 'You are successfully logged in!' : errorMessage
+            let message = isLoggedIn ? 'Вы успешно авторизовались!' : errorMessage
             return (
-                <Alert elevation={6}
-                       variant="filled"
-                       severity={severity}
-                       onClose={handleCloseAlert}>
+                <Alert
+                    className={classes.Alert}
+                    variant="standard"
+                    severity= {severity}
+                    onClose={handleCloseAlert}>
                     {message}
                 </Alert>
             )
         }
     }
 
+
+
+    const useStyles = makeStyles((theme) => ({
+        root: {
+            '& > *': {
+                margin: theme.spacing(1, 0),
+                height: 50,
+            },
+        },
+        buttonLogin: {
+            color: '#fbfbfb',
+            backgroundColor: '#2196f3',
+            "&:hover": {
+                backgroundColor: "#1976d2",
+            },
+        },
+        buttonReg: {
+            color: '#fbfbfb',
+            backgroundColor: '#e4084a',
+            "&:hover": {
+                backgroundColor: "#7b082b",
+            },
+        },
+        HeaderName: {
+            backgroundColor: '#303030',
+            padding: theme.spacing (2),
+        },
+        HeadPage: {
+            display: 'flex',
+        },
+        Alert: {
+            margin: theme.spacing (1, 2),
+        },
+    }));
+
+    const classes = useStyles();
+
+    if (isLoggedIn) {
+        return <Redirect to={"/"}/>
+    }
+    const history = useHistory();
+    const Registration = () => history.push('/reg');//eg.history.push('/login');
+
+
     return (
-        <Box minHeight='100%' display='flex'>
-            <Grid container justify='center' alignItems='center' direction='column' spacing={2}>
-                <Grid item>
-                    <Card>
-                        <CardContent>
-                            <Grid container direction='column' spacing={2}>
-                                <Grid item>
-                                    <Typography variant='h5'>Sign in</Typography>
-                                </Grid>
-                                <Grid item>
-                                    <TextField label='E-mail' value={email} onChange={handleEmailChange}/>
-                                </Grid>
-                                <Grid item>
-                                    <TextField type='password'
-                                               label='Password'
-                                               onChange={handlePasswordChange}/>
-                                </Grid>
-                                <Grid item>
-                                    <Button variant='contained'
-                                            color='primary'
-                                            onClick={handleLogin}>Submit</Button>
-                                </Grid>
-                            </Grid>
-                        </CardContent>
-                    </Card>
-                </Grid>
+        <Box height="100vh" className={classes.HeadPage}>
+            <Card>
+                <Typography variant='h5' className={classes.HeaderName}>Авторизация</Typography>
                 {renderAlert()}
-            </Grid>
+                <CardContent>
+                    <Grid container spacing={3}>
+                        <Grid item xs={12}>
+                            <TextField label='Email' variant="outlined" fullWidth value={email} onChange={handleEmailChange}/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField type='password' label="Пароль" fullWidth variant="outlined" onChange={handlePasswordChange}/>
+                        </Grid>
+                        <Grid item xs={12} className={classes.root}>
+                            <Button size="large" fullWidth variant='contained' className={classes.buttonLogin} startIcon={<AccountCircle />} onClick={handleLogin}>Войти</Button>
+                            <Button size="large" fullWidth variant="contained" className={classes.buttonReg} color="secondary" startIcon={<LockOpen />} onClick={Registration}>Регистрация</Button>
+                        </Grid>
+                    </Grid>
+                </CardContent>
+            </Card>
+
         </Box>
     )
 }
