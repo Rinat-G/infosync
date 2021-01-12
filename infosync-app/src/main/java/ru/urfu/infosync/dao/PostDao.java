@@ -3,8 +3,10 @@ package ru.urfu.infosync.dao;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.urfu.infosync.model.GeneralPost;
+import ru.urfu.infosync.model.GroupPostStatus;
 import ru.urfu.infosync.model.HabrPost;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,16 +27,17 @@ public class PostDao {
             "INSERT INTO ifs_post (title, post_link, post_body, group_id, recommended_by_user_id) " +
             "VALUES (?, ?, ?, ?, ?)";
 
-    private static final String SELECT_RECOMMENDED_POST_BY_GROUP_ID =
+    private static final String SELECT_RECOMMENDED_POST_BY_GROUP_ID = "" +
             "SELECT id, title, post_link, post_body, recommended_by_user_id " +
-                    "FROM ifs_post " +
-                    "WHERE group_id = ? " +
-                    "ORDER BY id DESC";
+            "FROM ifs_post " +
+            "WHERE group_id = ? " +
+            "ORDER BY id DESC";
 
-    private static final String SELECT_POSTS_THAT_TEACHER_GIVES_FOR_GROUP =
-            "SELECT id, title, post_link, post_body, recommended_by_user_id " +
-                    "FROM ifs_post " +
-                    "WHERE group_id = ? AND recommended_by_user_id = ? ";
+    private static final String SELECT_POSTS_THAT_TEACHER_GIVES_FOR_GROUP = "" +
+            "SELECT id, title " +
+            "FROM ifs_post " +
+            "WHERE group_id = ? AND recommended_by_user_id = ? ";
+
 
     public List<GeneralPost> getRecommendedPosts(Integer groupId) {
         return jdbcTemplate.query(
@@ -61,16 +64,14 @@ public class PostDao {
         );
     }
 
-    public List<GeneralPost> getTeacherPostsForGroup(Integer groupId, Integer teacherId) {
+    public List<GroupPostStatus> getTeacherPostsForGroup(Integer groupId, Integer teacherId) {
 
         return jdbcTemplate.query(
                 SELECT_POSTS_THAT_TEACHER_GIVES_FOR_GROUP,
-                (rs, rowNum) -> new GeneralPost(
+                (rs, rowNum) -> new GroupPostStatus(
                         rs.getInt("id"),
                         rs.getString("title"),
-                        rs.getString("post_link"),
-                        rs.getString("post_body"),
-                        rs.getInt("recommended_by_user_id")),
+                        new ArrayList<>()),
                 groupId,
                 teacherId
         );

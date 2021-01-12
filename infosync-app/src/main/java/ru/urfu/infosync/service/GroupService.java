@@ -1,15 +1,15 @@
 package ru.urfu.infosync.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.urfu.infosync.dao.GroupDao;
 import ru.urfu.infosync.dao.PostDao;
 import ru.urfu.infosync.dao.UserDao;
-import ru.urfu.infosync.model.GeneralPost;
-import ru.urfu.infosync.model.PostStatus;
-import ru.urfu.infosync.model.User;
+import ru.urfu.infosync.model.*;
 import ru.urfu.infosync.dao.PostStatusDao;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 @Service
 public class GroupService {
@@ -41,23 +41,16 @@ public class GroupService {
         return existGroup.getId();
     }
 
-    public HashMap<User, HashMap<GeneralPost, PostStatus>> getGroupInfoForTeacher(Integer groupId, Integer teacherId) {
+    @Transactional
+    public TeacherGroupInfo getGroupInfoForTeacher(Integer groupId, Integer teacherId) {
 
-        var posts = postDao.getTeacherPostsForGroup(groupId, teacherId);
-        if(posts.size() == 0) return null;
+        var groupPostStatuses = postDao.getTeacherPostsForGroup(groupId, teacherId);
+        if(groupPostStatuses.size() == 0) return null;
 
+        var info = new TeacherGroupInfo(groupId, teacherId, groupPostStatuses);
         var students = userDao.getUsersByGroupId(groupId);
-        var result = new HashMap<User, HashMap<GeneralPost, PostStatus>>();
-        for (User student : students) {
-            for (GeneralPost post : posts) {
-                var status =
-                        postStatusDao.getPostStatus(student.getId(), post.getId());
-                if (!result.containsKey(student)) {
-                    result.put(student, new HashMap<>());
-                }
-                result.get(student).put(post, status);
-            }
-        }
-        return result;
+
+        postStatusDao.setPostStatusesForTeacher(info, students);
+        return info;
     }
 }
