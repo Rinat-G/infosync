@@ -23,9 +23,6 @@ public class PostStatusDao {
             "VALUES (?, ?)" +
             "ON CONFLICT DO NOTHING";
 
-//    private static final String GET_POST_STATUS = "" +
-//            "SELECT * FROM ifs_post_status WHERE user_id = ? AND post_id = ?";
-
     private static final String GET_COLLECTION_OF_POST_STATUS = "" +
             "SELECT * FROM ifs_post_status " +
             "WHERE user_id IN ( $users ) AND post_id in ( $posts )";
@@ -45,23 +42,9 @@ public class PostStatusDao {
         );
     }
 
-//    public PostStatus getPostStatus(Integer userId, Integer postId) {
-//
-//        //На перспективу(таблица ifs_post_status вероятно в будущем будет расширена)
-//        return jdbcTemplate.queryForObject(
-//                GET_POST_STATUS,
-//                (rs, rowNum) -> new PostStatus(
-//                        rs.getInt("user_id"),
-//                        rs.getInt("post_id")
-//                ),
-//                userId,
-//                postId
-//        );
-//    }
-
     public void setPostStatusesForTeacher(TeacherGroupInfo info, List<User> users) {
 
-        var posts = info.getPosts().stream().map(GroupPostStatus::getPostId).toArray(Integer[]::new);
+        var posts = info.getPostStatuses().stream().map(GroupPostWithStatuses::getPostId).toArray(Integer[]::new);
 
         var inNamesSql = join(", ", nCopies(users.size(), "?"));
         var inPostsSql = join(", ", nCopies(posts.length, "?"));
@@ -93,10 +76,10 @@ public class PostStatusDao {
         );
     }
 
-    private RowCallbackHandler rowCallbackHandlerForTeacherInfo (TeacherGroupInfo info, List<User> users) {
+    private RowCallbackHandler rowCallbackHandlerForTeacherInfo (TeacherGroupInfo info, List<User> students) {
 
         return rs -> {
-            var post = info.getPosts().stream()
+            var post = info.getPostStatuses().stream()
                     .filter(x -> {
                         try {
                             return x.getPostId() == (rs.getInt("post_id"));
@@ -111,16 +94,15 @@ public class PostStatusDao {
                     rs.getInt("post_id")
             );
 
-            var userStatus = new UserStatus(
-                    Objects.requireNonNull(users.stream()
+            var userPostStatus = new UserPostStatus(
+                    Objects.requireNonNull(students.stream()
                             .filter(x -> x.getId().equals(postStatus.getUserId()))
                             .findAny().orElse(null))
                             .getFullName(),
-                    postStatus
+                    true
             );
-
             assert post != null;
-            post.getStatus().add(userStatus);
+            post.getStatuses().add(userPostStatus);
         };
     }
 

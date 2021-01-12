@@ -3,11 +3,15 @@ package ru.urfu.infosync.dao;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.urfu.infosync.model.GeneralPost;
-import ru.urfu.infosync.model.GroupPostStatus;
+import ru.urfu.infosync.model.GroupPostWithStatuses;
 import ru.urfu.infosync.model.HabrPost;
+import ru.urfu.infosync.model.User;
+import ru.urfu.infosync.model.UserPostStatus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * Component of access into ifs_post table
@@ -64,11 +68,11 @@ public class PostDao {
         );
     }
 
-    public List<GroupPostStatus> getTeacherPostsForGroup(Integer groupId, Integer teacherId) {
+    public List<GroupPostWithStatuses> getTeacherPostsForGroup(Integer groupId, Integer teacherId, List<User> students) {
 
         return jdbcTemplate.query(
                 SELECT_POSTS_THAT_TEACHER_GIVES_FOR_GROUP,
-                (rs, rowNum) -> new GroupPostStatus(
+                (rs, rowNum) -> new GroupPostWithStatuses(
                         rs.getInt("id"),
                         rs.getString("title"),
                         new ArrayList<>()),

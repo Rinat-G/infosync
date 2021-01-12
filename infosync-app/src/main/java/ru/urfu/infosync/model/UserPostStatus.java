@@ -1,9 +1,10 @@
 package ru.urfu.infosync.model;
+import lombok.Data;
 import lombok.Value;
 
 @Value
-public class UserStatus {
+public class UserPostStatus {
 
     String fullName;
-    PostStatus postStatus;
+    boolean isRead;
 }

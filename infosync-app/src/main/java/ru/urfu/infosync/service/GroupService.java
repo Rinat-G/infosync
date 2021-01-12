@@ -1,15 +1,11 @@
 package ru.urfu.infosync.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.urfu.infosync.dao.GroupDao;
 import ru.urfu.infosync.dao.PostDao;
 import ru.urfu.infosync.dao.UserDao;
 import ru.urfu.infosync.model.*;
 import ru.urfu.infosync.dao.PostStatusDao;
-
-import java.util.HashMap;
-import java.util.Objects;
 
 @Service
 public class GroupService {
@@ -37,20 +33,28 @@ public class GroupService {
         if (existGroup == null) {
             return groupDao.saveNewGroup(groupName).getId();
         }
-
         return existGroup.getId();
     }
 
-    @Transactional
     public TeacherGroupInfo getGroupInfoForTeacher(Integer groupId, Integer teacherId) {
 
-        var groupPostStatuses = postDao.getTeacherPostsForGroup(groupId, teacherId);
-        if(groupPostStatuses.size() == 0) return null;
-
-        var info = new TeacherGroupInfo(groupId, teacherId, groupPostStatuses);
         var students = userDao.getUsersByGroupId(groupId);
 
+        var groupPostStatuses = postDao.getTeacherPostsForGroup(groupId, teacherId, students);
+        if(groupPostStatuses.size() == 0) return new TeacherGroupInfo(groupId, teacherId, null);
+
+        var info = new TeacherGroupInfo(groupId, teacherId, groupPostStatuses);
+
         postStatusDao.setPostStatusesForTeacher(info, students);
+
+        //put other students
+        for (User user : students) {
+            for (GroupPostWithStatuses postStatuses : info.getPostStatuses()) {
+                var exist = postStatuses.getStatuses().stream()
+                        .anyMatch(x -> x.getFullName().equals(user.getFullName()));
+                if(!exist) postStatuses.getStatuses().add(new UserPostStatus(user.getFullName(), false));
+            }
+        }
         return info;
     }
 }
