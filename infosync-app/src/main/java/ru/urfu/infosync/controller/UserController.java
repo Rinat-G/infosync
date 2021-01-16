@@ -4,8 +4,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
+import ru.urfu.infosync.service.UserService;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -13,13 +12,14 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping(value = "/api/user", produces = APPLICATION_JSON_VALUE)
 public class UserController {
 
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping(value = "/role")
     public String getUserRole(UsernamePasswordAuthenticationToken token) {
-        var authorities = new ArrayList<>(token.getAuthorities());
-        if (authorities.size() != 0) {
-            return authorities.get(0).getAuthority();
-        }
-        return null;
+        return userService.getCurrentUserRole(token);
     }
 }

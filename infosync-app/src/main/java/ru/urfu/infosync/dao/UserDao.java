@@ -2,7 +2,10 @@ package ru.urfu.infosync.dao;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import ru.urfu.infosync.model.User;
 import ru.urfu.infosync.model.UserDto;
+
+import java.util.List;
 
 @Component
 public class UserDao {
@@ -16,6 +19,14 @@ public class UserDao {
     private static final String INSERT_NEW_USER = "" +
             "INSERT INTO ifs_user (first_name, last_name, patronymic, email, pass_hash, group_id, role)" +
             "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+    private static final String GET_USERS_ROLE = "" +
+            "SELECT role FROM ifs_user WHERE Id = ?";
+
+    private static final String SELECT_USERS_BY_GROUP_ID = "" +
+            "SELECT id, full_name FROM ifs_user " +
+            "WHERE group_id = ? " +
+            "ORDER BY full_name";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -57,11 +68,30 @@ public class UserDao {
 
     public Integer getUserIdByEmail(final String email) {
 
-        var ids = jdbcTemplate.queryForObject(
+        return jdbcTemplate.queryForObject(
                 SELECT_USER_ID_BY_EMAIL,
                 Integer.class,
                 email
         );
-        return ids;
+    }
+
+    public String getUsersRoleById(final Integer userId) {
+        return jdbcTemplate.queryForObject(
+                GET_USERS_ROLE,
+                String.class,
+                userId
+        );
+    }
+
+    public List<User> getUsersByGroupId(final Integer groupId) {
+
+        return jdbcTemplate.query(
+                SELECT_USERS_BY_GROUP_ID,
+                (rs, rowNum) -> new User(
+                        rs.getInt("id"),
+                        rs.getString("full_name")
+                ),
+                groupId
+        );
     }
 }

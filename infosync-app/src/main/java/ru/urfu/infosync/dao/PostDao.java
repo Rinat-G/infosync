@@ -25,11 +25,11 @@ public class PostDao {
             "INSERT INTO ifs_post (title, post_link, post_body, group_id, recommended_by_user_id) " +
             "VALUES (?, ?, ?, ?, ?)";
 
-    private static final String SELECT_RECOMMENDED_POST_BY_GROUP_ID =
+    private static final String SELECT_RECOMMENDED_POST_BY_GROUP_ID = "" +
             "SELECT id, title, post_link, post_body, recommended_by_user_id " +
-                    "FROM ifs_post " +
-                    "WHERE group_id = ? " +
-                    "ORDER BY id DESC";
+            "FROM ifs_post " +
+            "WHERE group_id = ? " +
+            "ORDER BY id DESC";
 
     public List<GeneralPost> getRecommendedPosts(Integer groupId) {
         return jdbcTemplate.query(
@@ -45,6 +45,7 @@ public class PostDao {
     }
 
     public void saveNewRecommendedPost(final HabrPost habrPost, final Integer groupId, final Integer fromId) {
+
         jdbcTemplate.update(
                 INSERT_NEW_POST,
                 habrPost.getPostTitle(),
@@ -54,4 +55,5 @@ public class PostDao {
                 fromId
         );
     }
+
 }

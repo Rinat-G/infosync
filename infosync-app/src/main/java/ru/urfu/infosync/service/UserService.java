@@ -1,5 +1,6 @@
 package ru.urfu.infosync.service;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,6 +10,8 @@ import ru.urfu.infosync.dao.UserDao;
 import ru.urfu.infosync.model.RegistrationResult;
 import ru.urfu.infosync.model.UserDto;
 import ru.urfu.infosync.model.UserJs;
+
+import java.util.ArrayList;
 
 @Service
 public class UserService {
@@ -66,5 +69,13 @@ public class UserService {
 
     public Integer getIdCurrentUser() {
         return userDao.getUserIdByEmail(getEmailOfCurrentUser());
+    }
+
+    public String getCurrentUserRole(UsernamePasswordAuthenticationToken token) {
+        var authorities = new ArrayList<>(token.getAuthorities());
+        if (authorities.size() != 0) {
+            return authorities.get(0).getAuthority();
+        }
+        return null;
     }
 }
