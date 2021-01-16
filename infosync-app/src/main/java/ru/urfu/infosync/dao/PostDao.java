@@ -31,11 +31,6 @@ public class PostDao {
             "WHERE group_id = ? " +
             "ORDER BY id DESC";
 
-    private static final String SELECT_POSTS_THAT_TEACHER_GIVES_FOR_GROUP = "" +
-            "SELECT id, title, post_link, post_body, recommended_by_user_id " +
-            "FROM ifs_post " +
-            "WHERE group_id = ? AND recommended_by_user_id = ? ";
-
     private static final  String SELECT_GROUPS_WHICH_TEACHER_GIVES_POSTS = "" +
             "SELECT DISTINCT group_id " +
             "FROM ifs_post " +
@@ -63,21 +58,6 @@ public class PostDao {
                 habrPost.getPostBody(),
                 groupId,
                 fromId
-        );
-    }
-
-    public List<GeneralPost> getTeacherPostsForGroup(Integer groupId, Integer teacherId) {
-
-        return jdbcTemplate.query(
-                SELECT_POSTS_THAT_TEACHER_GIVES_FOR_GROUP,
-                (rs, rowNum) -> new GeneralPost(
-                        rs.getInt("id"),
-                        rs.getString("title"),
-                        rs.getString("post_link"),
-                        rs.getString("post_body"),
-                        rs.getInt("recommended_by_user_id")),
-                groupId,
-                teacherId
         );
     }
 
