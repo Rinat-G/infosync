@@ -1,31 +1,37 @@
 package ru.urfu.infosync.dao;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementSetter;
-import org.springframework.jdbc.core.RowCallbackHandler;
-import org.springframework.lang.NonNull;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
-import ru.urfu.infosync.model.*;
+import ru.urfu.infosync.model.PostStatus;
+import ru.urfu.infosync.model.PostWithStatuses;
+import ru.urfu.infosync.model.TeacherGroupInfo;
+import ru.urfu.infosync.model.UserPostStatus;
 
-import static java.lang.String.join;
-import static java.util.Collections.nCopies;
-
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Component
 public class PostStatusDao {
 
+    //language=PostgreSQL
     private static final String MARK_POST_AS_READ = "" +
             "INSERT INTO ifs_post_status (user_id, post_id)" +
             "VALUES (?, ?)" +
             "ON CONFLICT DO NOTHING";
 
-    private static final String GET_COLLECTION_OF_POST_STATUS = "" +
-            "SELECT * FROM ifs_post_status " +
-            "WHERE user_id IN ( $users ) AND post_id in ( $posts )";
+    //language=PostgreSQL
+    private static final String GET_POSTS_WITH_STATUSES_FROM_GROUP_FOR_TEACHER = "" +
+            "SELECT post.id AS post_id, " +
+            "       post.title AS title, " +
+            "       iuser.full_name AS full_name, " +
+            "       CASE WHEN post_status.USER_ID IS null THEN false ELSE true END AS read_status " +
+            "FROM ifs_post post " +
+            "INNER JOIN ifs_user iuser ON post.group_id = iuser.group_id " +
+            "LEFT JOIN ifs_post_status post_status ON post.id = post_status.post_id AND iuser.ID = post_status.user_id " +
+            "WHERE recommended_by_user_id = ? " +
+            "  AND post.group_id = ? " +
+            "ORDER BY post.ID, full_name";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -42,69 +48,34 @@ public class PostStatusDao {
         );
     }
 
-    public void setPostStatusesForTeacher(TeacherGroupInfo info, List<User> users) {
-
-        var posts = info.getPostStatuses().stream().map(GroupPostWithStatuses::getPostId).toArray(Integer[]::new);
-
-        var inNamesSql = join(", ", nCopies(users.size(), "?"));
-        var inPostsSql = join(", ", nCopies(posts.length, "?"));
-
-        String query = GET_COLLECTION_OF_POST_STATUS
-                .replace("$users", inNamesSql)
-                .replace("$posts", inPostsSql);
-
-        var setter = new PreparedStatementSetter() {
-
-            public void setValues(@NonNull PreparedStatement preparedStatement) throws SQLException {
-
-                var parameterIndex = 1;
-                for (User user : users) {
-                    preparedStatement.setInt(parameterIndex, user.getId());
-                    parameterIndex++;
-                }
-                for (Integer post : posts) {
-                    preparedStatement.setInt(parameterIndex, post);
-                    parameterIndex++;
-                }
-            }
-        };
-
-        jdbcTemplate.query(
-                query,
-                setter,
-                rowCallbackHandlerForTeacherInfo(info, users)
+    public TeacherGroupInfo getPostsAndStatusesFromGroup(Integer groupId, Integer teacherId) {
+        var posts = jdbcTemplate.query(
+                GET_POSTS_WITH_STATUSES_FROM_GROUP_FOR_TEACHER,
+                groupPostWithStatusesRSE(),
+                teacherId,
+                groupId
         );
+
+        return new TeacherGroupInfo(groupId, teacherId, posts);
     }
 
-    private RowCallbackHandler rowCallbackHandlerForTeacherInfo (TeacherGroupInfo info, List<User> students) {
-
+    private ResultSetExtractor<List<PostWithStatuses>> groupPostWithStatusesRSE() {
         return rs -> {
-            var post = info.getPostStatuses().stream()
-                    .filter(x -> {
-                        try {
-                            return x.getPostId() == (rs.getInt("post_id"));
-                        } catch (SQLException throwable) {
-                            throwable.printStackTrace();
-                        }
-                        return false;
-                    }).findAny().orElse(null);
+            var posts = new ArrayList<PostWithStatuses>();
+            int currentPostId = 0;
+            PostWithStatuses currentPost = new PostWithStatuses(null, null, null);
 
-            var postStatus = new PostStatus(
-                    rs.getInt("user_id"),
-                    rs.getInt("post_id")
-            );
+            while (rs.next()) {
+                if (currentPostId != rs.getInt(1)) {
+                    currentPostId = rs.getInt(1);
+                    currentPost = new PostWithStatuses(currentPostId, rs.getString(2), new ArrayList<>());
+                    posts.add(currentPost);
+                }
+                currentPost.getStatuses().add(new UserPostStatus(rs.getString(3), rs.getBoolean(4)));
 
-            var userPostStatus = new UserPostStatus(
-                    Objects.requireNonNull(students.stream()
-                            .filter(x -> x.getId().equals(postStatus.getUserId()))
-                            .findAny().orElse(null))
-                            .getFullName(),
-                    true
-            );
-            assert post != null;
-            post.getStatuses().add(userPostStatus);
+            }
+            return posts;
         };
     }
-
 }
 

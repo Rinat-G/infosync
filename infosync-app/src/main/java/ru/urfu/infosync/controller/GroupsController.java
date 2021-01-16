@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import ru.urfu.infosync.dao.GroupDao;
-import ru.urfu.infosync.model.*;
-import ru.urfu.infosync.service.UserService;
+import ru.urfu.infosync.model.Group;
+import ru.urfu.infosync.model.TeacherGroupInfo;
 import ru.urfu.infosync.service.GroupService;
+import ru.urfu.infosync.service.UserService;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class GroupsController {
     private final UserService userService;
     private final GroupService groupService;
 
-    public GroupsController(final GroupDao groupDao, final  UserService userService,
+    public GroupsController(final GroupDao groupDao, final UserService userService,
                             final GroupService groupService) {
 
         this.groupDao = groupDao;
@@ -37,16 +38,13 @@ public class GroupsController {
         return groupDao.getAllGroups();
     }
 
-    @GetMapping(value = "/{groupId:\\d+}", produces = APPLICATION_JSON_VALUE)
-    public TeacherGroupInfo getGroupsPostInfo
-    (@PathVariable Integer groupId,UsernamePasswordAuthenticationToken token) {
-
+    @GetMapping(value = "/{groupId:\\d+}/posts", produces = APPLICATION_JSON_VALUE)
+    public TeacherGroupInfo getGroupsPostInfo(@PathVariable Integer groupId, UsernamePasswordAuthenticationToken token) {
         Integer userId = userService.getIdCurrentUser();
         String role = userService.getCurrentUserRole(token);
         if (role.equals("teacher")) {
-            return groupService.getGroupInfoForTeacher(groupId, userId);
+            return groupService.getGroupPostsForTeacher(groupId, userId);
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "role must be teacher");
-        //throw new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED, "Нет реализации");
+        throw new ResponseStatusException(HttpStatus.FORBIDDEN, "role must be teacher");
     }
 }

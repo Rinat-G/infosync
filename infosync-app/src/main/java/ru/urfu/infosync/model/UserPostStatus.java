@@ -1,5 +1,5 @@
 package ru.urfu.infosync.model;
-import lombok.Data;
+
 import lombok.Value;
 
 @Value

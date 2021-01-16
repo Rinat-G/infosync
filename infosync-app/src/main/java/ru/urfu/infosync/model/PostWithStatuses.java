@@ -5,7 +5,7 @@ import lombok.Value;
 import java.util.List;
 
 @Value
-public class GroupPostWithStatuses {
+public class PostWithStatuses {
 
     Integer postId;
     String title;

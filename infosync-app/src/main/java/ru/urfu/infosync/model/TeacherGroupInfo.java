@@ -2,7 +2,6 @@ package ru.urfu.infosync.model;
 
 import lombok.Value;
 
-import java.security.KeyPair;
 import java.util.List;
 
 @Value
@@ -10,6 +9,5 @@ public class TeacherGroupInfo {
 
     Integer groupId;
     Integer teacherId;
-    List<GroupPostWithStatuses> postStatuses;
-
+    List<PostWithStatuses> postsWithStatuses;
 }

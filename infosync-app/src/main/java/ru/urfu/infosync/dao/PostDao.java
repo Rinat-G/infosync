@@ -3,15 +3,9 @@ package ru.urfu.infosync.dao;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.urfu.infosync.model.GeneralPost;
-import ru.urfu.infosync.model.GroupPostWithStatuses;
 import ru.urfu.infosync.model.HabrPost;
-import ru.urfu.infosync.model.User;
-import ru.urfu.infosync.model.UserPostStatus;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 /**
  * Component of access into ifs_post table
@@ -36,12 +30,6 @@ public class PostDao {
             "FROM ifs_post " +
             "WHERE group_id = ? " +
             "ORDER BY id DESC";
-
-    private static final String SELECT_POSTS_THAT_TEACHER_GIVES_FOR_GROUP = "" +
-            "SELECT id, title " +
-            "FROM ifs_post " +
-            "WHERE group_id = ? AND recommended_by_user_id = ? ";
-
 
     public List<GeneralPost> getRecommendedPosts(Integer groupId) {
         return jdbcTemplate.query(
@@ -68,16 +56,4 @@ public class PostDao {
         );
     }
 
-    public List<GroupPostWithStatuses> getTeacherPostsForGroup(Integer groupId, Integer teacherId, List<User> students) {
-
-        return jdbcTemplate.query(
-                SELECT_POSTS_THAT_TEACHER_GIVES_FOR_GROUP,
-                (rs, rowNum) -> new GroupPostWithStatuses(
-                        rs.getInt("id"),
-                        rs.getString("title"),
-                        new ArrayList<>()),
-                groupId,
-                teacherId
-        );
-    }
 }
