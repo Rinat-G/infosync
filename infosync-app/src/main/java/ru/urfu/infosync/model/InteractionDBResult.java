@@ -3,7 +3,7 @@ package ru.urfu.infosync.model;
 import lombok.Value;
 
 @Value
-public class RegistrationResult {
+public class InteractionDBResult {
     Boolean status;
     String message;
 }

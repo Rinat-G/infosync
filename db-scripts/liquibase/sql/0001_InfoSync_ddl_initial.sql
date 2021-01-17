@@ -76,11 +76,9 @@ CREATE TABLE ifs_post_status
 (
     user_id BIGINT NOT NULL,
     post_id BIGINT NOT NULL,
-    essay_id BIGINT,
     CONSTRAINT post_status_pk PRIMARY KEY (user_id, post_id),
     CONSTRAINT post_status_user_id_fk FOREIGN KEY (user_id) REFERENCES ifs_user (id) ON DELETE CASCADE,
-    CONSTRAINT post_status_post_id_fk FOREIGN KEY (post_id) REFERENCES ifs_post (id) ON DELETE CASCADE,
-    CONSTRAINT post_status_essay_id_fk FOREIGN KEY (essay_id) REFERENCES ifs_essay (id) ON DELETE CASCADE
+    CONSTRAINT post_status_post_id_fk FOREIGN KEY (post_id) REFERENCES ifs_post (id) ON DELETE CASCADE
 );
 
 

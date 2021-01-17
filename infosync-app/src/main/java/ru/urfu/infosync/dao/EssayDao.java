@@ -1,5 +1,6 @@
 package ru.urfu.infosync.dao;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.urfu.infosync.model.Essay;
@@ -12,31 +13,26 @@ public class EssayDao {
     private static final String SEND_ESSAY = "" +
             "INSERT INTO ifs_essay (post_id, author_id, essay_text) " +
             "VALUES (?, ?, ?) " +
-            "ON CONFLICT (post_id, author_id) DO UPDATE SET essay_text = ?" +
-            "RETURNING id ";
+            "ON CONFLICT (post_id, author_id) DO UPDATE SET essay_text = ?";
 
-
-    private static final String GET_ESSAY_BY_ID = "" +
+    private static final String GET_ESSAY_BY_POST_AND_USER = "" +
             "SELECT essay_text FROM ifs_essay " +
-            "WHERE id = ?";
+            "WHERE post_id = ? AND author_id = ?";
 
     private static final String GET_ESSAYS_BY_POST_ID = "" +
             "SELECT * FROM ifs_essay " +
             "WHERE post_id = ?";
 
     private final JdbcTemplate jdbcTemplate;
-    private final PostStatusDao postStatusDao;
 
-    public EssayDao(final JdbcTemplate jdbcTemplate, PostStatusDao postStatusDao) {
+    public EssayDao(final JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.postStatusDao = postStatusDao;
     }
 
-    public Integer sendEssay(String text, Integer postId, Integer authorId) {
+    public void sendEssay(String text, Integer postId, Integer authorId) {
 
-        return jdbcTemplate.queryForObject(
+        jdbcTemplate.update(
                 SEND_ESSAY,
-                Integer.class,
                 postId,
                 authorId,
                 text,
@@ -46,15 +42,17 @@ public class EssayDao {
 
     public String getUserMadeEssay(Integer postId, Integer userId) {
 
-        var essayId = postStatusDao.getEssayId(userId, postId);
-        if (essayId != null) {
+        try {
             return jdbcTemplate.queryForObject(
-                    GET_ESSAY_BY_ID,
+                    GET_ESSAY_BY_POST_AND_USER,
                     String.class,
-                    essayId
+                    postId,
+                    userId
             );
+        } catch (EmptyResultDataAccessException e) {
+            return null;
         }
-        return null;
+
     }
 
     public List<Essay> getAllEssayByPostId(Integer postId) {

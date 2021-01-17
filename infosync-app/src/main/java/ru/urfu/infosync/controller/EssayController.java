@@ -2,6 +2,7 @@ package ru.urfu.infosync.controller;
 
 import org.springframework.web.bind.annotation.*;
 import ru.urfu.infosync.model.Essay;
+import ru.urfu.infosync.model.InteractionDBResult;
 import ru.urfu.infosync.service.EssayService;
 
 import java.util.List;
@@ -25,14 +26,6 @@ public class EssayController {
         return essayService.getAllEssaysOfPost(postId);
     }
 
-    //Get essays of post by group id
-    @GetMapping(value = "/{groupId:\\d++}")
-    public Essay getEssaysOfPostByGroupId(@PathVariable Integer postId, @PathVariable Integer groupId) {
-
-        return null;
-    }
-
-
     ///Get user essay if exists
     @GetMapping(value = "/self")
     public String getReadEssay(@PathVariable Integer postId) {
@@ -44,7 +37,6 @@ public class EssayController {
     По задумке студент пишет эссе на чистом(без статьи и других эссе на экране) экране, дабы не отвлекало.
     Проверку на роль делать не стоит, чтобы преподу дать возможность и самому писать эссе.
     В будущем можно добавить requestEntity, чтобы допустим препод мог ограничения на минимальный объем добавить.
-    Пока оставлю проверку отправленный текст = тексту из базы.
     */
 
     /**
@@ -52,8 +44,9 @@ public class EssayController {
      * @return write/overwrite an own(self made) essay
      */
     @PostMapping (value = "/self")
-    public boolean writeEssay(@RequestBody final String text, @PathVariable Integer postId) {
+    public InteractionDBResult writeEssay(@RequestBody final String text, @PathVariable Integer postId) {
 
+        if (text.isEmpty()) return new InteractionDBResult(false, "Trying send empty text");
         return essayService.sendEssay(text, postId);
     }
 }
