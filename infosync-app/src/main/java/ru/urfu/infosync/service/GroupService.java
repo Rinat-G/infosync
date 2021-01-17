@@ -45,11 +45,6 @@ public class GroupService {
      */
     public List<Group> getGroupsRecommendedByTeacher(Integer teacherId) {
 
-        System.out.println("GroupService.getGroupsRecommendedByTeacher");
-        var x = postDao.getGroupsWithPostByTeacher(teacherId);
-        System.out.println(x);
-        System.out.println(groupDao.getGroupsNamesByIndexes(x));
-
         return groupDao.getGroupsNamesByIndexes(postDao.getGroupsWithPostByTeacher(teacherId));
     }
 }
