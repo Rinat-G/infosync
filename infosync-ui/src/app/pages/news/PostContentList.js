@@ -1,33 +1,12 @@
 import React, {useEffect, useState} from 'react'
-import {Box, CardContent, makeStyles, Paper, Typography, Button, CircularProgress, Fade} from "@material-ui/core";
+import {Box} from "@material-ui/core";
 import ajax from "../../utils/ajax";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import RegistrationPage from "../registration/RegistrationPage";
-import LoginPage from "../login/LoginPage";
-import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
+import Loader from "../../components/Loader";
+import HabrPost from "../../components/HabrPost";
 
 const API_KEY = "api/habr/news"
 
-const useStyles = makeStyles((theme) => ({
-    paper: {
-        marginBottom: theme.spacing(2),
-    },
-    root: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    button: {
-        margin: theme.spacing(2),
-    },
-    placeholder: {
-        height: 40,
-    },
-}));
-
 const PostContentList = () => {
-
 
     const [content, setContent] = useState();
 
@@ -37,34 +16,19 @@ const PostContentList = () => {
     )
 
     const loadContent = () => {
-        ajax('/api/habr/news')
+        ajax(API_KEY)
             .then(value => {
                 setContent(value.data)
             })
             .catch(reason => console.log(reason))
-
     }
-
-
-
-
-    const classes = useStyles();
-
 
     if (content) {
         return (
             <Box>
-
-                {content.map(post => {
+                {content.map((post, i) => {
                     return (
-                        <Paper className={classes.paper}>
-                            <CardContent>
-                                <Typography gutterBottom variant="h6">
-                                    {post.postTitle}
-                                </Typography>
-                                <div dangerouslySetInnerHTML={{__html: post.postBody}}/>
-                            </CardContent>
-                        </Paper>
+                        <HabrPost title={post.postTitle} link={post.postLink} body={post.postBody} key={i}/>
                     )
                 })}
             </Box>
@@ -72,19 +36,8 @@ const PostContentList = () => {
     }
 
     return (
-
-        <Router>
-            <CircularProgress />
-            <Switch>
-                <Route exact path="/"></Route>
-                <Route path="/auth"  component={LoginPage}></Route>
-                <Route path="/reg"  component={RegistrationPage}></Route>
-            </Switch>
-        </Router>
-
+        <Loader/>
     );
-
 }
-
 
 export default PostContentList

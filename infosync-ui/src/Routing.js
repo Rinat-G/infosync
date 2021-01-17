@@ -1,16 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {HashRouter, Redirect, Route, Switch} from "react-router-dom";
-import LoginPage from "./src/app/pages/login/LoginPage";
-import ajax from "./src/app/utils/ajax";
-import SwipeableTabs from "./src/app/tabs/SwipeableTabs";
-import RegistrationPage from "./src/app/pages/registration/RegistrationPage";
-import {Button, Grid, Link} from "@material-ui/core";
-
+import LoginPage from "./app/pages/login/LoginPage";
+import ajax from "./app/utils/ajax";
+import SwipeableTabs from "./app/tabs/SwipeableTabs";
+import RegistrationPage from "./app/pages/registration/RegistrationPage";
+import Loader from "./app/components/Loader";
 
 const Routing = () => {
-
-    const [isAuthenticated, setAuthenticated ] = useState(false);
-    const [isRegistration, setRegistration] = useState( false);
+    const [isAuthenticated, setAuthenticated] = useState(undefined)
 
     useEffect(() => {
             checkAuth()
@@ -19,34 +16,32 @@ const Routing = () => {
 
     const checkAuth = () => {
         ajax("/api/user/role",)
-            .then(value => {
+            .then(() => {
                 setAuthenticated(true);
             })
             .catch(reason => {
-                    setAuthenticated(false);
                     console.log(reason);
+                    setAuthenticated(false);
                 }
             )
     }
 
     const renderPrivateRoute = () => {
-
         if (isAuthenticated) {
             return <SwipeableTabs/>
         }
         return (
-            <Redirect to={'/login'}></Redirect>
-
+            <Redirect to={'/login'}/>
         );
-
-
     }
 
     const loginCallback = () => {
         setAuthenticated(true);
     }
 
-
+    if (isAuthenticated === undefined) {
+        return <Loader/>
+    }
 
     return (
         <HashRouter>
@@ -55,7 +50,7 @@ const Routing = () => {
                     <LoginPage loginCallback={loginCallback}/>
                 </Route>
                 <Route path="/reg">
-                    <RegistrationPage></RegistrationPage>
+                    <RegistrationPage/>
                 </Route>
                 <Route path="/">
                     {renderPrivateRoute()}

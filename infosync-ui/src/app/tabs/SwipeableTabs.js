@@ -1,4 +1,3 @@
-
 import React from 'react'
 import SwipeableViews from 'react-swipeable-views';
 import {makeStyles} from '@material-ui/core/styles';
@@ -18,10 +17,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const shouldRenderPage = (value, index, component) => {
-    return value === index && component
-}
-
 export default function SwipeableTabs() {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
@@ -37,9 +32,9 @@ export default function SwipeableTabs() {
     return (
         <div className={classes.root}>
             <SwipeableViews axis={'x'} index={value} onChangeIndex={handleChangeIndex}>
-                {shouldRenderPage(value, 0, <NewsPage/>)}
-                {shouldRenderPage(value, 1, <GroupsPage/>)}
-                {shouldRenderPage(value, 2, <AccountPage/>)}
+                <NewsPage/>
+                <GroupsPage/>
+                <AccountPage/>
             </SwipeableViews>
             <BottomNavigation value={value} onChange={handleChange}>
                 <BottomNavigationAction icon={<AnnouncementOutlinedIcon/>} label="Новости"/>

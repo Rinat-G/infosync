@@ -1,6 +1,6 @@
 import React from 'react'
 import './css/App.css';
-import Routing from "../Routing";
+import Routing from "./Routing";
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 
 const darkTheme = createMuiTheme({
