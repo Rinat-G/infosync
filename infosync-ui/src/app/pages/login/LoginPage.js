@@ -1,4 +1,16 @@
-import {Box, Button, Card, CardContent, Grid, TextField, Typography} from "@material-ui/core";
+import {
+    AppBar,
+    Box,
+    Button,
+    Card,
+    CardContent,
+    Grid,
+    IconButton,
+    TextField,
+    Toolbar,
+    Typography,
+    Link
+} from "@material-ui/core";
 import React, {useState} from "react";
 import Axios from "axios";
 import {Alert} from "@material-ui/lab";
@@ -6,6 +18,7 @@ import {HashRouter, Redirect, Route, Switch, useHistory} from "react-router-dom"
 import LockOpen from '@material-ui/icons/LockOpen';
 import { makeStyles } from '@material-ui/core/styles';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import {ArrowBack} from "@material-ui/icons";
 
 
 const ajaxLogin = (email, password) => {
@@ -37,7 +50,7 @@ const LoginPage = (props) => {
             })
             .catch((reason) => {
                     setIsLoggedIn(false);
-                    setErrorMessage("Неверные учетные данные");
+                    setErrorMessage("Неверные учетные данные ");
                 }
             )
     }
@@ -96,7 +109,6 @@ const LoginPage = (props) => {
             },
         },
         HeaderName: {
-            backgroundColor: '#303030',
             padding: theme.spacing (2),
         },
         HeadPage: {
@@ -105,21 +117,29 @@ const LoginPage = (props) => {
         Alert: {
             margin: theme.spacing (1, 2),
         },
+        AppBar: {
+            backgroundColor: '#232323',
+        },
     }));
 
     const classes = useStyles();
 
     if (isLoggedIn) {
-        return <Redirect to={"/"}/>
+        return <Redirect to={'/'}/>
     }
+
     const history = useHistory();
-    const Registration = () => history.push('/reg');//eg.history.push('/login');
+    const Registration = () => history.push('/reg');
 
 
     return (
         <Box height="100vh" className={classes.HeadPage}>
             <Card>
-                <Typography variant='h5' className={classes.HeaderName}>Авторизация</Typography>
+                <AppBar position="static" className={classes.AppBar}>
+                    <Toolbar>
+                        <Typography variant='h5' className={classes.HeaderName}>Авторизация</Typography>
+                    </Toolbar>
+                </AppBar>
                 {renderAlert()}
                 <CardContent>
                     <Grid container spacing={3}>
