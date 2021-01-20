@@ -13,12 +13,16 @@ export default class PostContentList extends Component {
 
     componentDidMount() {
         const url = "/api/habr/news";
-        const userRole = () => {
-            return Axios
-                .get('/api/user/role')
-                .then(response => response())
-                .catch(() => console.log("Нет доступа к " + url + " Проверьте доступ к массиву данных1"))
-        }
+        fetch(url)
+            .then(response => response.json())
+            .then(news => {
+                this.setState({
+                    isLoaded: true,
+                    items: news
+                })
+            })
+            .catch(() => console.log("Нет доступа к " + url + " Проверьте доступ к массиву данных"))
+
     }
     render() {
         let {isLoaded, items} = this.state;
