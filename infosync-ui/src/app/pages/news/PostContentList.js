@@ -1,90 +1,44 @@
-import React, {useEffect, useState} from 'react'
-import {Box, CardContent, makeStyles, Paper, Typography, Button, CircularProgress, Fade} from "@material-ui/core";
-import ajax from "../../utils/ajax";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import RegistrationPage from "../registration/RegistrationPage";
-import LoginPage from "../login/LoginPage";
-import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
+import React, {Component} from 'react'
+import { CardContent,  Typography, CircularProgress,  Container, Card} from "@material-ui/core";
+import Axios from "axios";
 
-const API_KEY = "api/habr/news"
-
-const useStyles = makeStyles((theme) => ({
-    paper: {
-        marginBottom: theme.spacing(2),
-    },
-    root: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    button: {
-        margin: theme.spacing(2),
-    },
-    placeholder: {
-        height: 40,
-    },
-}));
-
-const PostContentList = () => {
-
-
-    const [content, setContent] = useState();
-
-    useEffect(() => {
-            loadContent()
-        }, []
-    )
-
-    const loadContent = () => {
-        ajax('/api/habr/news')
-            .then(value => {
-                setContent(value.data)
-            })
-            .catch(reason => console.log(reason))
-
+export default class PostContentList extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            items: [],
+            isLoaded: false,
+        }
     }
 
+    componentDidMount() {
+        const url = "/api/habr/news";
+        const userRole = () => {
+            return Axios
+                .get('/api/user/role')
+                .then(response => response())
+                .catch(() => console.log("Нет доступа к " + url + " Проверьте доступ к массиву данных1"))
+        }
+    }
+    render() {
+        let {isLoaded, items} = this.state;
 
-
-
-    const classes = useStyles();
-
-
-    if (content) {
-        return (
-            <Box>
-
-                {content.map(post => {
-                    return (
-                        <Paper className={classes.paper}>
+        if (!isLoaded) {
+            return <CircularProgress />
+        } else {
+            return (
+                <Container>
+                    {items.map(news_page => (
+                        <Card style={{ margin: "15px 0px" }}>
                             <CardContent>
-                                <Typography gutterBottom variant="h6">
-                                    {post.postTitle}
-                                </Typography>
-                                <div dangerouslySetInnerHTML={{__html: post.postBody}}/>
+                                <Typography>{news_page.postTitle}</Typography>
                             </CardContent>
-                        </Paper>
-                    )
-                })}
-            </Box>
-        );
+                        </Card>
+                    ))}
+                </Container>
+
+            );
+        }
     }
-
-    return (
-
-        <Router>
-            <CircularProgress />
-            <Switch>
-                <Route exact path="/"></Route>
-                <Route path="/auth"  component={LoginPage}></Route>
-                <Route path="/reg"  component={RegistrationPage}></Route>
-            </Switch>
-        </Router>
-
-    );
 
 }
-
-
-export default PostContentList

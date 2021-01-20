@@ -29,21 +29,11 @@ const Routing = () => {
             )
     }
 
-    const PrivateRoute = () => {
-
-        if (isAuthenticated) {
-            return <SwipeableTabs/>
-        }
-
-    }
-
-
     const loginCallback = () => {
         setAuthenticated(true);
     }
 
 
-//BrowserRouter <- HashRouter
     return (
         <BrowserRouter>
             <Switch>
