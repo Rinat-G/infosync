@@ -5,6 +5,8 @@ import ajax from "./src/app/utils/ajax";
 import SwipeableTabs from "./src/app/tabs/SwipeableTabs";
 import RegistrationPage from "./src/app/pages/registration/RegistrationPage";
 import {Redirect} from "react-router";
+import GroupsPage from "./src/app/pages/groups/GroupsPage";
+import AccountPage from "./src/app/pages/account/AccountPage";
 
 
 const Routing = () => {
@@ -38,12 +40,18 @@ const Routing = () => {
         <BrowserRouter>
             <Switch>
                 <Route path="/login">
-                    {isAuthenticated ? <Redirect to="/"></Redirect> : <LoginPage loginCallback={loginCallback}/>}
+                    {isAuthenticated ? <Redirect to="/news"></Redirect> : <LoginPage loginCallback={loginCallback}/>}
                 </Route>
                 <Route path="/reg">
-                    {isAuthenticated ? <Redirect to="/"></Redirect>: <RegistrationPage/>}
+                    {isAuthenticated ? <Redirect to="/news"></Redirect>: <RegistrationPage/>}
                 </Route>
-                <Route exact path="/">
+                <Route path="/groups">
+                    {isAuthenticated ? <GroupsPage/>: <Redirect to="/login"></Redirect>}
+                </Route>
+                <Route path="/account">
+                    {isAuthenticated ? <AccountPage/>: <Redirect to="/login"></Redirect>}
+                </Route>
+                <Route exact path="/news">
                     {isAuthenticated ? <SwipeableTabs/>: <Redirect to="/login"></Redirect>}
                 </Route>
             </Switch>

@@ -1,24 +1,12 @@
-import {
-    AppBar,
-    Box,
-    Button,
-    Card,
-    CardContent,
-    Grid,
-    IconButton,
-    TextField,
-    Toolbar,
-    Typography,
-    Link
+import { AppBar, Box, Button, Card, CardContent, Grid, TextField, Toolbar, Typography
 } from "@material-ui/core";
 import React, {useState} from "react";
 import Axios from "axios";
 import {Alert} from "@material-ui/lab";
-import {HashRouter, Redirect, Route, Switch, useHistory} from "react-router-dom";
+import { Redirect, useHistory} from "react-router-dom";
 import LockOpen from '@material-ui/icons/LockOpen';
 import { makeStyles } from '@material-ui/core/styles';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import {ArrowBack} from "@material-ui/icons";
 
 
 const ajaxLogin = (email, password) => {
@@ -125,7 +113,7 @@ const LoginPage = (props) => {
     const classes = useStyles();
 
     if (isLoggedIn) {
-        return <Redirect to={'/'}/>
+        return <Redirect to={'/news'}/>
     }
 
     const history = useHistory();

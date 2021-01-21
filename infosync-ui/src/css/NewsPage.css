@@ -1,0 +1,22 @@
+.paper {
+    margin-bottom: 2%
+}
+
+root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+button {
+    margin: 2%
+}
+
+.placeholder {
+    height: 40%
+}
+
+.newsHeader {
+    background: #303030;
+    backdrop-filter: blur()
+}
