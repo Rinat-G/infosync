@@ -146,33 +146,30 @@ const RegistrationPage = (props) => {
                 height: 50,
             },
         },
-        buttonLogin: {
-            color: '#fbfbfb',
-            backgroundColor: '#2196f3',
-            "&:hover": {
-                backgroundColor: "#1976d2",
-            },
-        },
         buttonReg: {
             color: '#fbfbfb',
-            backgroundColor: '#e4084a',
+            backgroundColor: '#1a2639',
             "&:hover": {
-                backgroundColor: "#7b082b",
+                backgroundColor: "#1a2639",
             },
         },
         HeaderName: {
-            padding: theme.spacing (2),
+            padding: theme.spacing(2),
         },
         HeadPage: {
             display: 'flex',
         },
         Alert: {
-            margin: theme.spacing (1, 2),
+            margin: theme.spacing(1, 2),
         },
         AppBar: {
-            backgroundColor: '#232323',
+            backgroundColor: '#25282b',
+        },
+        CardReg: {
+            backgroundColor: '#0d1117',
         },
     }));
+
 
     const classes = useStyles();
     const history = useHistory();
@@ -180,7 +177,7 @@ const RegistrationPage = (props) => {
 
     return (
         <Box height="100vh" className={classes.HeadPage}>
-            <Card>
+            <Card className={classes.CardReg}>
                 <AppBar position="static" className={classes.AppBar}>
                     <Toolbar>
                         <IconButton edge="start" color="inherit" aria-label="back" onClick={Login} className={classes.AppBar}>

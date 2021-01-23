@@ -1,22 +1,18 @@
-.paper {
-    margin-bottom: 2%
+.AppBar {
+    background-color: #25282b!important;
 }
-
-root {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.CardNews {
+    background-color: #0d1117!important;
 }
-
-button {
-    margin: 2%
+.NavigationIcon {
+    background-color: #25282b!important;
 }
-
-.placeholder {
-    height: 40%
+.CardContent {
+    background-color: #191b1d!important;
+    margin: 0px 20px 0px 20px;
 }
-
-.newsHeader {
-    background: #303030;
-    backdrop-filter: blur()
+.CardTitle {
+    background-color: #191b1d!important;
+    margin: 20px 20px 0px 20px!important;
+    padding: 15px!important;
 }

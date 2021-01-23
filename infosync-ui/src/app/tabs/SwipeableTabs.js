@@ -12,7 +12,7 @@ class SwipeableTabs extends Component {
     render() {
         return (
           <Router>
-              <Route path="/news" component={NewsPage} />
+              <Route exact path="/" component={NewsPage} />
               <Route path="/groups" component={GroupsPage} />
               <Route path="/account" component={AccountPage} />
               <NavigationBottom />

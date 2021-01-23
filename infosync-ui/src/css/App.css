@@ -2,7 +2,7 @@
     color: #0060ff !important;
 }
 
-.react-swipeable-view-container {
+.news_content {
     height: calc(100vh - 56px)
 }
 

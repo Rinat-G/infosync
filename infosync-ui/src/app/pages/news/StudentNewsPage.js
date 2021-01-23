@@ -1,18 +1,7 @@
 import React, { Component } from "react";
-import { makeStyles } from '@material-ui/core/styles';
 import NewsComponents from "./NewsComponents";
-import {
-    Accordion,
-    AccordionDetails, AccordionSummary,
-    AppBar,
-    Checkbox,
-    CircularProgress, FormControlLabel,
-    IconButton,
-    Toolbar,
-    Typography
-} from "@material-ui/core";
-import {HomeOutlined} from "@material-ui/icons";
-import {ExpandMore} from "@material-ui/icons";
+import {CircularProgress} from "@material-ui/core";
+
 
 
 export default class StudentNewsPage extends Component {
@@ -45,43 +34,15 @@ export default class StudentNewsPage extends Component {
     }
 
     render() {
-        const { error, isLoaded, items } = this.state;
-
-        function refreshPage(){
-            window.location.reload();
-        }
+        const {error, isLoaded, items} = this.state;
 
         if (error) {
             return <div>Ошибка: {error.message}</div>;
         } else if (!isLoaded) {
-            return <div><CircularProgress /></div>;
+            return <div><CircularProgress/></div>;
         } else {
             return (
-                <div>
-                    <AppBar position="sticky">
-                        <Toolbar>
-                            <IconButton edge="start" color="inherit" aria-label="menu" onClick={ refreshPage }>
-                                <HomeOutlined />
-                            </IconButton>
-                            <Typography variant="h6" >Новости студента</Typography>
-                        </Toolbar>
-                    </AppBar>
-                    {items.map(item => (
-                    <Accordion>
-                        <AccordionSummary
-                            expandIcon={<ExpandMore/>} id="student">
-                            <Typography>{item.postTitle}</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <div dangerouslySetInnerHTML={{__html: item.postBody}}/>
-                        </AccordionDetails>
-                    </Accordion>
-                    ))}
-
-
-                </div>
-
-
+                <NewsComponents.Html.NewsContentBox role="student" items={items} id="student"/>
             );
         }
     }
