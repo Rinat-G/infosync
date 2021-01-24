@@ -1,22 +1,20 @@
 import React, {useEffect, useState} from "react";
-import {HashRouter, Redirect, Route, Switch} from "react-router-dom";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 import LoginPage from "./src/app/pages/login/LoginPage";
-import ajax from "./src/app/utils/ajax";
 import SwipeableTabs from "./src/app/tabs/SwipeableTabs";
 import RegistrationPage from "./src/app/pages/registration/RegistrationPage";
-import {Button, Grid, Link} from "@material-ui/core";
+import {Redirect} from "react-router";
+import GroupsPage from "./src/app/pages/groups/GroupsPage";
+import AccountPage from "./src/app/pages/account/AccountPage";
+import ajax from "./src/app/utils/ajax";
 
 
 const Routing = () => {
-
-    const [isAuthenticated, setAuthenticated ] = useState(false);
-    const [isRegistration, setRegistration] = useState( false);
 
     useEffect(() => {
             checkAuth()
         }, []
     )
-
     const checkAuth = () => {
         ajax("/api/user/role",)
             .then(value => {
@@ -29,41 +27,35 @@ const Routing = () => {
             )
     }
 
-    const renderPrivateRoute = () => {
-
-        if (isAuthenticated) {
-            return <SwipeableTabs/>
-        }
-        return (
-            <Redirect to={'/login'}></Redirect>
-
-        );
 
 
-    }
+    const [isAuthenticated, setAuthenticated ] = useState(false);
 
     const loginCallback = () => {
         setAuthenticated(true);
     }
 
-
-
     return (
-        <HashRouter>
+        <BrowserRouter>
             <Switch>
                 <Route path="/login">
-                    <LoginPage loginCallback={loginCallback}/>
+                    {isAuthenticated ? <Redirect to="/"></Redirect> : <LoginPage loginCallback={loginCallback}/>}
                 </Route>
                 <Route path="/reg">
-                    <RegistrationPage></RegistrationPage>
+                    {isAuthenticated ? <Redirect to="/"></Redirect>: <RegistrationPage/>}
                 </Route>
-                <Route path="/">
-                    {renderPrivateRoute()}
+                <Route path="/groups">
+                    {isAuthenticated ? <GroupsPage/>: <Redirect to="/login"></Redirect>}
+                </Route>
+                <Route path="/account">
+                    {isAuthenticated ? <AccountPage/>: <Redirect to="/login"></Redirect>}
+                </Route>
+                <Route exact path="/">
+                    {isAuthenticated ? <SwipeableTabs/>: <Redirect to="/login"></Redirect>}
                 </Route>
             </Switch>
-        </HashRouter>
+        </BrowserRouter>
     );
 };
 
 export default Routing;
-

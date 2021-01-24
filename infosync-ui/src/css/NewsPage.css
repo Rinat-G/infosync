@@ -1,0 +1,18 @@
+.AppBar {
+    background-color: #25282b!important;
+}
+.CardNews {
+    background-color: #0d1117!important;
+}
+.NavigationIcon {
+    background-color: #25282b!important;
+}
+.CardContent {
+    background-color: #191b1d!important;
+    margin: 0px 20px 0px 20px;
+}
+.CardTitle {
+    background-color: #191b1d!important;
+    margin: 20px 20px 0px 20px!important;
+    padding: 15px!important;
+}

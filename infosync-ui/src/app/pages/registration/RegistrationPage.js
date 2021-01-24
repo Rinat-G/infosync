@@ -1,4 +1,17 @@
-import { Box, Button, Card, CardContent, FormControlLabel, Grid, Radio, RadioGroup, TextField, Typography } from "@material-ui/core";
+import {
+    AppBar,
+    Box,
+    Button,
+    Card,
+    CardContent,
+    FormControlLabel,
+    Grid,
+    Radio,
+    RadioGroup,
+    TextField, Toolbar,
+    Typography,
+    IconButton
+} from "@material-ui/core";
 import React, {useState} from "react";
 import {Alert} from "@material-ui/lab";
 import ajax from "../../utils/ajax";
@@ -72,7 +85,7 @@ const RegistrationPage = (props) => {
 
     const handleRegistration = () => {
         if (password !== passwordConfirm) {
-            setErrorMessage('Password and password confirm did not match')
+            setErrorMessage('Пароли не совпадают!')
             return
         }
 
@@ -117,10 +130,10 @@ const RegistrationPage = (props) => {
             let message = registerSuccess ? 'Вы успешно зарегистрировались!' : errorMessage
             return (
                 <Alert
-                       className={classes.Alert}
-                       variant="standard"
-                       severity= {severity}
-                       onClose={handleCloseAlert}>
+                    className={classes.Alert}
+                    variant="standard"
+                    severity= {severity}
+                    onClose={handleCloseAlert}>
                     {message}
                 </Alert>
             )
@@ -133,31 +146,30 @@ const RegistrationPage = (props) => {
                 height: 50,
             },
         },
-        buttonLogin: {
-            color: '#fbfbfb',
-            backgroundColor: '#2196f3',
-            "&:hover": {
-                backgroundColor: "#1976d2",
-            },
-        },
         buttonReg: {
             color: '#fbfbfb',
-            backgroundColor: '#e4084a',
+            backgroundColor: '#1a2639',
             "&:hover": {
-                backgroundColor: "#7b082b",
+                backgroundColor: "#1a2639",
             },
         },
         HeaderName: {
-            backgroundColor: '#303030',
-            padding: theme.spacing (2),
+            padding: theme.spacing(2),
         },
         HeadPage: {
             display: 'flex',
         },
         Alert: {
-            margin: theme.spacing (1, 2),
+            margin: theme.spacing(1, 2),
+        },
+        AppBar: {
+            backgroundColor: '#25282b',
+        },
+        CardReg: {
+            backgroundColor: '#0d1117',
         },
     }));
+
 
     const classes = useStyles();
     const history = useHistory();
@@ -165,8 +177,15 @@ const RegistrationPage = (props) => {
 
     return (
         <Box height="100vh" className={classes.HeadPage}>
-            <Card>
-                <Typography variant='h5' className={classes.HeaderName}><LockOpen/>Регистрация</Typography>
+            <Card className={classes.CardReg}>
+                <AppBar position="static" className={classes.AppBar}>
+                    <Toolbar>
+                        <IconButton edge="start" color="inherit" aria-label="back" onClick={Login} className={classes.AppBar}>
+                            <ArrowBack />
+                        </IconButton>
+                        <Typography variant='h5' className={classes.HeaderName}>Регистрация</Typography>
+                    </Toolbar>
+                </AppBar>
                 {renderAlert()}
                 <CardContent>
                     <Grid container spacing={3}>
@@ -195,11 +214,8 @@ const RegistrationPage = (props) => {
                             </RadioGroup>
                         </Grid>
                         {renderGroupField(role)}
-                        <Grid item xs={6} className={classes.root}>
-                            <Button size="large" fullWidth variant='contained' className={classes.buttonLogin} startIcon={<ArrowBack />} onClick={Login}>Обратно</Button>
-                        </Grid>
-                        <Grid item xs={6} className={classes.root}>
-                            <Button size="large" fullWidth variant="contained" className={classes.buttonReg} color="secondary" onClick={handleRegistration}>Отправить</Button>
+                        <Grid item xs={12} className={classes.root}>
+                            <Button size="large" fullWidth variant="contained" className={classes.buttonReg} color="secondary" onClick={handleRegistration}>Зарегистрироваться</Button>
                         </Grid>
                     </Grid>
                 </CardContent>

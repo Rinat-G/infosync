@@ -1,11 +1,13 @@
 const path = require('path');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
+
 module.exports = {
     entry: './src/index.js',
     output: {
         filename: 'main.js',
         path: path.resolve(__dirname, 'dist'),
+        publicPath: '/'
     },
     module: {
         rules: [
@@ -60,7 +62,8 @@ module.exports = {
     devServer: {
         proxy: {
             '/api': 'http://localhost:9080'
-        }
+        },
+        historyApiFallback: true
     },
     devtool: 'source-map'
 };
