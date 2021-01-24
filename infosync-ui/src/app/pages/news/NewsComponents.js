@@ -36,20 +36,6 @@ const ButtonWithHouse = (props) => {
     )
 }
 
-const HeadToolBar = (props) => {
-    let strRole
-    switch (props.role){
-        case "teacher": strRole = "педагога";
-            break;
-        case "student": strRole = "студента"
-    }
-    return (
-        <Toolbar>
-            <NewsComponents.Html.ButtonWithHouse/>
-            <Typography variant="h6">Новости {strRole}</Typography>
-        </Toolbar>
-    )
-}
 
 const OneNews = (props) => {
     return (
@@ -76,10 +62,7 @@ const Body = (props) => {
 
 const NewsContent = (props) => {
     return (
-        <div className='news_content '>
-            <AppBar position="sticky" className="AppBar">
-                <NewsComponents.Html.HeadToolBar role={props.role}/>
-            </AppBar>
+        <div className='NewsContent'>
             {props.items.map(item => (
                 <NewsComponents.Html.OneNews id={props.id} postTitle={item.postTitle} postBody={item.postBody}/>
             ))}
@@ -105,7 +88,6 @@ const Html = {
     ButtonReadMore,
     PostTitle,
     ButtonWithHouse,
-    HeadToolBar,
     Title,
     Body,
     OneNews,

@@ -38,7 +38,6 @@ class NavigationBottom extends Component {
 
     render() {
         const {value, pathMap} = this.state;
-
         return (
             <BottomNavigation value={value} onChange={this.handleChange} className="NavigationIcon">
                 <BottomNavigationAction label="Новости" icon={<AnnouncementOutlinedIcon />} component={Link} to={pathMap[0]} />
