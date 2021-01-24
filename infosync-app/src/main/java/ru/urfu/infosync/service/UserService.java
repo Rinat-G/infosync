@@ -7,7 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.urfu.infosync.dao.UserDao;
-import ru.urfu.infosync.model.RegistrationResult;
+import ru.urfu.infosync.model.InteractionDBResult;
 import ru.urfu.infosync.model.UserDto;
 import ru.urfu.infosync.model.UserJs;
 
@@ -27,10 +27,10 @@ public class UserService {
     }
 
     @Transactional
-    public RegistrationResult registerNewUser(final UserJs userJs) {
+    public InteractionDBResult registerNewUser(final UserJs userJs) {
 
         if (emailAlreadyExist(userJs.getEmail())) {
-            return new RegistrationResult(false, "Email already exist in database");
+            return new InteractionDBResult(false, "Email already exist in database");
         }
 
         var userDto = new UserDto(
@@ -46,9 +46,9 @@ public class UserService {
         try {
             userDao.saveNewUser(userDto);
         } catch (Exception e) {
-            return new RegistrationResult(false, e.getMessage());
+            return new InteractionDBResult(false, e.getMessage());
         }
-        return new RegistrationResult(true, "User registered successfully");
+        return new InteractionDBResult(true, "User registered successfully");
     }
 
     private boolean emailAlreadyExist(String email) {
