@@ -1,17 +1,8 @@
 import React, {Component} from "react";
-import NewsComponents from "./NewsComponents";
-import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary,
-    AppBar, Box, CircularProgress,
-    IconButton,
-    Toolbar,
-    Typography
-} from "@material-ui/core";
-import {ExpandMore, HomeOutlined} from "@material-ui/icons";
-import styles from "../../../css/NewsPage.css";
-
+import Loader from "../../component/Loader";
+import ajax from "../../utils/ajax";
+import HabrPost from "../../component/HabrPost";
+import {Box} from "@material-ui/core";
 
 export default class TeacherNewsPage extends Component {
     constructor(props) {
@@ -24,8 +15,8 @@ export default class TeacherNewsPage extends Component {
     }
 
     componentDidMount() {
-        fetch("api/habr/news")
-            .then(res => res.json())
+        ajax("api/habr/news")
+            .then(result => result.data)
             .then(
                 (result) => {
                     this.setState({
@@ -48,14 +39,16 @@ export default class TeacherNewsPage extends Component {
         if (error) {
             return <div>Ошибка: {error.message}</div>;
         } else if (!isLoaded) {
-            return <div><CircularProgress/></div>;
+            return <div><Loader/></div>;
         } else {
             return (
-                <NewsComponents.Html.NewsContentBox
-                    role="teacher"
-                    items={items}
-                    id="teacher"
-                />
+                <Box>
+                    {items.map((post, i) => {
+                        return (
+                            <HabrPost title={post.postTitle} link={post.postLink} body={post.postBody} key={i}/>
+                        )
+                    })}
+                </Box>
             );
         }
     }

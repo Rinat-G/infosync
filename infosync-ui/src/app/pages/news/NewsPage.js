@@ -1,49 +1,27 @@
-import React, {useState} from 'react'
-import {Box, Container} from "@material-ui/core";
-import UserRole from "../../utils/UserRole";
+import React, {useContext} from 'react'
+import {Box} from "@material-ui/core";
 import TeacherNewsPage from "./TeacherNewsPage";
 import StudentNewsPage from "./StudentNewsPage";
-import styles from '../../../css/NewsPage.css';
+import UserContext from "../../context/UserContext";
 
 export default function NewsPage() {
+    const user = useContext(UserContext)
 
-    const [role, setRole] = useState(`student`)
-
-    const setCurrentRole = () => {
-        return UserRole.userRole()
-            .then(response => {
-                    setRole(response.data)
-                    console.log(`ROLE -- ${role}`)
-                }
-            )
-            .catch(error => alert(`${error}\n roleController crush`))
-    }
-
-    const Content = () => {
-
-        setCurrentRole()
-            .then(() => console.log(`Launch role controller`))
-            .catch(err => console.log(err))
-
-        switch (role) {
-            case `student`:
+    const renderRoleDependentPage = () => {
+        switch (user.role) {
+            case 'student':
                 return (
                     <StudentNewsPage/>
                 )
-            case `teacher`:
+            case 'teacher':
                 return (
                     <TeacherNewsPage/>
                 )
         }
     }
-
     return (
-            <Box>
-                <div className={styles.newsHeader}>
-                </div>
-                <div className='news_content'>
-                    <Content/>
-                </div>
-            </Box>
+        <Box>
+            {renderRoleDependentPage()}
+        </Box>
     );
 }
