@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import Loader from "../../component/Loader";
 import ajax from "../../utils/ajax";
 import HabrPost from "../../component/HabrPost";
-import {Box} from "@material-ui/core";
+import {Container} from "@material-ui/core";
 
 export default class TeacherNewsPage extends Component {
     constructor(props) {
@@ -42,13 +42,13 @@ export default class TeacherNewsPage extends Component {
             return <div><Loader/></div>;
         } else {
             return (
-                <Box>
+                <Container maxWidth={"md"}>
                     {items.map((post, i) => {
                         return (
                             <HabrPost title={post.postTitle} link={post.postLink} body={post.postBody} key={i}/>
                         )
                     })}
-                </Box>
+                </Container>
             );
         }
     }

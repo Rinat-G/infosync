@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import NewsPage from "../pages/news/NewsPage";
 import NavigationBottom from "./NavigationBottom"
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 import SwipeUpPanel from "./SwipeUpPanel";
 import GroupsPage from "../pages/groups/GroupsPage";
 import AccountPage from "../pages/account/AccountPage";
@@ -17,13 +17,11 @@ class MainPage extends Component {
     render() {
         return (
             <UserProvider value={{role: this.props.userRole}}>
-                <Router>
-                    <SwipeUpPanel/>
-                    <Route exact path="/" component={NewsPage}/>
-                    <Route path="/groups" component={GroupsPage}/>
-                    <Route path="/account" component={AccountPage}/>
-                    <NavigationBottom/>
-                </Router>
+                <SwipeUpPanel/>
+                <Route exact path="/" component={NewsPage}/>
+                <Route path="/groups" component={GroupsPage}/>
+                <Route path="/account" component={AccountPage}/>
+                <NavigationBottom/>
             </UserProvider>
         );
     }

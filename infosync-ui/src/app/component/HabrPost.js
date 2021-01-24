@@ -1,6 +1,6 @@
 import React from "react";
 import * as PropTypes from 'prop-types';
-import {Button, CardActions, CardContent, Grid, makeStyles, Paper, Typography} from "@material-ui/core";
+import {Button, CardActions, CardContent, makeStyles, Paper, Typography} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: 0,
         width: '100%'
     },
-    actions:{
+    actions: {
         padding: '16px'
     }
 }));
@@ -20,23 +20,18 @@ const HabrPost = (props) => {
     const classes = useStyles();
 
     return (
-        <Grid container justify={"center"}>
-            <Grid item xs={12} sm={9} md={6}>
-                <Paper square className={classes.paper}>
-                    <CardContent>
-                        <Typography gutterBottom variant="h6">
-                            {title}
-                        </Typography>
-                        <div dangerouslySetInnerHTML={{__html: body}}/>
-                    </CardContent>
-                    <CardActions className={classes.actions}>
-                        <Button className={classes.button} variant={'contained'}>Читать дальше</Button>
-                        <Button className={classes.button} variant={"contained"}>Поделиться</Button>
-                    </CardActions>
-                </Paper>
-            </Grid>
-        </Grid>
-
+        <Paper square className={classes.paper}>
+            <CardContent>
+                <Typography gutterBottom variant="h6">
+                    {title}
+                </Typography>
+                <div dangerouslySetInnerHTML={{__html: body}}/>
+            </CardContent>
+            <CardActions className={classes.actions}>
+                <Button className={classes.button} variant={'contained'}>Читать</Button>
+                <Button className={classes.button} variant={"contained"}>Поделиться</Button>
+            </CardActions>
+        </Paper>
     )
 
 }
