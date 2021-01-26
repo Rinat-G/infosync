@@ -53,7 +53,6 @@ module.exports = {
     },
 
     plugins: [
-
         new HtmlWebpackPlugin({
             template: 'public/index.html',
         }),
@@ -63,7 +62,7 @@ module.exports = {
         proxy: {
             '/api': 'http://localhost:9080'
         },
-        historyApiFallback: true
+        historyApiFallback: true,
     },
     devtool: 'source-map'
 };
