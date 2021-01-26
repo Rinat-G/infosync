@@ -11,8 +11,7 @@
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "react-router": "^5.2.0",
-    "react-router-dom": "^5.2.0",
-    "react-swipeable-views": "^0.13.9"
+    "react-router-dom": "^5.2.0"
   },
   "scripts": {
     "build-webpack": "webpack  --mode=production",

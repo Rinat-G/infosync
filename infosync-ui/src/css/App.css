@@ -17,16 +17,23 @@
 }
 
 .post__body_crop img {
-  max-width: 100%;
-  height: auto;
+    max-width: 100%;
+    height: auto;
 }
 
 .post__body_crop p {
-  margin: 0;
+    margin: 0;
 }
-.post__body_crop a{
-  color: #3f51b5
+
+.post__body_crop a {
+    color: #3f51b5
 }
+
+/*нужно чтобы корректно отображались блоки <code> с хабра*/
+.post__body_crop pre {
+    overflow-x: scroll;
+}
+
 .MuiCard-root {
     width: 100%;
 }

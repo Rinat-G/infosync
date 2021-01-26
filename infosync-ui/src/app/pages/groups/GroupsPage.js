@@ -1,5 +1,6 @@
-import React, { Component } from "react";
-import {Card, CardContent, CircularProgress, Container, Typography} from "@material-ui/core";
+import React, {Component} from "react";
+import {Card, CardContent, Container, Typography} from "@material-ui/core";
+import Loader from "../../component/Loader";
 
 
 export default class GroupsPage extends Component {
@@ -30,13 +31,13 @@ export default class GroupsPage extends Component {
         let {isLoaded, items} = this.state;
 
         if (!isLoaded) {
-            return <CircularProgress />
+            return <Loader/>
         } else {
             return (
                 <Container>
 
                     {items.map(numbers_group => (
-                        <Card key={numbers_group.id} style={{ margin: "15px 0px" }}>
+                        <Card key={numbers_group.id} style={{margin: "15px 0px"}}>
                             <CardContent>
                                 <Typography>Группа: {numbers_group.name}</Typography>
                             </CardContent>

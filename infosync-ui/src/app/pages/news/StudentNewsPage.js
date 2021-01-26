@@ -1,7 +1,6 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import NewsComponents from "./NewsComponents";
-import {CircularProgress} from "@material-ui/core";
-
+import Loader from "../../component/Loader";
 
 
 export default class StudentNewsPage extends Component {
@@ -39,7 +38,7 @@ export default class StudentNewsPage extends Component {
         if (error) {
             return <div>Ошибка: {error.message}</div>;
         } else if (!isLoaded) {
-            return <div><CircularProgress/></div>;
+            return <div><Loader/></div>;
         } else {
             return (
                 <NewsComponents.Html.NewsContentBox role="student" items={items} id="student"/>
