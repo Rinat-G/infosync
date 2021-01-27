@@ -1,13 +1,8 @@
 package ru.urfu.infosync.controller;
 
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.urfu.infosync.model.HabrPost;
 import ru.urfu.infosync.service.HabrNewsService;
-
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -25,12 +20,15 @@ public class HabrNewsController {
     }
 
     @GetMapping
+
     public List<HabrPost> getHabrNews() {
         return newsService.getNews();
     }
 
-    @GetMapping(value = "/{id}", produces = TEXT_HTML_VALUE)
-    public String getHabrNewsById(@PathVariable int id) {
-        return newsService.getNews().get(id).getPostBody();
+    @GetMapping(value = "/url", produces = TEXT_HTML_VALUE)
+
+    public String getHabrNews(@RequestParam String link) {
+        return newsService.getNews(link);
     }
+
 }
