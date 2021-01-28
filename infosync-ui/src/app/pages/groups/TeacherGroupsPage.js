@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import Loader from "../../component/Loader";
 import {Card, CardContent, Container, Typography} from "@material-ui/core";
+import GroupInfo from "../../component/GroupInfo";
 
 
 export default class TeacherGroupsPage extends Component {
@@ -10,7 +11,25 @@ export default class TeacherGroupsPage extends Component {
         this.state = {
             items: [],
             isLoaded: false,
+            toLookGroup: undefined,
+            nameToLookGroup: "",
         }
+
+        this.toLookGroup = this.toLookGroup.bind(this);
+        this.takeToBack = this.takeToBack.bind(this);
+    }
+
+    toLookGroup(groupId, name) {
+        this.setState({
+            toLookGroup: groupId,
+            nameToLookGroup: name,
+        })
+    }
+
+    takeToBack() {
+        this.setState({
+            toLookGroup: undefined
+        })
     }
 
     componentDidMount() {
@@ -24,29 +43,42 @@ export default class TeacherGroupsPage extends Component {
                 })
             })
             .catch(() => console.log("Нет доступа к " + url + " Проверьте доступ к массиву данных"))
-
     }
 
     render() {
-        let {isLoaded, items} = this.state;
+        let {isLoaded, items, toLookGroup, nameToLookGroup} = this.state;
 
         if (!isLoaded) {
             return <Loader/>
         } else {
-            return (
-                <Container>
+            if (toLookGroup !== undefined) {
+                return (
+                    <GroupInfo
+                        groupId={toLookGroup}
+                        takeToBack={this.takeToBack}
+                        groupTitle={nameToLookGroup}
+                    />
+                );
 
-                    {items.map(numbers_group => (
-                        <Card key={numbers_group.id} style={{margin: "15px 0px"}}>
-                            <CardContent>
-                                <Typography>Группа: {numbers_group.name}</Typography>
-                            </CardContent>
-                        </Card>
-                    ))}
+            } else {
 
-                </Container>
+                return (
+                    <Container>
+                        {items.map(numbers_group => (
+                            <Card
+                                key={numbers_group.id}
+                                style={{margin: "15px 0px"}}
+                                onClick={() => this.toLookGroup(numbers_group.id, numbers_group.name)}
+                            >
+                                <CardContent>
+                                    <Typography>Группа: {numbers_group.name}</Typography>
+                                </CardContent>
+                            </Card>
+                        ))}
+                    </Container>
 
-            );
+                );
+            }
         }
     }
 }
