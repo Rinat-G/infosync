@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
-import {Button, Card, CardActions, CardContent, Paper} from "@material-ui/core";
+import {Button, Card, CardActions, CardContent, Typography} from "@material-ui/core";
 import Axios from "axios";
 import Loader from "./Loader";
 import * as PropTypes from "prop-types";
+import "./../../css/NewsPage.css"
+import {ArrowBack} from "@material-ui/icons";
 
 class FullHabrPost extends Component {
     constructor(props) {
@@ -42,20 +44,18 @@ class FullHabrPost extends Component {
             return <div><Loader/></div>;
         } else {
             return (
-                <Paper>
-                    <CardActions>
-                        <Button
-                            onClick={() => {
-                                this.props.toHide()
-                            }}
-                            style={{position: "fixed"}}
-
-                        >Назад</Button>
+                <Card className="CardNews">
+                    <CardActions className="CardContent">
+                        <Button variant="outlined" size="large" className="ButtonBack" fullWidth startIcon={<ArrowBack/>} onClick={() => { this.props.toHide() }}>Назад</Button>
                     </CardActions>
-                    <CardContent>
+                    <CardContent className="CardContent">
                         <div dangerouslySetInnerHTML={{__html: fullText}}/>
                     </CardContent>
-                </Paper>
+                    <CardActions className="CardContent">
+                        <Button onClick={() => { this.props.toHide() }}>Назад</Button>
+                    </CardActions>
+                </Card>
+
             );
         }
     }

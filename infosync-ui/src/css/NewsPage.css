@@ -3,9 +3,11 @@
 }
 .CardNews {
     background-color: #0d1117!important;
+    padding: 20px 0px 0px 0px!important;
 }
 .NavigationIcon {
     background-color: #25282b!important;
+    margin: 20px 0px 0px 0px;
 }
 .CardContent {
     background-color: #191b1d!important;
@@ -13,6 +15,22 @@
 }
 .CardTitle {
     background-color: #191b1d!important;
-    margin: 20px 20px 0px 20px!important;
+    margin: 0px 20px 0px 20px!important;
     padding: 15px!important;
+}
+img {
+ max-inline-size: 100%!important;
+ min-inline-size: 100%!important;
+}
+iframe {
+    inline-size: 100%!important;
+    block-size: 400px!important;
+}
+.ButtonRead, .ButtonShare, .ButtonBack {
+    color: #fbfbfb!important;
+    background-color: #1a2639!important;
+    transition: 0.25s ease;
+}
+.ButtonRead:hover, .ButtonShare:hover, .ButtonBack:hover {
+    background-color: #1a2639!important;
 }

@@ -1,20 +1,8 @@
 import React, {Component} from "react";
 import * as PropTypes from 'prop-types';
-import {Button, Card, CardActions, CardContent, makeStyles, Paper, Typography} from "@material-ui/core";
-
-//Не знаю как подружить с классаовыми компонентами
-// const useStyles = makeStyles((theme) => ({
-//     paper: {
-//         marginBottom: theme.spacing(2),
-//     },
-//     button: {
-//         borderRadius: 0,
-//         width: '100%'
-//     },
-//     actions: {
-//         padding: '16px'
-//     }
-// }));
+import {Button, Card, CardActions, CardContent, Typography} from "@material-ui/core";
+import "./../../css/NewsPage.css"
+import {Book, Share} from "@material-ui/icons";
 
 class HabrPost extends Component {
     constructor(props) {
@@ -27,27 +15,21 @@ class HabrPost extends Component {
     render() {
         const {error} = this.state;
         const {title, link, body} = this.props;
-        //const classes = useStyles();
 
         if (error) {
             return <div>Ошибка: {error.message}</div>;
         } else {
             return (
-                    <Paper square className="paper">
-                        <CardContent>
-                            <Typography gutterBottom variant="h6">
-                                {title}
-                            </Typography>
+                    <Card className="CardNews">
+                        <Typography gutterBottom variant="h5" component="h2" className="CardTitle">{title}</Typography>
+                        <CardContent className="CardContent">
                             <div dangerouslySetInnerHTML={{__html: body}}/>
                         </CardContent>
-                        <CardActions className="actions">
-                            <Button className="button" variant={'contained'}
-                            onClick={() => this.props.toRead(link)}
-                            >Читать
-                            </Button>
-                            <Button className="button" variant={"contained"}>Поделиться</Button>
+                        <CardActions className="CardContent">
+                            <Button variant="outlined" size="large" fullWidth className="ButtonRead" startIcon={<Book/>} onClick={() => this.props.toRead(link)}>Читать</Button>
+                            <Button variant="outlined" size="large" fullWidth className="ButtonShare" startIcon={<Share/>}>Поделиться</Button>
                         </CardActions>
-                    </Paper>
+                    </Card>
             )
         }
     }

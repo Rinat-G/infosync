@@ -57,7 +57,7 @@ const Routing = () => {
                     <Route path="/reg">
                         {isAuthenticated ? <Redirect to="/"/> : <RegistrationPage/>}
                     </Route>
-                    {isAuthenticated ? <MainPage userRole={userRole}/> : <Redirect to="/login"/>}
+                        {isAuthenticated ? <MainPage userRole={userRole}/> : <Redirect to="/login"/>}
                 </Switch>
             </BrowserRouter>
         </Box>

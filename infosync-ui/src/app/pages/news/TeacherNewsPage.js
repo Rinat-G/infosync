@@ -4,8 +4,10 @@ import ajax from "../../utils/ajax";
 import HabrPost from "../../component/HabrPost";
 import {Container} from "@material-ui/core";
 import FullHabrPost from "../../component/FullHabrPost";
+import "./../../../css/NewsPage.css"
 
 export default class TeacherNewsPage extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -58,12 +60,11 @@ export default class TeacherNewsPage extends Component {
             return <div>Ошибка: {error.message}</div>;
         } else if (!isLoaded) {
             return <div><Loader/></div>;
-        } else {
-            if (linkSingleNews !== "") {
+        } else if (linkSingleNews !== ""){
                 return <FullHabrPost link={linkSingleNews} toHide={this.toClearSingleNews}/>
-            } else
+            } else {
                 return (
-                    <Container maxWidth={"md"}>
+                    <div>
                         {items.map((post, i) => {
                             return (
                                 <HabrPost
@@ -75,7 +76,7 @@ export default class TeacherNewsPage extends Component {
                                 />
                             )
                         })}
-                    </Container>
+                    </div>
                 );
         }
     }
