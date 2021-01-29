@@ -33,21 +33,28 @@ class HabrPost extends Component {
             return <div>Ошибка: {error.message}</div>;
         } else {
             return (
-                    <Paper square className="paper">
-                        <CardContent>
-                            <Typography gutterBottom variant="h6">
-                                {title}
-                            </Typography>
-                            <div dangerouslySetInnerHTML={{__html: body}}/>
-                        </CardContent>
-                        <CardActions className="actions">
-                            <Button className="button" variant={'contained'}
-                            onClick={() => this.props.toRead(link)}
-                            >Читать
-                            </Button>
-                            <Button className="button" variant={"contained"}>Поделиться</Button>
-                        </CardActions>
-                    </Paper>
+                <Paper square className="paper">
+                    <CardContent>
+                        <Typography gutterBottom variant="h6">
+                            {title}
+                        </Typography>
+                        <div dangerouslySetInnerHTML={{__html: body}}/>
+                    </CardContent>
+                    <CardActions className="actions">
+
+                        <Button className="button" variant={'contained'}
+                                onClick={() => this.props.toRead(link)}
+                        >Читать
+                        </Button>
+
+                        <Button className="button" variant={"contained"}
+                                onClick={() => this.props.toShare({postTitle : title, postLink : link, postBody : body})}
+
+                        >Поделиться
+                        </Button>
+
+                    </CardActions>
+                </Paper>
             )
         }
     }
@@ -57,6 +64,7 @@ HabrPost.propTypes = {
     title: PropTypes.string.isRequired,
     link: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
-    toRead : PropTypes.func.isRequired
+    toRead: PropTypes.func.isRequired,
+    toShare: PropTypes.func.isRequired,
 }
 export default HabrPost;

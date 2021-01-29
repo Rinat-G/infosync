@@ -4,6 +4,7 @@ import ajax from "../../utils/ajax";
 import HabrPost from "../../component/HabrPost";
 import {Container} from "@material-ui/core";
 import FullHabrPost from "../../component/FullHabrPost";
+import ShareNewsWithGroups from "../../component/ShareNewsWithGroups";
 
 export default class TeacherNewsPage extends Component {
     constructor(props) {
@@ -13,10 +14,13 @@ export default class TeacherNewsPage extends Component {
             isLoaded: false,
             items: [],
             linkSingleNews: "",
+            shareNews: undefined,
         };
 
         this.toClearSingleNews = this.toClearSingleNews.bind(this);
         this.toShowSingleNews = this.toShowSingleNews.bind(this);
+        this.toShareNews = this.toShareNews.bind(this);
+        this.TakeToBack = this.TakeToBack.bind(this);
     }
 
     toShowSingleNews(link) {
@@ -29,6 +33,18 @@ export default class TeacherNewsPage extends Component {
         this.setState({
             linkSingleNews: "",
             fullText: "",
+        })
+    }
+
+    toShareNews(habrPost) {
+        this.setState({
+            shareNews: habrPost,
+        })
+    }
+
+    TakeToBack() {
+        this.setState({
+            shareNews: undefined
         })
     }
 
@@ -52,7 +68,7 @@ export default class TeacherNewsPage extends Component {
     }
 
     render() {
-        const {error, isLoaded, items, linkSingleNews} = this.state;
+        const {error, isLoaded, items, linkSingleNews, shareNews} = this.state;
 
         if (error) {
             return <div>Ошибка: {error.message}</div>;
@@ -61,6 +77,8 @@ export default class TeacherNewsPage extends Component {
         } else {
             if (linkSingleNews !== "") {
                 return <FullHabrPost link={linkSingleNews} toHide={this.toClearSingleNews}/>
+            } else if (shareNews !== undefined) {
+                return <ShareNewsWithGroups habrPost={shareNews} takeToBack={this.TakeToBack}/>
             } else
                 return (
                     <Container maxWidth={"md"}>
@@ -72,6 +90,7 @@ export default class TeacherNewsPage extends Component {
                                     body={post.postBody}
                                     key={i}
                                     toRead={this.toShowSingleNews}
+                                    toShare={this.toShareNews}
                                 />
                             )
                         })}
