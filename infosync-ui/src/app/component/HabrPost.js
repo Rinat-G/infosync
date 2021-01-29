@@ -27,7 +27,7 @@ class HabrPost extends Component {
                         </CardContent>
                         <CardActions className="CardContent">
                             <Button variant="outlined" size="large" fullWidth className="ButtonRead" startIcon={<Book/>} onClick={() => this.props.toRead(link)}>Читать</Button>
-                            <Button variant="outlined" size="large" fullWidth className="ButtonShare" startIcon={<Share/>}>Поделиться</Button>
+                            <Button variant="outlined" size="large" fullWidth className="ButtonShare" startIcon={<Share/>} onClick={() => this.props.toShare({postTitle : title, postLink : link, postBody : body})} >Поделиться</Button>
                         </CardActions>
                     </Card>
             )
@@ -39,6 +39,7 @@ HabrPost.propTypes = {
     title: PropTypes.string.isRequired,
     link: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
-    toRead : PropTypes.func.isRequired
+    toRead : PropTypes.func.isRequired,
+    toShare: PropTypes.func.isRequired,
 }
 export default HabrPost;
