@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.urfu.infosync.dao.UserDao;
 import ru.urfu.infosync.model.RegistrationResult;
 import ru.urfu.infosync.model.UserDto;
+import ru.urfu.infosync.model.UserInfo;
 import ru.urfu.infosync.model.UserJs;
 
 import java.util.ArrayList;
@@ -66,6 +67,8 @@ public class UserService {
     public UserDto getCurrentUser() {
         return userDao.getUserByEmail(getEmailOfCurrentUser());
     }
+
+    public UserInfo getUserInfo() { return userDao.getUserInfo(getEmailOfCurrentUser());}
 
     public Integer getIdCurrentUser() {
         return userDao.getUserIdByEmail(getEmailOfCurrentUser());

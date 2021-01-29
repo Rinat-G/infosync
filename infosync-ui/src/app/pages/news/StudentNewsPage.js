@@ -14,7 +14,7 @@ export default class StudentNewsPage extends Component {
     }
 
     componentDidMount() {
-        fetch("api/habr/news")
+        fetch("api/news")
             .then(res => res.json())
             .then(
                 (result) => {
