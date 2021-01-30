@@ -3,6 +3,7 @@ package ru.urfu.infosync.dao;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.urfu.infosync.model.GeneralPost;
+import ru.urfu.infosync.model.GeneralPostWithStatus;
 import ru.urfu.infosync.model.HabrPost;
 
 import java.util.List;
@@ -31,6 +32,20 @@ public class PostDao {
             "WHERE group_id = ? " +
             "ORDER BY id DESC";
 
+    //language=PostgreSQL
+    private static final String SELECT_RECOMMENDED_POSTS_WITH_STATUSES = "" +
+            "SELECT ifs_post.id, " +
+            "       ifs_post.title, " +
+            "       ifs_post.post_link, " +
+            "       ifs_post.post_body, " +
+            "       ifs_post.recommended_by_user_id, " +
+            "       CASE WHEN ifs_post_status.user_id IS null THEN false ELSE true END AS read_status " +
+            "FROM infosync.ifs_post " +
+            "LEFT JOIN infosync.ifs_post_status ON " +
+            "ifs_post.id = ifs_post_status.post_id AND ? = ifs_post_status.user_id " +
+            "WHERE ifs_post.group_id = ? " +
+            "ORDER BY  read_status, ifs_post.id DESC";
+
     public List<GeneralPost> getRecommendedPosts(Integer groupId) {
         return jdbcTemplate.query(
                 SELECT_RECOMMENDED_POST_BY_GROUP_ID,
@@ -40,6 +55,23 @@ public class PostDao {
                         rs.getString("post_link"),
                         rs.getString("post_body"),
                         rs.getInt("recommended_by_user_id")),
+                groupId
+        );
+    }
+
+    public List<GeneralPostWithStatus> getRecommendedPostsWithStatuses(Integer userId, Integer groupId) {
+        return jdbcTemplate.query(
+                SELECT_RECOMMENDED_POSTS_WITH_STATUSES,
+                (rs, rowNum) -> new GeneralPostWithStatus(
+                        new GeneralPost(
+                                rs.getInt("id"),
+                                rs.getString("title"),
+                                rs.getString("post_link"),
+                                rs.getString("post_body"),
+                                rs.getInt("recommended_by_user_id")),
+                        rs.getBoolean("read_status")
+                ),
+                userId,
                 groupId
         );
     }

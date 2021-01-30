@@ -91,6 +91,7 @@ export default class TeacherNewsPage extends Component {
                                     key={i}
                                     toRead={this.toShowSingleNews}
                                     toShare={this.toShareNews}
+                                    role="teacher"
                                 />
                             )
                         })}

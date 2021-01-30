@@ -33,6 +33,13 @@ class FullHabrPost extends Component {
                     });
                 }
             )
+
+        if(this.props.role === "student") {
+            Axios.put(`api/news/${this.props.postId}`)
+                .then(response => console.log(`Status updated: ${response.status}`))
+                .catch(err => console.error(`Cannot update status:\n\t${err}`))
+        }
+
     }
 
     render() {
