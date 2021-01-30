@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import Axios from "axios";
 import * as PropTypes from "prop-types";
-import {Button, CardActions, CardContent, Container, Paper, Typography} from "@material-ui/core";
+import { Button, Card, CardActions, CardContent, Container, Paper, Typography} from "@material-ui/core";
 import Loader from "./Loader";
+import "./../../css/NewsPage.css"
+import {ArrowBack} from "@material-ui/icons";
 
 class GroupInfo extends Component {
     constructor(props) {
@@ -41,20 +43,13 @@ class GroupInfo extends Component {
             return <div><Loader/></div>;
         } else {
             return (
-                <Paper>
-                    <CardActions>
-                        <Button variant={'contained'} onClick={() => this.props.takeToBack()}>Назад</Button>
-                    </CardActions>
-                    <Typography gutterBottom variant="h6">
-                        {this.props.groupTitle}
-                    </Typography>
-
-                    <Container>
+                <Card className="CardGroupPage">
+                    <Typography gutterBottom variant="h6" component="h6" className="CardTitle">Список статьей которыми вы поделились с группой</Typography>
+                    <Typography gutterBottom variant="h5" component="h2" className="CardTitle">Группа: {this.props.groupTitle}</Typography>
+                    <CardContent className="CardContent">
                         {items.postsWithStatuses.map(post => (
                             <CardContent key={post.id}>
-                                <Typography gutterBottom variant="h6">
-                                    {post.title}
-                                </Typography>
+                                <Typography gutterBottom variant="h6">{post.title}</Typography>
                                 {post.statuses.map(user => (
                                     <div style={user.read ? {color: 'green'} : {color: 'red'}}
                                          key={user.fullName + post.id}>
@@ -63,8 +58,11 @@ class GroupInfo extends Component {
                                 ))}
                             </CardContent>
                         ))}
-                    </Container>
-                </Paper>
+                    </CardContent>
+                    <CardActions className="CardContent">
+                        <Button variant="outlined" size="large" fullWidth className="ButtonRead" startIcon={<ArrowBack/>} onClick={() => this.props.takeToBack()}>Назад</Button>
+                    </CardActions>
+                </Card>
 
             );
         }

@@ -13,6 +13,11 @@
     padding: 20px 0px 0px 0px!important;
     height: 90vh!important;
 }
+.CardGroupPage {
+    background-color: #0d1117!important;
+    padding: 20px 0px 0px 0px!important;
+    height: 90vh!important;
+}
 .NavigationIcon {
     background-color: #25282b!important;
     margin: 20px 0px 0px 0px;
@@ -24,6 +29,7 @@
 .CardContentGroup {
     background-color: #191b1d!important;
     margin: 20px 20px 0px 20px;
+    cursor: pointer;
 }
 .CardTitle {
     background-color: #191b1d!important;
@@ -43,7 +49,7 @@ iframe {
     background-color: #1a2639!important;
     transition: 0.25s ease;
 }
-.ButtonRead:hover, .ButtonShare:hover, .ButtonBack:hover {
+.ButtonRead:hover, .ButtonShare:hover, .ButtonBack:hover, .CardContentGroup:hover {
     background-color: #1a2639!important;
 }
 .ButtonExit {

@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import Loader from "../../component/Loader";
 import {Card, CardContent, Container, Typography} from "@material-ui/core";
 import GroupInfo from "../../component/GroupInfo";
+import "./../../../css/NewsPage.css"
 
 
 export default class TeacherGroupsPage extends Component {
@@ -53,29 +54,19 @@ export default class TeacherGroupsPage extends Component {
         } else {
             if (toLookGroup !== undefined) {
                 return (
-                    <GroupInfo
-                        groupId={toLookGroup}
-                        takeToBack={this.takeToBack}
-                        groupTitle={nameToLookGroup}
-                    />
-                );
+                    <GroupInfo groupId={toLookGroup} takeToBack={this.takeToBack} groupTitle={nameToLookGroup}/>
+                    );
 
             } else {
 
                 return (
-                    <Container>
+                    <Card className="CardGroupPage">
                         {items.map(numbers_group => (
-                            <Card
-                                key={numbers_group.id}
-                                style={{margin: "15px 0px"}}
-                                onClick={() => this.toLookGroup(numbers_group.id, numbers_group.name)}
-                            >
-                                <CardContent>
-                                    <Typography>Группа: {numbers_group.name}</Typography>
-                                </CardContent>
-                            </Card>
+                            <CardContent key={numbers_group.id} className="CardContentGroup" onClick={() => this.toLookGroup(numbers_group.id, numbers_group.name)}>
+                                <Typography>Группа: {numbers_group.name}</Typography>
+                            </CardContent>
                         ))}
-                    </Container>
+                    </Card>
 
                 );
             }

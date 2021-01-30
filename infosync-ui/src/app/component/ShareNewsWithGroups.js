@@ -66,7 +66,7 @@ class ShareNewsWithGroups extends Component {
                 <Card className="CardGroups">
                     {checkGroups.map(res =>
                         <CardContent key={res[0].id} className="CardContentGroup">
-                            <FormControlLabel className="FormControl" control={<Checkbox checked={res[1]} onChange={() => this.handleCheckboxChange(res[0].id)}  />} label={res[0].name} />
+                            <FormControlLabel className="FormControl" control={<Checkbox checked={res[1]} onChange={() => this.handleCheckboxChange(res[0].id)}  />} label= {res[0].name} />
                         </CardContent>
                     )}
                     <CardActions className="CardContentGroup">
