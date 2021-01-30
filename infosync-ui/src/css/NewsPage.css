@@ -5,6 +5,14 @@
     background-color: #0d1117!important;
     padding: 20px 0px 0px 0px!important;
 }
+.CardAccount {
+    padding: 20px 0px 0px 0px!important;
+    height: 90vh!important;
+}
+.CardGroups {
+    padding: 20px 0px 0px 0px!important;
+    height: 90vh!important;
+}
 .NavigationIcon {
     background-color: #25282b!important;
     margin: 20px 0px 0px 0px;
@@ -12,6 +20,10 @@
 .CardContent {
     background-color: #191b1d!important;
     margin: 0px 20px 0px 20px;
+}
+.CardContentGroup {
+    background-color: #191b1d!important;
+    margin: 20px 20px 0px 20px;
 }
 .CardTitle {
     background-color: #191b1d!important;
@@ -33,4 +45,12 @@ iframe {
 }
 .ButtonRead:hover, .ButtonShare:hover, .ButtonBack:hover {
     background-color: #1a2639!important;
+}
+.ButtonExit {
+    color: #fbfbfb!important;
+    background-color: #1a2639!important;
+    transition: 0.25s ease;
+}
+.FormControl {
+    inline-size: 100%!important;
 }
