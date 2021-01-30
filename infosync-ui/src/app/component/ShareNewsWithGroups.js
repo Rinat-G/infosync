@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
-import {Button, CardActions, CardContent, Paper} from "@material-ui/core";
+import {Button, Card, CardActions, CardContent, FormControlLabel, Paper} from "@material-ui/core";
 import * as PropTypes from 'prop-types';
 import Axios from "axios";
 import Loader from "./Loader";
+import "./../../css/NewsPage.css"
 
 class ShareNewsWithGroups extends Component {
     constructor(props) {
@@ -62,27 +63,17 @@ class ShareNewsWithGroups extends Component {
             )
         } else {
             return (
-                <Paper>
-                    <CardActions>
-                        <Button onClick={() => this.props.takeToBack()}>
-                            Назад
-                        </Button>
-                    </CardActions>
+                <Card className="CardGroups">
                     {checkGroups.map(res =>
-                        <CardContent key={res[0].id}>
-                            {res[0].name}
-                            <Checkbox
-                                checked={res[1]}
-                                onChange={() => this.handleCheckboxChange(res[0].id)}
-                            />
+                        <CardContent key={res[0].id} className="CardContentGroup">
+                            <FormControlLabel className="FormControl" control={<Checkbox checked={res[1]} onChange={() => this.handleCheckboxChange(res[0].id)}  />} label={res[0].name} />
                         </CardContent>
                     )}
-                    <CardActions>
-                        <Button onClick={() => this.toShare()}>
-                            Порекомендовать
-                        </Button>
+                    <CardActions className="CardContentGroup">
+                        <Button fullWidth onClick={() => this.props.takeToBack()}>Назад</Button>
+                        <Button fullWidth onClick={() => this.toShare()}>Порекомендовать</Button>
                     </CardActions>
-                </Paper>
+                </Card>
             )
         }
     }
