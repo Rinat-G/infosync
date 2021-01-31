@@ -1,6 +1,9 @@
 .AppBar {
     background-color: #25282b!important;
 }
+body {
+    background-color: #0d1117!important;
+}
 .CardNews {
     background-color: #0d1117!important;
     padding: 40px 0px 0px 0px!important;
@@ -8,16 +11,17 @@
 }
 .CardAccount {
     padding: 20px 0px 0px 0px!important;
-    height: 90vh!important;
+    background-color: #0d1117!important;
+    box-shadow: none!important;
 }
 .CardGroups {
     padding: 20px 0px 0px 0px!important;
-    height: 90vh!important;
+    box-shadow: none!important;
 }
 .CardGroupPage {
     background-color: #0d1117!important;
     padding: 20px 0px 0px 0px!important;
-    height: 90vh!important;
+    height: calc(100% - 56px)!important;
 }
 .NavigationIcon {
     background-color: #25282b!important;
