@@ -5,11 +5,14 @@ import Loader from "../../component/Loader";
 import "./../../../css/NewsPage.css"
 import {ExitToApp} from "@material-ui/icons";
 
+
 const logout = () => {
      alert(`В разработке`)
 }
 
+
 class AccountPage extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -17,6 +20,7 @@ class AccountPage extends Component {
             item: {}
         }
     }
+
 
     componentDidMount() {
         Axios.get(`/api/user/info`)
@@ -26,6 +30,7 @@ class AccountPage extends Component {
             }))
             .catch(err => console.error(`FAIL GET USER_INFO: ${err}`))
     }
+
 
     render() {
         const {isLoaded, item} = this.state
@@ -100,7 +105,7 @@ class AccountPage extends Component {
                             </Grid>
                         </CardContent>
                         <CardContent>
-                            <Button variant="contained" fullWidth color="secondary" size="large" startIcon={<ExitToApp />} className="ButtonExit" onClick={logout}>Выход</Button>
+                            <Button variant="contained" fullWidth color="secondary" size="large" startIcon={<ExitToApp />} className="ButtonExit" onClick={this.cookies}>Выход</Button>
                         </CardContent>
                     </Card>
             );
@@ -108,4 +113,4 @@ class AccountPage extends Component {
     }
 }
 
-export default AccountPage
+export default withCookies(AccountPage)
