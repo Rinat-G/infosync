@@ -51,7 +51,7 @@ class FullHabrPost extends Component {
             return <div><Loader/></div>;
         } else {
             return (
-                <Card className="CardNews">
+                <Card className="CardNews NewsContent">
                     <CardActions className="CardContent">
                         <Button variant="outlined" size="large" className="ButtonBack" fullWidth startIcon={<ArrowBack/>} onClick={() => { this.props.toHide() }}>Назад</Button>
                     </CardActions>
@@ -59,7 +59,7 @@ class FullHabrPost extends Component {
                         <div dangerouslySetInnerHTML={{__html: fullText}}/>
                     </CardContent>
                     <CardActions className="CardContent">
-                        <Button onClick={() => { this.props.toHide() }}>Назад</Button>
+                        <Button variant="outlined" size="large" className="ButtonBack" fullWidth startIcon={<ArrowBack/>} onClick={() => { this.props.toHide() }}>Назад</Button>
                     </CardActions>
                 </Card>
 

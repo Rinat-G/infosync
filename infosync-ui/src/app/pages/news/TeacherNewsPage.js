@@ -81,7 +81,7 @@ export default class TeacherNewsPage extends Component {
                 return <ShareNewsWithGroups habrPost={shareNews} takeToBack={this.TakeToBack}/>
             } else
                 return (
-                    <div>
+                    <div className="NewsContent">
                         {items.map((post, i) => {
                             return (
                                 <HabrPost

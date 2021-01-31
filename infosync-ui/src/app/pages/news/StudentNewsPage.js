@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import Loader from "../../component/Loader";
 import HabrPost from "../../component/HabrPost";
 import FullHabrPost from "../../component/FullHabrPost";
+import "./../../../css/NewsPage.css"
 
 
 export default class StudentNewsPage extends Component {
@@ -71,7 +72,7 @@ export default class StudentNewsPage extends Component {
                 />
             } else {
                 return (
-                    <div>
+                    <div className="NewsContent">
                         {items.map((post, i) => {
                             return (
                                 <HabrPost
