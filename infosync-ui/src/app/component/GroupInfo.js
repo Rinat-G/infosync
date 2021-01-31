@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import Axios from "axios";
 import * as PropTypes from "prop-types";
-import { Button, Card, CardActions, CardContent, Container, Paper, Typography} from "@material-ui/core";
+import {Button, Card, CardActions, CardContent, Chip, Container, Paper, Typography} from "@material-ui/core";
 import Loader from "./Loader";
 import "./../../css/NewsPage.css"
-import {ArrowBack} from "@material-ui/icons";
+import {ArrowBack, Face, Done, Clear} from "@material-ui/icons";
 
 class GroupInfo extends Component {
     constructor(props) {
@@ -37,6 +37,10 @@ class GroupInfo extends Component {
     render() {
         const {error, isLoaded, items} = this.state
 
+        const handleDelete = () => {
+            console.info('Позже можно прикрутить переход на профиль при клике');
+        };
+
         if (error) {
             return <div>Ошибка: {error.message}</div>;
         } else if (!isLoaded) {
@@ -46,15 +50,21 @@ class GroupInfo extends Component {
                 <Card className="CardGroupPage">
                     <Typography gutterBottom variant="h6" component="h6" className="CardTitle">Список статьей которыми вы поделились с группой</Typography>
                     <Typography gutterBottom variant="h5" component="h2" className="CardTitle">Группа: {this.props.groupTitle}</Typography>
-                    <CardContent className="CardContent">
+                    <CardContent className="">
                         {items.postsWithStatuses.map(post => (
-                            <CardContent key={post.id}>
+                            <CardContent key={post.id} className="CardGroupTitle">
                                 <Typography gutterBottom variant="h6">{post.title}</Typography>
                                 {post.statuses.map(user => (
-                                    <div style={user.read ? {color: 'green'} : {color: 'red'}}
-                                         key={user.fullName + post.id}>
-                                        {user.fullName}
-                                    </div>
+
+                                    <Chip
+                                        icon={<Face />}
+                                        label={user.fullName}
+                                        clickable
+                                        onDelete={handleDelete}
+                                        deleteIcon={user.read ?  <Done style={{color: 'white'}} />  : <Clear style={{color: 'white'}} />}
+                                        style = {user.read ? {backgroundColor: "green"}  : {backgroundColor: "red"}}
+                                        key={user.fullName + post.id}
+                                    />
                                 ))}
                             </CardContent>
                         ))}

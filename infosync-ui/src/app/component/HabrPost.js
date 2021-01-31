@@ -1,8 +1,8 @@
 import React, {Component, useContext} from "react";
 import * as PropTypes from 'prop-types';
-import {Button, Card, CardActions, CardContent, Typography} from "@material-ui/core";
+import {Button, Card, CardActions, CardContent, Chip, Typography} from "@material-ui/core";
 import "./../../css/NewsPage.css"
-import {Book, Share} from "@material-ui/icons";
+import {Book, Clear, Done, Face, Share} from "@material-ui/icons";
 
 
 class HabrPost extends Component {
@@ -31,16 +31,17 @@ class HabrPost extends Component {
                             <Button variant="outlined" size="large" fullWidth className="ButtonShare"
                                     startIcon={<Share/>}
                                     onClick={() => this.props.toShare(
-                                        {postTitle: title, postLink: link, postBody: body})
-                                    }
-                            >Поделиться</Button> :
-
-                            <div>{status ? <div>Прочитано</div> : <div>Не прочитано</div>}</div>
+                                        {postTitle: title, postLink: link, postBody: body})}>Поделиться
+                            </Button> :
+                            <Chip
+                                className="IconRead"
+                                icon={<Face />}
+                                label={status ? "Прочитано" : "Не прочитано"}
+                                style = {status ? {backgroundColor: "green"}  : {backgroundColor: "red"}}
+                            />
                         }
                         <Button variant="outlined" size="large" fullWidth className="ButtonRead" startIcon={<Book/>}
                                 onClick={() => this.props.toRead(link, this.props.postId)}>Читать</Button>
-
-
                     </CardActions>
                 </Card>
             )
