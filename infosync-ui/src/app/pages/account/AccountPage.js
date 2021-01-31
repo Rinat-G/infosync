@@ -5,12 +5,6 @@ import Loader from "../../component/Loader";
 import "./../../../css/NewsPage.css"
 import {ExitToApp} from "@material-ui/icons";
 
-
-const logout = () => {
-     alert(`В разработке`)
-}
-
-
 class AccountPage extends Component {
 
     constructor(props) {
@@ -21,7 +15,6 @@ class AccountPage extends Component {
         }
     }
 
-
     componentDidMount() {
         Axios.get(`/api/user/info`)
             .then(response => this.setState({
@@ -31,7 +24,6 @@ class AccountPage extends Component {
             .catch(err => console.error(`FAIL GET USER_INFO: ${err}`))
     }
 
-
     render() {
         const {isLoaded, item} = this.state
 
@@ -39,78 +31,82 @@ class AccountPage extends Component {
             return <div><Loader/></div>;
         } else {
             return (
-                    <Card className="CardAccount">
-                        <CardContent className="CardContent">
-                            <Grid container spacing={3}>
-                                <Grid item xs={6}>
-                                    <TextField
-                                        id="filled-read-only-input"
-                                        label="Фамилия"
-                                        fullWidth
-                                        defaultValue={item.lastName}
-                                        InputProps={{
-                                            readOnly: true,
-                                        }}
-                                        variant="filled"
-                                    />
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <TextField
-                                        id="filled-read-only-input"
-                                        label="Имя"
-                                        fullWidth
-                                        defaultValue={item.firstName}
-                                        InputProps={{
-                                            readOnly: true,
-                                        }}
-                                        variant="filled"
-                                    />
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <TextField
-                                        id="filled-read-only-input"
-                                        label="Отчество"
-                                        fullWidth
-                                        defaultValue={item.patronymic}
-                                        InputProps={{
-                                            readOnly: true,
-                                        }}
-                                        variant="filled"
-                                    />
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <TextField
-                                        id="filled-read-only-input"
-                                        label="Email"
-                                        fullWidth
-                                        defaultValue={item.email}
-                                        InputProps={{
-                                            readOnly: true,
-                                        }}
-                                        variant="filled"
-                                    />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <TextField
-                                        id="filled-read-only-input"
-                                        label="Группа"
-                                        fullWidth
-                                        defaultValue={item.group}
-                                        InputProps={{
-                                            readOnly: true,
-                                        }}
-                                        variant="filled"
-                                    />
-                                </Grid>
+                <Card className="CardAccount">
+                    <CardContent className="CardContent">
+                        <Grid container spacing={3}>
+                            <Grid item xs={6}>
+                                <TextField
+                                    id="filled-read-only-input"
+                                    label="Фамилия"
+                                    fullWidth
+                                    defaultValue={item.lastName}
+                                    InputProps={{
+                                        readOnly: true,
+                                    }}
+                                    variant="filled"
+                                />
                             </Grid>
-                        </CardContent>
-                        <CardContent>
-                            <Button variant="contained" fullWidth color="secondary" size="large" startIcon={<ExitToApp />} className="ButtonExit" onClick={this.cookies}>Выход</Button>
-                        </CardContent>
-                    </Card>
+                            <Grid item xs={6}>
+                                <TextField
+                                    id="filled-read-only-input"
+                                    label="Имя"
+                                    fullWidth
+                                    defaultValue={item.firstName}
+                                    InputProps={{
+                                        readOnly: true,
+                                    }}
+                                    variant="filled"
+                                />
+                            </Grid>
+                            <Grid item xs={6}>
+                                <TextField
+                                    id="filled-read-only-input"
+                                    label="Отчество"
+                                    fullWidth
+                                    defaultValue={item.patronymic}
+                                    InputProps={{
+                                        readOnly: true,
+                                    }}
+                                    variant="filled"
+                                />
+                            </Grid>
+                            <Grid item xs={6}>
+                                <TextField
+                                    id="filled-read-only-input"
+                                    label="Email"
+                                    fullWidth
+                                    defaultValue={item.email}
+                                    InputProps={{
+                                        readOnly: true,
+                                    }}
+                                    variant="filled"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    id="filled-read-only-input"
+                                    label="Группа"
+                                    fullWidth
+                                    defaultValue={item.group}
+                                    InputProps={{
+                                        readOnly: true,
+                                    }}
+                                    variant="filled"
+                                />
+                            </Grid>
+                        </Grid>
+                    </CardContent>
+                    {
+                        // <CardContent>
+                        //     <Button variant="contained" fullWidth color="secondary" size="large"
+                        //             startIcon={<ExitToApp/>} className="ButtonExit"
+                        //             onClick={this.cookies}>Выход</Button>
+                        // </CardContent>
+                    }
+                </Card>
             );
         }
     }
 }
 
-export default withCookies(AccountPage)
+export default AccountPage
