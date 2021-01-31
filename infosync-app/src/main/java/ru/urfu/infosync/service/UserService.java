@@ -59,7 +59,7 @@ public class UserService {
     /**
      * @return this method uses SecurityContextHolder
      */
-    private String getEmailOfCurrentUser() {
+    public String getEmailOfCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getName();
     }

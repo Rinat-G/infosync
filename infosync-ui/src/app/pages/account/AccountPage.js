@@ -4,11 +4,9 @@ import Axios from "axios";
 import Loader from "../../component/Loader";
 import "./../../../css/NewsPage.css"
 import {ExitToApp} from "@material-ui/icons";
-import { withCookies, Cookies } from 'react-cookie';
-import { instanceOf } from 'prop-types';
 
 const logout = () => {
-     alert(`ПОКА НЕ РАБОТАЕТ`)
+     alert(`В разработке`)
 }
 
 class AccountPage extends Component {
@@ -26,7 +24,7 @@ class AccountPage extends Component {
                 isLoaded: true,
                 item: response.data
             }))
-            .catch(err => console.log(`FAIL GET USER_INFO: ${err}`))
+            .catch(err => console.error(`FAIL GET USER_INFO: ${err}`))
     }
 
     render() {
