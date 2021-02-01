@@ -38,6 +38,11 @@ public class GroupsController {
         return groupDao.getAllGroups();
     }
 
+    @GetMapping(value = "/self")
+    public List<String> GetSelfGroup() {
+        return groupService.getGroupMembers(userService.getEmailOfCurrentUser());
+    }
+
     @GetMapping(value = "/{groupId:\\d+}/posts", produces = APPLICATION_JSON_VALUE)
     public TeacherGroupInfo getGroupsPostInfo(@PathVariable Integer groupId, UsernamePasswordAuthenticationToken token) {
         Integer userId = userService.getIdCurrentUser();

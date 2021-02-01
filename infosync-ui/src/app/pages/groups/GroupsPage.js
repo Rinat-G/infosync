@@ -1,52 +1,28 @@
-import React, {Component} from "react";
-import {Card, CardContent, Container, Typography} from "@material-ui/core";
-import Loader from "../../component/Loader";
+import React, {useContext} from "react";
+import {Box} from "@material-ui/core";
+import UserContext from "../../context/UserContext";
+import TeacherGroupsPage from "./TeacherGroupsPage";
+import StudentGroupsPage from "./StudentGroupsPage";
 
 
-export default class GroupsPage extends Component {
+export default function GroupsPage() {
+    const user = useContext(UserContext)
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            items: [],
-            isLoaded: false,
+    const renderRoleDependentPage = () => {
+        switch (user.role) {
+            case 'student':
+                return (
+                    <StudentGroupsPage/>
+                )
+            case 'teacher':
+                return (
+                    <TeacherGroupsPage/>
+                )
         }
     }
-
-    componentDidMount() {
-        const url = "/api/groups";
-        fetch(url)
-            .then(response => response.json())
-            .then(groups => {
-                this.setState({
-                    isLoaded: true,
-                    items: groups
-                })
-            })
-            .catch(() => console.log("Нет доступа к " + url + " Проверьте доступ к массиву данных"))
-
-    }
-
-    render() {
-        let {isLoaded, items} = this.state;
-
-        if (!isLoaded) {
-            return <Loader/>
-        } else {
-            return (
-                <Container>
-
-                    {items.map(numbers_group => (
-                        <Card key={numbers_group.id} style={{margin: "15px 0px"}}>
-                            <CardContent>
-                                <Typography>Группа: {numbers_group.name}</Typography>
-                            </CardContent>
-                        </Card>
-                    ))}
-
-                </Container>
-
-            );
-        }
-    }
+    return (
+        <Box>
+            {renderRoleDependentPage()}
+        </Box>
+    );
 }

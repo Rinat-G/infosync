@@ -36,6 +36,7 @@ const Routing = () => {
             )
     }
 
+
     const [isAuthenticated, setAuthenticated] = useState(undefined);
     const [userRole, setUserRole] = useState(undefined);
 
@@ -57,7 +58,7 @@ const Routing = () => {
                     <Route path="/reg">
                         {isAuthenticated ? <Redirect to="/"/> : <RegistrationPage/>}
                     </Route>
-                    {isAuthenticated ? <MainPage userRole={userRole}/> : <Redirect to="/login"/>}
+                        {isAuthenticated ? <MainPage userRole={userRole}/> : <Redirect to="/login"/>}
                 </Switch>
             </BrowserRouter>
         </Box>

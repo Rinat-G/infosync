@@ -1,0 +1,21 @@
+.paper {
+    margin-bottom: 2px
+}
+
+.button {
+    border-radius: 0;
+    width: 100%;
+}
+
+.actions {
+    padding: 16px;
+}
+
+.HiddenNewsComponent {
+    display: none;
+    min-width: 100%;
+    max-width: 100%;
+    position: absolute;
+    z-index: 1000;
+    background-color: red;
+}

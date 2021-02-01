@@ -5,6 +5,8 @@ import ru.urfu.infosync.dao.GroupDao;
 import ru.urfu.infosync.dao.PostStatusDao;
 import ru.urfu.infosync.model.TeacherGroupInfo;
 
+import java.util.List;
+
 @Service
 public class GroupService {
 
@@ -15,6 +17,10 @@ public class GroupService {
 
         this.groupDao = groupDao;
         this.postStatusDao = postStatusDao;
+    }
+
+    public List<String> getGroupMembers(String email) {
+        return groupDao.getGroupMembers(email);
     }
 
     public Integer createGroupOrGetId(String groupName) {

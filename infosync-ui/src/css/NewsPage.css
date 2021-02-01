@@ -1,8 +1,34 @@
 .AppBar {
     background-color: #25282b!important;
 }
+body {
+    background-color: #0d1117!important;
+}
 .CardNews {
     background-color: #0d1117!important;
+    padding: 40px 0px 0px 0px!important;
+    position: relative;
+}
+.CardAccount, .CardStudent {
+    padding: 20px 0px 0px 0px!important;
+    background-color: #0d1117!important;
+    box-shadow: none!important;
+}
+
+.CardContentGroupsStudents {
+    margin: 20px 20px 0px 20px;
+    cursor: pointer;
+    background-color: #1a2639!important;
+}
+
+.CardGroups {
+    padding: 20px 0px 0px 0px!important;
+    box-shadow: none!important;
+}
+.CardGroupPage {
+    background-color: #0d1117!important;
+    padding: 20px 0px 0px 0px!important;
+    height: calc(100% - 56px)!important;
 }
 .NavigationIcon {
     background-color: #25282b!important;
@@ -11,8 +37,60 @@
     background-color: #191b1d!important;
     margin: 0px 20px 0px 20px;
 }
+.CardContentGroup {
+    background-color: #191b1d!important;
+    margin: 20px 20px 0px 20px;
+    cursor: pointer;
+}
+.CardGroupTitle {
+    margin: 20px 0px 20px 0px;
+    background-color: #191b1d!important;
+}
 .CardTitle {
     background-color: #191b1d!important;
-    margin: 20px 20px 0px 20px!important;
+    margin: 0px 20px 0px 20px!important;
     padding: 15px!important;
+}
+img {
+    max-inline-size: 100%!important;
+    max-block-size: 400px!important;
+}
+figure img, .post__body-cover, .bordered, figure  {
+    display: flex;
+    justify-content: center;
+    align-content: space-between;
+}
+figcaption {
+    display: none;
+}
+a {
+    color: aqua;
+}
+.IconRead {
+    position: absolute;
+    top: 25px;
+    right: 45px
+}
+iframe {
+    inline-size: 100%!important;
+    block-size: 400px!important;
+}
+.ButtonRead, .ButtonShare, .ButtonBack {
+    color: #fbfbfb!important;
+    background-color: #1a2639!important;
+    transition: 0.25s ease;
+}
+.ButtonRead:hover, .ButtonShare:hover, .ButtonBack:hover, .CardContentGroup:hover {
+    background-color: #1a2639!important;
+}
+.ButtonExit {
+    color: #fbfbfb!important;
+    background-color: #1a2639!important;
+    transition: 0.25s ease;
+}
+.FormControl {
+    inline-size: 100%!important;
+}
+.NewsContent {
+    margin-bottom: 56px;
 }

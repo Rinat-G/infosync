@@ -32,4 +32,17 @@ public class HabrNewsService {
             );
         }).collect(toList());
     }
+
+    public String getNews(String url) {
+
+        var posts = new Elements();
+        try {
+            Document doc = Jsoup.connect(url).get();
+            posts = doc.select("div.post__body_full");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return posts.select("div.post__body_full").get(0).toString();
+    }
 }

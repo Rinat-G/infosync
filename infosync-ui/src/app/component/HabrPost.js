@@ -1,44 +1,59 @@
-import React from "react";
+import React, {Component, useContext} from "react";
 import * as PropTypes from 'prop-types';
-import {Button, CardActions, CardContent, makeStyles, Paper, Typography} from "@material-ui/core";
+import {Button, Card, CardActions, CardContent, Chip, Typography} from "@material-ui/core";
+import "./../../css/NewsPage.css"
+import {Book, Clear, Done, Face, Share} from "@material-ui/icons";
 
-const useStyles = makeStyles((theme) => ({
-    paper: {
-        marginBottom: theme.spacing(2),
-    },
-    button: {
-        borderRadius: 0,
-        width: '100%'
-    },
-    actions: {
-        padding: '16px'
+
+class HabrPost extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            error: null,
+        }
     }
-}));
 
-const HabrPost = (props) => {
-    const {title, link, body} = props;
-    const classes = useStyles();
+    render() {
+        const {error} = this.state;
+        const {title, link, body, status} = this.props
 
-    return (
-        <Paper square className={classes.paper}>
-            <CardContent>
-                <Typography gutterBottom variant="h6">
-                    {title}
-                </Typography>
-                <div dangerouslySetInnerHTML={{__html: body}}/>
-            </CardContent>
-            <CardActions className={classes.actions}>
-                <Button className={classes.button} variant={'contained'}>Читать</Button>
-                <Button className={classes.button} variant={"contained"}>Поделиться</Button>
-            </CardActions>
-        </Paper>
-    )
-
+        if (error) {
+            return <div>Ошибка: {error.message}</div>;
+        } else {
+            return (
+                <Card className="CardNews">
+                    <Typography gutterBottom variant="h5" component="h2" className="CardTitle">{title}</Typography>
+                    <CardContent className="CardContent">
+                        <div dangerouslySetInnerHTML={{__html: body}}/>
+                    </CardContent>
+                    <CardActions className="CardContent">
+                        {this.props.role === "teacher" ?
+                            <Button variant="outlined" size="large" fullWidth className="ButtonShare"
+                                    startIcon={<Share/>}
+                                    onClick={() => this.props.toShare(
+                                        {postTitle: title, postLink: link, postBody: body})}>Поделиться
+                            </Button> :
+                            <Chip
+                                className="IconRead"
+                                icon={<Face />}
+                                label={status ? "Прочитано" : "Не прочитано"}
+                                style = {status ? {backgroundColor: "green"}  : {backgroundColor: "red"}}
+                            />
+                        }
+                        <Button variant="outlined" size="large" fullWidth className="ButtonRead" startIcon={<Book/>}
+                                onClick={() => this.props.toRead(link, this.props.postId)}>Читать</Button>
+                    </CardActions>
+                </Card>
+            )
+        }
+    }
 }
 
 HabrPost.propTypes = {
     title: PropTypes.string.isRequired,
     link: PropTypes.string.isRequired,
-    body: PropTypes.string.isRequired
+    body: PropTypes.string.isRequired,
+    toRead: PropTypes.func.isRequired,
+    role: PropTypes.string.isRequired,
 }
 export default HabrPost;

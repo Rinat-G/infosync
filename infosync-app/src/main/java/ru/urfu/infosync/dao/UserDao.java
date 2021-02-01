@@ -4,6 +4,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.urfu.infosync.model.User;
 import ru.urfu.infosync.model.UserDto;
+import ru.urfu.infosync.model.UserInfo;
 
 import java.util.List;
 
@@ -28,6 +29,14 @@ public class UserDao {
             "WHERE group_id = ? " +
             "ORDER BY full_name";
 
+    //language=PostgreSQL
+    private static final String SELECT_USER_INFO = "" +
+            "SELECT ifs_user.first_name, ifs_user.last_name, ifs_user.patronymic, ifs_user.email, ifs_group.title " +
+            "FROM infosync.ifs_user " +
+            "LEFT JOIN infosync.ifs_group on ifs_group.id = infosync.ifs_user.group_id " +
+            "WHERE ifs_user.email = ? " +
+            "LIMIT 1";
+
     private final JdbcTemplate jdbcTemplate;
 
     public UserDao(JdbcTemplate jdbcTemplate) {
@@ -44,6 +53,20 @@ public class UserDao {
                 userDto.getPasswordHash(),
                 userDto.getGroupId(),
                 userDto.getRole()
+        );
+    }
+
+    public UserInfo getUserInfo(final String email) {
+        return jdbcTemplate.queryForObject(
+                SELECT_USER_INFO,
+                (rs, rowNum) -> new UserInfo(
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getString("patronymic"),
+                        rs.getString("email"),
+                        rs.getString("title")
+                ),
+                email
         );
     }
 

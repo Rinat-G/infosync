@@ -13,13 +13,22 @@ import static java.util.Collections.nCopies;
 @Component
 public class GroupDao {
 
-    private static final String SELECT_ALL_GROUPS = "SELECT id, name FROM ifs_group";
+    private static final String SELECT_ALL_GROUPS = "SELECT id, title FROM ifs_group";
 
-    private static final String SELECT_GROUP_BY_NAME = "SELECT id, name FROM ifs_group WHERE name = ?";
+    private static final String SELECT_GROUP_BY_NAME = "SELECT id, title FROM ifs_group WHERE title = ?";
 
-    private static final String SELECT_GROUPS_BY_NAMES = "SELECT id, name FROM ifs_group WHERE name in ( $names )";
+    private static final String SELECT_GROUPS_BY_NAMES = "SELECT id, title FROM ifs_group WHERE title in ( $names )";
 
-    private static final String INSERT_GROUP = "INSERT INTO ifs_group (name) VALUES (?) RETURNING id";
+    private static final String INSERT_GROUP = "INSERT INTO ifs_group (title) VALUES (?) RETURNING id";
+
+    //language=PostgreSQL
+    private static final String SELECT_MEMBERS_OF_GROUP = "" +
+            "SELECT ifs_user.full_name " +
+            "FROM infosync.ifs_user " +
+            "JOIN infosync.ifs_group on ifs_user.group_id = ifs_group.id " +
+            "WHERE ifs_group.id = " +
+            "   (SELECT ifs_user.group_id FROM infosync.ifs_user " +
+            "   WHERE ifs_user.email = ? LIMIT 1)";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -27,17 +36,25 @@ public class GroupDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    public List<String> getGroupMembers(String email) {
+
+        return jdbcTemplate.query(
+                SELECT_MEMBERS_OF_GROUP,
+                (rs, rowNum) -> rs.getString("full_name"),
+                email);
+    }
+
     public List<Group> getAllGroups() {
         return jdbcTemplate.query(
                 SELECT_ALL_GROUPS,
-                (rs, rowNum) -> new Group(rs.getInt("id"), rs.getString("name"))
+                (rs, rowNum) -> new Group(rs.getInt("id"), rs.getString("title"))
         );
     }
 
     public Group getGroupByName(String groupName) {
         var groups = jdbcTemplate.query(
                 SELECT_GROUP_BY_NAME,
-                (rs, rowNum) -> new Group(rs.getInt("id"), rs.getString("name")),
+                (rs, rowNum) -> new Group(rs.getInt("id"), rs.getString("title")),
                 groupName
         );
 
@@ -50,7 +67,7 @@ public class GroupDao {
 
         return jdbcTemplate.query(
                 SELECT_GROUPS_BY_NAMES.replace("$names", inClauseSql),
-                (rs, rowNum) -> new Group(rs.getInt("id"), rs.getString("name")),
+                (rs, rowNum) -> new Group(rs.getInt("id"), rs.getString("title")),
                 groupNames.toArray()
         );
     }

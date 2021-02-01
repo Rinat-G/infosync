@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.*;
 import ru.urfu.infosync.model.GeneralPost;
+import ru.urfu.infosync.model.GeneralPostWithStatus;
 import ru.urfu.infosync.service.PostService;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -21,6 +22,12 @@ public class PostController {
     @GetMapping
     public List<GeneralPost> getNews() {
         return postService.getNews();
+    }
+
+    @GetMapping(value = "/student")
+    public List<GeneralPostWithStatus> getNewsWithStatuses() {
+
+        return postService.getNewsWithStatuses();
     }
 
     //PUT идемпонентный, так как сколько не выполняй результат не изменится
