@@ -32,8 +32,8 @@ public class UserDao {
     //language=PostgreSQL
     private static final String SELECT_USER_INFO = "" +
             "SELECT ifs_user.first_name, ifs_user.last_name, ifs_user.patronymic, ifs_user.email, ifs_group.title " +
-            "FROM infosync.ifs_user " +
-            "LEFT JOIN infosync.ifs_group on ifs_group.id = infosync.ifs_user.group_id " +
+            "FROM ifs_user " +
+            "LEFT JOIN ifs_group on ifs_group.id = ifs_user.group_id " +
             "WHERE ifs_user.email = ? " +
             "LIMIT 1";
 
