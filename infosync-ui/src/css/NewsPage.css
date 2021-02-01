@@ -9,11 +9,18 @@ body {
     padding: 40px 0px 0px 0px!important;
     position: relative;
 }
-.CardAccount {
+.CardAccount, .CardStudent {
     padding: 20px 0px 0px 0px!important;
     background-color: #0d1117!important;
     box-shadow: none!important;
 }
+
+.CardContentGroupsStudents {
+    margin: 20px 20px 0px 20px;
+    cursor: pointer;
+    background-color: #1a2639!important;
+}
+
 .CardGroups {
     padding: 20px 0px 0px 0px!important;
     box-shadow: none!important;

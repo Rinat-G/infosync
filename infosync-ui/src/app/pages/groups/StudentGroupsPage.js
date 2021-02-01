@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Axios from "axios";
 import Loader from "../../component/Loader";
+import "./../../../css/NewsPage.css"
+import {Card, CardContent, Typography} from "@material-ui/core";
 
 class StudentGroupsPage extends Component {
     constructor(props) {
@@ -27,11 +29,14 @@ class StudentGroupsPage extends Component {
             return <Loader/>
         } else {
             return (
-                <div>
-                    {members.map(name =>
-                        <div>{name}</div>
-                    )}
-                </div>
+                <Card className="CardStudent">
+                    <Typography className="CardTitle">Студенты группы (Фамилия, Имя, Отчество)</Typography>
+                    <CardContent className="CardContentGroupsStudents">
+                        {members.map(name =>
+                            <div>{name}</div>
+                        )}
+                    </CardContent>
+                </Card>
             );
         }
     }
