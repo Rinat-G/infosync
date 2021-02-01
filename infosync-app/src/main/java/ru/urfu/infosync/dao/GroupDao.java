@@ -24,10 +24,10 @@ public class GroupDao {
     //language=PostgreSQL
     private static final String SELECT_MEMBERS_OF_GROUP = "" +
             "SELECT ifs_user.full_name " +
-            "FROM infosync.ifs_user " +
-            "JOIN infosync.ifs_group on ifs_user.group_id = ifs_group.id " +
+            "FROM ifs_user " +
+            "JOIN ifs_group on ifs_user.group_id = ifs_group.id " +
             "WHERE ifs_group.id = " +
-            "   (SELECT ifs_user.group_id FROM infosync.ifs_user " +
+            "   (SELECT ifs_user.group_id FROM ifs_user " +
             "   WHERE ifs_user.email = ? LIMIT 1)";
 
     private final JdbcTemplate jdbcTemplate;
