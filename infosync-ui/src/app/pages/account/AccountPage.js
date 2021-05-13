@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
-import {Box, Button, Card, CardContent, Grid, TextField} from "@material-ui/core";
+import {Button, Card, CardContent, Grid, TextField} from "@material-ui/core";
 import Axios from "axios";
 import Loader from "../../component/Loader";
 import "./../../../css/NewsPage.css"
 import {ExitToApp} from "@material-ui/icons";
+import ajax from "../../utils/ajax";
 
 class AccountPage extends Component {
 
@@ -22,6 +23,11 @@ class AccountPage extends Component {
                 item: response.data
             }))
             .catch(err => console.error(`FAIL GET USER_INFO: ${err}`))
+    }
+
+    onExit = () => {
+        ajax("/api/logout")
+        window.location.reload()
     }
 
     render() {
@@ -97,11 +103,11 @@ class AccountPage extends Component {
                         </Grid>
                     </CardContent>
                     {
-                        // <CardContent>
-                        //     <Button variant="contained" fullWidth color="secondary" size="large"
-                        //             startIcon={<ExitToApp/>} className="ButtonExit"
-                        //             onClick={this.cookies}>Выход</Button>
-                        // </CardContent>
+                        <CardContent>
+                            <Button variant="contained" fullWidth color="secondary" size="large"
+                                    startIcon={<ExitToApp/>} className="ButtonExit"
+                                    onClick={this.onExit}>Выход</Button>
+                        </CardContent>
                     }
                 </Card>
             );

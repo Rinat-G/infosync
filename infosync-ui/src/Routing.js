@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {HashRouter, Route, Switch} from "react-router-dom";
 import {Redirect} from "react-router";
 import MainPage from "./app/tabs/MainPage";
 import Loader from "./app/component/Loader";
@@ -50,7 +50,7 @@ const Routing = () => {
 
     return (
         <Box className={classes.root}>
-            <BrowserRouter>
+            <HashRouter>
                 <Switch>
                     <Route path="/login">
                         {isAuthenticated ? <Redirect to="/"/> : <LoginPage loginCallback={loginCallback}/>}
@@ -58,9 +58,9 @@ const Routing = () => {
                     <Route path="/reg">
                         {isAuthenticated ? <Redirect to="/"/> : <RegistrationPage/>}
                     </Route>
-                        {isAuthenticated ? <MainPage userRole={userRole}/> : <Redirect to="/login"/>}
+                    {isAuthenticated ? <MainPage userRole={userRole}/> : <Redirect to="/login"/>}
                 </Switch>
-            </BrowserRouter>
+            </HashRouter>
         </Box>
     );
 };
