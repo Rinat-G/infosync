@@ -31,18 +31,26 @@ class NavigationBottom extends Component {
     }
 
     handleChange = (event, value) => {
-        this.setState({ value });
+        this.setState({value});
     };
-
 
 
     render() {
         const {value, pathMap} = this.state;
         return (
             <BottomNavigation value={value} onChange={this.handleChange} className="NavigationIcon">
-                <BottomNavigationAction label="Новости" icon={<AnnouncementOutlinedIcon />} component={Link} to={pathMap[0]} />
-                <BottomNavigationAction label="Группа" icon={<PermIdentityOutlinedIcon />} component={Link} to={pathMap[1]} />
-                <BottomNavigationAction label="Аккаунт" icon={<PeopleAltOutlinedIcon />} component={Link} to={pathMap[2]} />
+                <BottomNavigationAction label="Новости"
+                                        icon={<AnnouncementOutlinedIcon/>}
+                                        component={Link}
+                                        to={pathMap[0]}/>
+                <BottomNavigationAction label="Группа"
+                                        icon={<PeopleAltOutlinedIcon/>}
+                                        component={Link}
+                                        to={pathMap[1]}/>
+                <BottomNavigationAction label="Аккаунт"
+                                        icon={<PermIdentityOutlinedIcon/>}
+                                        component={Link}
+                                        to={pathMap[2]}/>
             </BottomNavigation>
         );
     }
